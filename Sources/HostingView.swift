@@ -59,9 +59,4 @@ public class HostingView: RendererView {
     public func invalidateLayout() {
         setNeedsLayout()
     }
-
-    public override func setNeedsLayout() {
-        super.setNeedsLayout()
-        print(#function)
-    }
 }

@@ -36,7 +36,11 @@ open class RendererView: UIView {
 
     open override func addSubview(_ view: UIView) {
         subviewsToRemove.remove(view)
-        super.addSubview(view)
+        if view.superview !== self {
+            super.addSubview(view)
+        } else {
+            bringSubviewToFront(view)
+        }
     }
 
     public func replaceSubviews(_ block: () -> Void) {
