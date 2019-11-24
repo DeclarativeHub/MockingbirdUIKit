@@ -17,7 +17,7 @@ public class HostingView: RendererView {
 
     private var node: AnyUIKitNode {
         didSet {
-            setNeedsLayout()
+            invalidateLayout()
         }
     }
 
