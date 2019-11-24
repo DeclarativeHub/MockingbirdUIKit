@@ -11,18 +11,9 @@ import Mockingbird
 
 public class HostingView: RendererView {
 
-    private var context = Context()
+    public var context: Context
 
-    private let resolver = UIKitNodeResolver()
-
-    public var view: View {
-        didSet {
-            node = resolver.resolve(view, context: context, cachedNode: node)
-            node.didInvalidateLayout = { [weak self] in
-                self?.setNeedsLayout()
-            }
-        }
-    }
+    public private(set) var view: View
 
     private var node: AnyUIKitNode {
         didSet {
@@ -30,17 +21,27 @@ public class HostingView: RendererView {
         }
     }
 
-    public init(_ view: View, resolvedNode: AnyUIKitNode) {
+    private let resolver = UIKitNodeResolver()
+
+    public init(_ view: View, resolvedNode: AnyUIKitNode, context: Context = Context()) {
         self.view = view
+        self.context = context
         self.node = resolvedNode
         super.init(frame: .zero)
         node.didInvalidateLayout = { [weak self] in self?.setNeedsLayout() }
     }
 
-    public init(_ view: View) {
+    public init(_ view: View, context: Context = Context()) {
         self.view = view
+        self.context = context
         self.node = resolver.resolve(view, context: context, cachedNode: nil)
         super.init(frame: .zero)
+        node.didInvalidateLayout = { [weak self] in self?.setNeedsLayout() }
+    }
+
+    public func updateView(_ view: View, resolvedNode: AnyUIKitNode? = nil) {
+        self.view = view
+        self.node = resolvedNode ?? resolver.resolve(view, context: context, cachedNode: nil)
         node.didInvalidateLayout = { [weak self] in self?.setNeedsLayout() }
     }
 
