@@ -42,7 +42,7 @@ open class RendererView: UIView {
     public func replaceSubviews(_ block: () -> Void) {
         subviewsToRemove = Set(subviews)
         (layer as! RendererLayer).replaceSublayers(block)
-//        subviewsToRemove.forEach { $0.removeFromSuperview() }
+        subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
 }
 

@@ -21,6 +21,8 @@ public class HostingView: RendererView {
         }
     }
 
+    private var previousBounds: CGRect? = nil
+
     private let resolver = UIKitNodeResolver()
 
     public init(_ view: View, resolvedNode: AnyUIKitNode, context: Context = Context()) {
@@ -28,7 +30,9 @@ public class HostingView: RendererView {
         self.context = context
         self.node = resolvedNode
         super.init(frame: .zero)
-        node.didInvalidateLayout = { [weak self] in self?.setNeedsLayout() }
+        node.didInvalidateLayout = { [weak self] in
+            self?.invalidateLayout()
+        }
     }
 
     public init(_ view: View, context: Context = Context()) {
@@ -36,13 +40,17 @@ public class HostingView: RendererView {
         self.context = context
         self.node = resolver.resolve(view, context: context, cachedNode: nil)
         super.init(frame: .zero)
-        node.didInvalidateLayout = { [weak self] in self?.setNeedsLayout() }
+        node.didInvalidateLayout = { [weak self] in
+            self?.invalidateLayout()
+        }
     }
 
     public func updateView(_ view: View, resolvedNode: AnyUIKitNode? = nil) {
         self.view = view
         self.node = resolvedNode ?? resolver.resolve(view, context: context, cachedNode: nil)
-        node.didInvalidateLayout = { [weak self] in self?.setNeedsLayout() }
+        node.didInvalidateLayout = { [weak self] in
+            self?.invalidateLayout()
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -51,12 +59,16 @@ public class HostingView: RendererView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        replaceSubviews {
-            node.layout(in: self, bounds: bounds)
+        if previousBounds != bounds {
+            previousBounds = bounds
+            replaceSubviews {
+                node.layout(in: self, bounds: bounds)
+            }
         }
     }
 
     public func invalidateLayout() {
+        previousBounds = nil
         setNeedsLayout()
     }
 }
