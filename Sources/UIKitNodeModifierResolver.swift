@@ -22,7 +22,8 @@ class UIKitNodeModifierResolver {
         ClipShapeNodeModifier.self,
         OverlayNodeModifier.self,
         BackgroundNodeModifier.self,
-        ShadowNodeModifier.self
+        ShadowNodeModifier.self,
+        EnvironmentObjectNodeModifier.self
     ]
 
     init(resolver: UIKitNodeResolver) {

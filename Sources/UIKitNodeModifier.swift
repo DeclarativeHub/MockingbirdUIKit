@@ -15,6 +15,8 @@ public protocol AnyUIKitNodeModifier {
 
     var hierarchyIdentifier: String { get }
 
+    var context: Context { get }
+
     func layoutSize(fitting size: CGSize, node: AnyUIKitNode) -> CGSize
 
     func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect)

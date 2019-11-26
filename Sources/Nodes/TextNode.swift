@@ -17,6 +17,12 @@ class TextNode: UIKitNode<Text> {
 
     private var label: UILabel?
 
+    override func viewDidUpdate(oldView: Text) {
+        if view != oldView {
+            invalidateLayout()
+        }
+    }
+
     override func layoutSize(fitting size: CGSize) -> CGSize {
         return view.storage.boundingSize(fitting: size, env: env)
     }

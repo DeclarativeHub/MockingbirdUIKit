@@ -90,12 +90,17 @@ open class UIKitNode<V: View>: AnyUIKitNode {
     }
 
     open func update(_ view: V, context: Context) {
+        let oldView = self.view
         self.view = view
         self.context = context
         self.env = context.environment
+        viewDidUpdate(oldView: oldView)
     }
 
     open override func update(_ view: View, context: Context) {
         self.update(view as! V, context: context)
+    }
+
+    open func viewDidUpdate(oldView: V) {
     }
 }

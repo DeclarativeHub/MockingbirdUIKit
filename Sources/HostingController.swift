@@ -11,7 +11,7 @@ import Mockingbird
 
 public class HostingController: UIViewController {
 
-    private let hostingView: HostingView
+    public let hostingView: HostingView
 
     public init(_ view: View) {
         self.hostingView = HostingView(view)

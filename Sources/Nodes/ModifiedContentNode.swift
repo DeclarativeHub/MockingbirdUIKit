@@ -19,16 +19,16 @@ class ModifiedContentNode: UIKitNode<ModifiedContent> {
     private var nodeModifier: AnyUIKitNodeModifier
 
     required init(_ view: ModifiedContent, context: Context, resolver: UIKitNodeResolver) {
-        self.node = resolver.resolve(view.content, context: context, cachedNode: nil)
         self.nodeModifier = resolver.modifierResolver.resolve(view.modifier, context: context, cachedNodeModifier: nil)
+        self.node = resolver.resolve(view.content, context: nodeModifier.context, cachedNode: nil)
         super.init(view, context: context, resolver: resolver)
         self.node.parentNode = self
     }
 
     override func update(_ view: ModifiedContent, context: Context) {
         super.update(view, context: context)
-        self.node = resolver.resolve(view.content, context: context, cachedNode: node)
         nodeModifier = resolver.modifierResolver.resolve(view.modifier, context: context, cachedNodeModifier: nodeModifier)
+        self.node = resolver.resolve(view.content, context: nodeModifier.context, cachedNode: node)
         node.parentNode = self
     }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC2441C1238DDA2400135660 /* EnvironmentObjectNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */; };
 		ECC2104B238AD2090034D0E3 /* MockingbirdUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ECC2107D238AD2300034D0E3 /* UIKitNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21052238AD2300034D0E3 /* UIKitNodeModifier.swift */; };
 		ECC2107E238AD2300034D0E3 /* FixedSizeNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSizeNodeModifier.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObjectNodeModifier.swift; sourceTree = "<group>"; };
 		ECC21046238AD2090034D0E3 /* MockingbirdUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockingbirdUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockingbirdUIKit.h; sourceTree = "<group>"; };
 		ECC2104A238AD2090034D0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				ECC2105B238AD2300034D0E3 /* FlexFrameNodeModifier.swift */,
 				ECC2105C238AD2300034D0E3 /* ShadowNodeModifier.swift */,
 				ECC2105D238AD2300034D0E3 /* OverlayNodeModifier.swift */,
+				EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				ECC2108E238AD2300034D0E3 /* SpacerNode.swift in Sources */,
 				ECC21089238AD2300034D0E3 /* VStackNode.swift in Sources */,
 				ECC21096238AD2300034D0E3 /* FillShapeNode.swift in Sources */,
+				EC2441C1238DDA2400135660 /* EnvironmentObjectNodeModifier.swift in Sources */,
 				ECC21092238AD2300034D0E3 /* ColorNode.swift in Sources */,
 				ECC2109E238AD2300034D0E3 /* CGPoint+Extensions.swift in Sources */,
 				ECC210A4238AD2300034D0E3 /* UIViewRepresentable.swift in Sources */,

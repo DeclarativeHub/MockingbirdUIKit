@@ -15,21 +15,23 @@ class ViewNode: UIKitNode<AnyView> {
         return "V[\(node.hierarchyIdentifier)]"
     }
 
-    var properties: [String: Any] = [:]
+    var propertyStorage: [String: Any] = [:]
     var node: AnyUIKitNode
 
     required init( _ view: AnyView, context: Context, resolver: UIKitNodeResolver) {
+        ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
         self.node = resolver.resolve(view.body, context: context, cachedNode: nil)
         super.init(view, context: context, resolver: resolver)
         self.node.parentNode = self
-//        observeDynamicProperties()
+        observeStateProperties(of: view.content)
     }
 
     override func update(_ view: AnyView, context: Context) {
         super.update(view, context: context)
+        observeStateProperties(of: view.content)
+        ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
         self.node = resolver.resolve(view.body, context: context, cachedNode: node)
         self.node.parentNode = self
-//        observeDynamicProperties()
     }
 
     override func layoutSize(fitting targetSize: CGSize) -> CGSize {
@@ -38,5 +40,40 @@ class ViewNode: UIKitNode<AnyView> {
 
     override func layout(in parent: UIView, bounds: CGRect) {
         node.layout(in: parent, bounds: bounds)
+    }
+
+    private func observeStateProperties(of view: View) {
+        let mirror = Mirror(reflecting: view)
+        for (label, value) in mirror.children where label != nil {
+            if let property = value as? StateProperty {
+                if propertyStorage[label!] == nil { propertyStorage[label!] = property.storage.initialValue }
+                property.storage.get = { [unowned self] in self.propertyStorage[label!]! }
+                property.storage.set = { [unowned self] in
+                    self.propertyStorage[label!] = $0;
+                    self.update(self.view, context: self.context)
+                }
+            } else if let property = value as? EnvironmentObjectProperty {
+                let key = property.storage.objectTypeIdentifier
+                property.storage.get = { [unowned self] in self.context.environmentObjects[key]! }
+                property.storage.set = { [unowned self] in self.context.environmentObjects[key] = $0 }
+            }
+        }
+    }
+
+    private static func configureEnvironmentObjectProperties(of view: View, context: Context) {
+        let mirror = Mirror(reflecting: view)
+        for (label, value) in mirror.children where label != nil {
+            if let property = value as? EnvironmentObjectProperty {
+                let key = property.storage.objectTypeIdentifier
+                property.storage.get = {
+                    if let object = context.environmentObjects[key] {
+                        return object
+                    } else {
+                        fatalError("Environment object of type \(key) not found.")
+                    }
+                }
+                property.storage.set = { _ in fatalError() }
+            }
+        }
     }
 }
