@@ -16,6 +16,6 @@ class FixedSizeNodeModifier: UIKitNodeModifier<ViewModifiers.FixedSize> {
     }
 
     override func layoutSize(fitting size: CGSize, node: AnyUIKitNode) -> CGSize {
-        return node.layoutSize(fitting: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        return node.layoutSize(fitting: .zero)
     }
 }

@@ -48,7 +48,7 @@ struct ContentView: View {
             VStack {
                 ForEach(0..<4) { _ in
                     Text(self.viewModel.title).font(.title)
-                }.padding(50)
+                }
                 MyButton(title: $viewModel.title)
             }
         }.accentColor(colorPalette.secondary)

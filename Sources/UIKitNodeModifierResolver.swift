@@ -16,6 +16,7 @@ class UIKitNodeModifierResolver {
     private let modifierTypes: [AnyUIKitNodeModifier.Type] = [
         PaddingNodeModifier.self,
         FrameNodeModifier.self,
+        FixedSizeNodeModifier.self,
         FlexFrameNodeModifier.self,
         OffsetNodeModifier.self,
         LayoutPriorityNodeModifier.self,
