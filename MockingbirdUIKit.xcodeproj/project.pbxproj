@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EC2441C1238DDA2400135660 /* EnvironmentObjectNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */; };
+		EC6F1376239BDA26002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
+		EC6F1377239BDA33002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
+		EC6F1378239BDA33002FE2E4 /* ReactiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EC6F137A239BDD26002FE2E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6F1379239BDD26002FE2E4 /* ContentView.swift */; };
 		ECC2104B238AD2090034D0E3 /* MockingbirdUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ECC2107D238AD2300034D0E3 /* UIKitNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21052238AD2300034D0E3 /* UIKitNodeModifier.swift */; };
 		ECC2107E238AD2300034D0E3 /* FixedSizeNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSizeNodeModifier.swift */; };
@@ -79,6 +83,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				ECC210C9238AEB710034D0E3 /* Mockingbird.framework in Embed Frameworks */,
+				EC6F1378239BDA33002FE2E4 /* ReactiveKit.framework in Embed Frameworks */,
 				ECC210CC238AEB730034D0E3 /* MockingbirdUIKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -88,6 +93,8 @@
 
 /* Begin PBXFileReference section */
 		EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObjectNodeModifier.swift; sourceTree = "<group>"; };
+		EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveKit.framework; path = Carthage/Build/iOS/ReactiveKit.framework; sourceTree = "<group>"; };
+		EC6F1379239BDD26002FE2E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ECC21046238AD2090034D0E3 /* MockingbirdUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockingbirdUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockingbirdUIKit.h; sourceTree = "<group>"; };
 		ECC2104A238AD2090034D0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -146,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC6F1376239BDA26002FE2E4 /* ReactiveKit.framework in Frameworks */,
 				ECC210A7238AD32C0034D0E3 /* Mockingbird.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECC210C8238AEB710034D0E3 /* Mockingbird.framework in Frameworks */,
+				EC6F1377239BDA33002FE2E4 /* ReactiveKit.framework in Frameworks */,
 				ECC210CB238AEB730034D0E3 /* MockingbirdUIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +277,7 @@
 		ECC210A5238AD32C0034D0E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */,
 				ECC210A6238AD32C0034D0E3 /* Mockingbird.framework */,
 			);
 			name = Frameworks;
@@ -277,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				ECC210B5238AEA8A0034D0E3 /* AppDelegate.swift */,
+				EC6F1379239BDD26002FE2E4 /* ContentView.swift */,
 				ECC210BE238AEA8C0034D0E3 /* Assets.xcassets */,
 				ECC210C0238AEA8C0034D0E3 /* LaunchScreen.storyboard */,
 				ECC210C3238AEA8C0034D0E3 /* Info.plist */,
@@ -446,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC6F137A239BDD26002FE2E4 /* ContentView.swift in Sources */,
 				ECC210B6238AEA8A0034D0E3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,7 +670,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -681,7 +693,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DemoApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

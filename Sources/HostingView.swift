@@ -59,6 +59,12 @@ public class HostingView: RendererView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
+        let bounds: CGRect
+        if #available(iOS 11.0, *) {
+            bounds = self.safeAreaLayoutGuide.layoutFrame
+        } else {
+            bounds = self.bounds
+        }
         if previousBounds != bounds {
             previousBounds = bounds
             replaceSubviews {

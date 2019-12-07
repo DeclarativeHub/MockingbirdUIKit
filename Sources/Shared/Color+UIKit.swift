@@ -12,11 +12,20 @@ import Mockingbird
 extension Color {
 
     var uiColorValue: UIColor {
-        return UIColor(
-            red: CGFloat(rgba.red),
-            green: CGFloat(rgba.green),
-            blue: CGFloat(rgba.blue),
-            alpha: CGFloat(rgba.alpha)
-        )
+        switch storage {
+        case .rgba(let red, let green, let blue, let alpha):
+            return UIColor(
+                red: CGFloat(red),
+                green: CGFloat(green),
+                blue: CGFloat(blue),
+                alpha: CGFloat(alpha)
+            )
+        case .asset(let name, let bundle):
+            if #available(iOS 11.0, *) {
+                return UIColor(named: name, in: bundle, compatibleWith: nil)!
+            } else {
+                fatalError("Color assets are not available on iOS 10 or earlier.")
+            }
+        }
     }
 }

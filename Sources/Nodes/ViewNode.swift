@@ -8,6 +8,7 @@
 
 import UIKit
 import Mockingbird
+import ReactiveKit
 
 class ViewNode: UIKitNode<AnyView> {
 
@@ -17,6 +18,7 @@ class ViewNode: UIKitNode<AnyView> {
 
     var propertyStorage: [String: Any] = [:]
     var node: AnyUIKitNode
+    var observedObjectsCancellables: [AnyCancellable] = []
 
     required init( _ view: AnyView, context: Context, resolver: UIKitNodeResolver) {
         ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
@@ -43,6 +45,7 @@ class ViewNode: UIKitNode<AnyView> {
     }
 
     private func observeStateProperties(of view: View) {
+        observedObjectsCancellables = []
         let mirror = Mirror(reflecting: view)
         for (label, value) in mirror.children where label != nil {
             if let property = value as? StateProperty {
@@ -56,6 +59,14 @@ class ViewNode: UIKitNode<AnyView> {
                 let key = property.storage.objectTypeIdentifier
                 property.storage.get = { [unowned self] in self.context.environmentObjects[key]! }
                 property.storage.set = { [unowned self] in self.context.environmentObjects[key] = $0 }
+            } else if let property = value as? ObservedObjectProperty {
+                property.objectWillChange
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] in
+                        guard let self = self else { return }
+                        self.update(self.view, context: self.context)
+                    }
+                    .store(in: &observedObjectsCancellables)
             }
         }
     }
