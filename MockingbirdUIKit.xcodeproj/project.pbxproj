@@ -12,6 +12,7 @@
 		EC6F1377239BDA33002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
 		EC6F1378239BDA33002FE2E4 /* ReactiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC6F137A239BDD26002FE2E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6F1379239BDD26002FE2E4 /* ContentView.swift */; };
+		EC7469EC239C51B3009A4102 /* GestureNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7469EB239C51B3009A4102 /* GestureNodeModifier.swift */; };
 		ECC2104B238AD2090034D0E3 /* MockingbirdUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ECC2107D238AD2300034D0E3 /* UIKitNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21052238AD2300034D0E3 /* UIKitNodeModifier.swift */; };
 		ECC2107E238AD2300034D0E3 /* FixedSizeNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSizeNodeModifier.swift */; };
@@ -95,6 +96,7 @@
 		EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObjectNodeModifier.swift; sourceTree = "<group>"; };
 		EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveKit.framework; path = Carthage/Build/iOS/ReactiveKit.framework; sourceTree = "<group>"; };
 		EC6F1379239BDD26002FE2E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EC7469EB239C51B3009A4102 /* GestureNodeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureNodeModifier.swift; sourceTree = "<group>"; };
 		ECC21046238AD2090034D0E3 /* MockingbirdUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockingbirdUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockingbirdUIKit.h; sourceTree = "<group>"; };
 		ECC2104A238AD2090034D0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				ECC2105C238AD2300034D0E3 /* ShadowNodeModifier.swift */,
 				ECC2105D238AD2300034D0E3 /* OverlayNodeModifier.swift */,
 				EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */,
+				EC7469EB239C51B3009A4102 /* GestureNodeModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				ECC21097238AD2300034D0E3 /* UIKitNodeModifierResolver.swift in Sources */,
 				ECC21082238AD2300034D0E3 /* BackgroundNodeModifier.swift in Sources */,
 				ECC210A3238AD2300034D0E3 /* HostingView.swift in Sources */,
+				EC7469EC239C51B3009A4102 /* GestureNodeModifier.swift in Sources */,
 				ECC2108B238AD2300034D0E3 /* TextNode.swift in Sources */,
 				ECC210A1238AD2300034D0E3 /* UIKitNodeResolver.swift in Sources */,
 				ECC21091238AD2300034D0E3 /* HStackNode.swift in Sources */,

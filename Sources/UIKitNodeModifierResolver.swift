@@ -24,7 +24,8 @@ class UIKitNodeModifierResolver {
         OverlayNodeModifier.self,
         BackgroundNodeModifier.self,
         ShadowNodeModifier.self,
-        EnvironmentObjectNodeModifier.self
+        EnvironmentObjectNodeModifier.self,
+        GestureNodeModifier.self
     ]
 
     init(resolver: UIKitNodeResolver) {
