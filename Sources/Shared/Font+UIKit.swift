@@ -37,22 +37,36 @@ extension Font.Weight {
 
 extension Font.Descriptor {
 
+    private static var cache: [Font.Descriptor: UIFont] = [:]
+
     var uiFontValue: UIFont {
+        if let font = Self.cache[self] {
+            return font
+        }
+        let font: UIFont
         switch self {
-        case .system(let size, let weight, _, let attributes):
+        case .system(let size, var weight, let design, let attributes):
             // TODO: improve mapping
             if attributes.isBold {
-                return .boldSystemFont(ofSize: size)
-            } else if attributes.isItalic {
-                return .italicSystemFont(ofSize: size)
-            } else if attributes.isMonospacedDigit {
-                return .monospacedDigitSystemFont(ofSize: size, weight: weight.uiFontWeightValue)
-            } else {
-                return .systemFont(ofSize: size)
+                weight = .bold
+            }
+            switch design {
+            case .default:
+                font = .systemFont(ofSize: size, weight: weight.uiFontWeightValue)
+            case .monospaced:
+                if #available(iOS 12.0, *) {
+                    font = .monospacedSystemFont(ofSize: size, weight: weight.uiFontWeightValue)
+                } else {
+                    font = .monospacedDigitSystemFont(ofSize: size, weight: weight.uiFontWeightValue)
+                }
+            default:
+                fatalError()
             }
         case .custom(let name, let size):
-            return UIFont(name: name, size: size)!
+            font = UIFont(name: name, size: size)!
         }
+        Self.cache[self] = font
+        return font
     }
 }
 
