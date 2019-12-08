@@ -72,7 +72,7 @@ class ZStackNode: UIKitNode<ZStack> {
             case .firstTextBaseline, .lastTextBaseline:
                 fatalError()
             }
-            node.layout(in: parent, bounds: alignedBounds)
+            node.layout(in: parent, bounds: alignedBounds.roundedToScale(scale: UIScreen.main.scale))
         }
     }
 }

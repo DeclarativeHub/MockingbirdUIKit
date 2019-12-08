@@ -22,7 +22,7 @@ class HStackNode: UIKitNode<HStack> {
     required init(_ view: HStack, context: Context, resolver: UIKitNodeResolver) {
         let context = modified(context) { $0.environment._layoutAxis = .horizontal }
         self.nodes = view.content.flatMap { $0.flattened }.map { resolver.resolve($0, context: context, cachedNode: nil) }
-        self.layout = StackLayout(node: nodes, interItemSpacing: view.spacing ?? context.environment.stackSpacing)
+        self.layout = StackLayout(node: nodes, interItemSpacing: view.spacing ?? context.environment.stackSpacing, screenScale: UIScreen.main.scale)
         super.init(view, context: context, resolver: resolver)
         self.nodes.forEach { $0.parentNode = self }
     }
@@ -34,7 +34,7 @@ class HStackNode: UIKitNode<HStack> {
         if nodes.count != content.count {
             nodes = content.map { resolver.resolve($0, context: context, cachedNode: nil) }
             nodes.forEach { $0.parentNode = self }
-            layout = StackLayout(node: nodes, interItemSpacing: view.spacing ?? env.stackSpacing)
+            layout = StackLayout(node: nodes, interItemSpacing: view.spacing ?? env.stackSpacing, screenScale: UIScreen.main.scale)
         } else {
             var childrenModified = false
             for (index, node) in nodes.enumerated() {
@@ -43,7 +43,7 @@ class HStackNode: UIKitNode<HStack> {
                 childrenModified = childrenModified || nodes[index] !== node
             }
             if childrenModified {
-                layout = StackLayout(node: nodes, interItemSpacing: view.spacing ?? env.stackSpacing)
+                layout = StackLayout(node: nodes, interItemSpacing: view.spacing ?? env.stackSpacing, screenScale: UIScreen.main.scale)
             }
         }
     }

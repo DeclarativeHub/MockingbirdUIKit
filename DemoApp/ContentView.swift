@@ -27,14 +27,16 @@ struct MyButton: View {
     @EnvironmentObject var colorPalette: ColorPalette
 
     var body: View {
-        Button(action: { self.title += "😍" }) {
+//        Button(action: { self.title += "😍" }) {
             ZStack {
                 Circle()
                     .stroke(colorPalette.primary, lineWidth: 4)
-                Text("Tap me")
+                Text("Tap me").font(.system(size: 14, weight: .regular, design: .monospaced))
             }
             .frame(width: 100, height: 100)
-        }
+            .onLongPressGesture { self.title += "😍" }
+            .onTapGesture { self.title += "🥶" }
+//        }
     }
 }
 
