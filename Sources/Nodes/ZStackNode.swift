@@ -47,7 +47,7 @@ class ZStackNode: UIKitNode<ZStack> {
         return nodes.reduce(.zero) { (totalSize, node) -> CGSize in
             let nodeSize = node.layoutSize(fitting: targetSize)
             return max(totalSize, nodeSize)
-        }
+        }.roundedToScale(scale: UIScreen.main.scale)
     }
 
     override func layout(in parent: UIView, bounds: CGRect) {
