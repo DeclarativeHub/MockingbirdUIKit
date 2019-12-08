@@ -29,14 +29,34 @@ class ButtonNode: UIKitNode<Button> {
         }
 
         @objc dynamic private func unhighlight() {
-            UIView.animate(withDuration: 0.1) {
-                self.alpha = 1
+            if #available(iOS 10.0, *) {
+                UIViewPropertyAnimator.runningPropertyAnimator(
+                    withDuration: 0.1,
+                    delay: 0,
+                    options: [],
+                    animations: { self.alpha = 1 },
+                    completion: nil
+                )
+            } else {
+                UIView.animate(withDuration: 0.1) {
+                    self.alpha = 1
+                }
             }
         }
 
         @objc dynamic private func highlight() {
-            UIView.animate(withDuration: 0.1) {
-                self.alpha = 0.5
+            if #available(iOS 10.0, *) {
+                UIViewPropertyAnimator.runningPropertyAnimator(
+                    withDuration: 0.1,
+                    delay: 0,
+                    options: [],
+                    animations: { self.alpha = 0.5 },
+                    completion: nil
+                )
+            } else {
+                UIView.animate(withDuration: 0.1) {
+                    self.alpha = 0.5
+                }
             }
         }
 
