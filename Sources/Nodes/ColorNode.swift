@@ -15,16 +15,16 @@ class ColorNode: UIKitNode<Color> {
         return "C"
     }
 
-    private var colorView: UIView!
+    private var layer: CALayer!
 
     override func layoutSize(fitting size: CGSize) -> CGSize {
         return size
     }
 
     override func layout(in parent: UIView, bounds: CGRect) {
-        colorView = colorView ?? UIView()
-        colorView.backgroundColor = view.uiColorValue
-        colorView.frame = bounds
-        parent.addSubview(colorView)
+        layer = layer ?? CALayer()
+        layer.backgroundColor = view.uiColorValue.cgColor
+        layer.frame = bounds
+        parent.layer.addSublayer(layer)
     }
 }
