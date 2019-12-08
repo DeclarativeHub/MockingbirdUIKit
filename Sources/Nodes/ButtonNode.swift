@@ -69,7 +69,7 @@ class ButtonNode: UIKitNode<Button> {
     }
     
     override func layoutSize(fitting targetSize: CGSize) -> CGSize {
-        return max(label.layoutSize(fitting: targetSize), CGSize(width: 44, height: 44))
+        return label.layoutSize(fitting: targetSize)
     }
 
     override func layout(in parent: UIView, bounds: CGRect) {
