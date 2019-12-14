@@ -43,7 +43,8 @@ extension ViewModifiers.Gesture: UIKitNodeModifierResolvable {
         private var gestureView: GestureView!
 
         override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            gestureView = gestureView ?? GestureView(frame: bounds)
+            gestureView = gestureView ?? GestureView()
+            gestureView.frame = bounds
             gestureView.gestureController = (modifer.gesture as? ResolvableGesture)?
                 .resolve(cachedGestureRecognizer: gestureView.gestureController?._gestureRecognizer)
             gestureView.replaceSubviews {

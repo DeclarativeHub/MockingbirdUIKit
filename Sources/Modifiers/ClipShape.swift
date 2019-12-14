@@ -10,7 +10,7 @@ import UIKit
 import Mockingbird
 
 extension ViewModifiers.ClipShape: UIKitNodeModifierResolvable {
-    
+
     class NodeModifier: UIKitNodeModifier<ViewModifiers.ClipShape> {
 
         private class ClippingView: RendererView {
@@ -42,13 +42,14 @@ extension ViewModifiers.ClipShape: UIKitNodeModifierResolvable {
         }
 
         override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            let view = clippingView ?? ClippingView(frame: bounds)
-            self.clippingView = view
-            view.clipPath = modifer.shape.path(in: view.bounds)
-            view.replaceSubviews {
-                node.layout(in: view, bounds: view.bounds)
+            let clippingView = self.clippingView ?? ClippingView()
+            clippingView.frame = bounds
+            clippingView.clipPath = modifer.shape.path(in: clippingView.bounds)
+            parent.addSubview(clippingView)
+            clippingView.replaceSubviews {
+                node.layout(in: clippingView, bounds: clippingView.bounds)
             }
-            parent.addSubview(view)
+            self.clippingView = clippingView
         }
     }
 }
