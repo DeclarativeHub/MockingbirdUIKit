@@ -24,7 +24,7 @@ open class AnyUIKitNode: Layoutable {
     public var didInvalidateLayout: (() -> Void)?
     public var didInvalidateState: (() -> Void)?
 
-    open class func make(_ view: View, context: Context, resolver: UIKitNodeResolver) -> AnyUIKitNode {
+    open class func make(_ view: View, context: Context) -> AnyUIKitNode {
         fatalError("To be implemented in a subclass")
     }
 
@@ -76,17 +76,14 @@ open class UIKitNode<V: View>: AnyUIKitNode {
         }
     }
 
-    public let resolver: UIKitNodeResolver
-
-    public required init(_ view: V, context: Context, resolver: UIKitNodeResolver) {
+    public required init(_ view: V, context: Context) {
         self.view = view
-        self.resolver = resolver
         self.context = context
         self.env = context.environment
     }
 
-    open override class func make(_ view: View, context: Context, resolver: UIKitNodeResolver) -> AnyUIKitNode {
-        return Self.init(view as! V, context: context, resolver: resolver)
+    open override class func make(_ view: View, context: Context) -> AnyUIKitNode {
+        return Self.init(view as! V, context: context)
     }
 
     open func update(_ view: V, context: Context) {

@@ -9,45 +9,48 @@
 import UIKit
 import Mockingbird
 
-class GestureNodeModifier: UIKitNodeModifier<ViewModifiers.Gesture> {
+extension ViewModifiers.Gesture: UIKitNodeModifierResolvable {
 
-    private class GestureView: RendererView {
+    class NodeModifier: UIKitNodeModifier<ViewModifiers.Gesture> {
 
-        var didEndAction: (() -> Void)?
+        private class GestureView: RendererView {
 
-        var gestureController: GestureController? {
-            didSet {
-                guard let gestureController = gestureController else { return }
-                if let oldGestureController = oldValue {
-                    if oldGestureController._gestureRecognizer != gestureController._gestureRecognizer {
-                        removeGestureRecognizer(oldGestureController._gestureRecognizer)
+            var didEndAction: (() -> Void)?
+
+            var gestureController: GestureController? {
+                didSet {
+                    guard let gestureController = gestureController else { return }
+                    if let oldGestureController = oldValue {
+                        if oldGestureController._gestureRecognizer != gestureController._gestureRecognizer {
+                            removeGestureRecognizer(oldGestureController._gestureRecognizer)
+                            addGestureRecognizer(gestureController._gestureRecognizer)
+                        }
+                    } else {
                         addGestureRecognizer(gestureController._gestureRecognizer)
                     }
-                } else {
-                    addGestureRecognizer(gestureController._gestureRecognizer)
                 }
+            }
+
+            @objc func didEnd() {
+                didEndAction?()
             }
         }
 
-        @objc func didEnd() {
-            didEndAction?()
+        override var hierarchyIdentifier: String {
+            return "Gstr"
         }
-    }
 
-    override var hierarchyIdentifier: String {
-        return "Gstr"
-    }
+        private var gestureView: GestureView!
 
-    private var gestureView: GestureView!
-
-    override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-        gestureView = gestureView ?? GestureView(frame: bounds)
-        gestureView.gestureController = (modifer.gesture as? ResolvableGesture)?
-            .resolve(cachedGestureRecognizer: gestureView.gestureController?._gestureRecognizer)
-        gestureView.replaceSubviews {
-            node.layout(in: gestureView, bounds: gestureView.bounds)
+        override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
+            gestureView = gestureView ?? GestureView(frame: bounds)
+            gestureView.gestureController = (modifer.gesture as? ResolvableGesture)?
+                .resolve(cachedGestureRecognizer: gestureView.gestureController?._gestureRecognizer)
+            gestureView.replaceSubviews {
+                node.layout(in: gestureView, bounds: gestureView.bounds)
+            }
+            parent.addSubview(gestureView)
         }
-        parent.addSubview(gestureView)
     }
 }
 

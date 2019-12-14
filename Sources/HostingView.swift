@@ -23,8 +23,6 @@ public class HostingView: RendererView {
 
     private var previousBounds: CGRect? = nil
 
-    private let resolver = UIKitNodeResolver()
-
     public init(_ view: View, resolvedNode: AnyUIKitNode, context: Context = Context()) {
         self.view = view
         self.context = context
@@ -38,7 +36,7 @@ public class HostingView: RendererView {
     public init(_ view: View, context: Context = Context()) {
         self.view = view
         self.context = context
-        self.node = resolver.resolve(view, context: context, cachedNode: nil)
+        self.node = view.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
         node.didInvalidateLayout = { [weak self] in
             self?.invalidateLayout()
@@ -47,7 +45,7 @@ public class HostingView: RendererView {
 
     public func updateView(_ view: View, resolvedNode: AnyUIKitNode? = nil) {
         self.view = view
-        self.node = resolvedNode ?? resolver.resolve(view, context: context, cachedNode: nil)
+        self.node = resolvedNode ?? view.resolve(context: context, cachedNode: nil)
         node.didInvalidateLayout = { [weak self] in
             self?.invalidateLayout()
         }

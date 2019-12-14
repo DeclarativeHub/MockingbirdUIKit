@@ -9,30 +9,33 @@
 import UIKit
 import Mockingbird
 
-class TextNode: UIKitNode<Text> {
+extension Text: UIKitNodeResolvable {
 
-    override var hierarchyIdentifier: String {
-        return "T"
-    }
+    class Node: UIKitNode<Text> {
 
-    private var label: UILabel?
-
-    override func viewDidUpdate(oldView: Text) {
-        if view != oldView {
-            invalidateLayout()
+        override var hierarchyIdentifier: String {
+            return "T"
         }
-    }
 
-    override func layoutSize(fitting size: CGSize) -> CGSize {
-        return view.storage.boundingSize(fitting: size, env: env)
-    }
-    
-    override func layout(in parent: UIView, bounds: CGRect) {
-        let label = self.label ?? UILabel()
-        self.label = label
-        label.frame = bounds
-        parent.addSubview(label)
-        label.configure(with: view.storage, env: env)
+        private var label: UILabel?
+
+        override func viewDidUpdate(oldView: Text) {
+            if view != oldView {
+                invalidateLayout()
+            }
+        }
+
+        override func layoutSize(fitting size: CGSize) -> CGSize {
+            return view.storage.boundingSize(fitting: size, env: env)
+        }
+
+        override func layout(in parent: UIView, bounds: CGRect) {
+            let label = self.label ?? UILabel()
+            self.label = label
+            label.frame = bounds
+            parent.addSubview(label)
+            label.configure(with: view.storage, env: env)
+        }
     }
 }
 

@@ -20,10 +20,10 @@ class ViewNode: UIKitNode<AnyView> {
     var node: AnyUIKitNode
     var observedObjectsCancellables: [AnyCancellable] = []
 
-    required init( _ view: AnyView, context: Context, resolver: UIKitNodeResolver) {
+    required init( _ view: AnyView, context: Context) {
         ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
-        self.node = resolver.resolve(view.body, context: context, cachedNode: nil)
-        super.init(view, context: context, resolver: resolver)
+        self.node = view.body.resolve(context: context, cachedNode: nil)
+        super.init(view, context: context)
         self.node.parentNode = self
         observeStateProperties(of: view.content)
     }
@@ -32,7 +32,7 @@ class ViewNode: UIKitNode<AnyView> {
         super.update(view, context: context)
         observeStateProperties(of: view.content)
         ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
-        self.node = resolver.resolve(view.body, context: context, cachedNode: node)
+        self.node = view.body.resolve(context: context, cachedNode: node)
         self.node.parentNode = self
     }
 

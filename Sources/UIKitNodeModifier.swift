@@ -23,7 +23,7 @@ public protocol AnyUIKitNodeModifier {
 
     func layoutPriorityFor(_ node: AnyUIKitNode) -> Double
 
-    static func make(_ modifier: ViewModifier, context: Context, resolver: UIKitNodeResolver) -> AnyUIKitNodeModifier
+    static func make(_ modifier: ViewModifier, context: Context) -> AnyUIKitNodeModifier
 
     func update(_ modifier: ViewModifier, context: Context)
 }
@@ -36,12 +36,10 @@ open class UIKitNodeModifier<Modifier: ViewModifier> {
 
     public var modifer: Modifier
     public var context: Context
-    public var resolver: UIKitNodeResolver
 
-    public required init(_ modifier: Modifier, context: Context, resolver: UIKitNodeResolver) {
+    public required init(_ modifier: Modifier, context: Context) {
         self.modifer = modifier
         self.context = context
-        self.resolver = resolver
     }
 
     open func update(_ modifier: Modifier, context: Context) {
@@ -68,8 +66,8 @@ extension UIKitNodeModifier: AnyUIKitNodeModifier {
         return Modifier.self
     }
 
-    public static func make(_ modifier: ViewModifier, context: Context, resolver: UIKitNodeResolver) -> AnyUIKitNodeModifier {
-        return Self.init(modifier as! Modifier, context: context, resolver: resolver)
+    public static func make(_ modifier: ViewModifier, context: Context) -> AnyUIKitNodeModifier {
+        return Self.init(modifier as! Modifier, context: context)
     }
 
     public func update(_ modifier: ViewModifier, context: Context) {

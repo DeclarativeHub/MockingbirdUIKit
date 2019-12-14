@@ -39,4 +39,3 @@ class UIViewRepresentableNode: UIKitNode<AnyView> {
         parent.addSubview(uiView)
     }
 }
-

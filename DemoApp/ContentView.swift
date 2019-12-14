@@ -18,13 +18,18 @@ struct ColorPalette {
 }
 
 class ViewModel: ObservableObject {
-    @Published var title: String = "TK"
+
+    @Published
+    var title: String = "TK"
 }
 
 struct MyButton: View {
 
-    @Binding var title: String
-    @EnvironmentObject var colorPalette: ColorPalette
+    @Binding
+    var title: String
+
+    @EnvironmentObject
+    var colorPalette: ColorPalette
 
     var body: View {
 //        Button(action: { self.title += "😍" }) {
@@ -42,8 +47,11 @@ struct MyButton: View {
 
 struct ContentView: View {
 
-    @ObservedObject var viewModel = ViewModel()
-    @EnvironmentObject var colorPalette: ColorPalette
+    @ObservedObject
+    var viewModel = ViewModel()
+
+    @EnvironmentObject
+    var colorPalette: ColorPalette
 
     var body: View {
         ZStack {

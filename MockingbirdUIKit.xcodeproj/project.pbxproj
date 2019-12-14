@@ -7,40 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC2441C1238DDA2400135660 /* EnvironmentObjectNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */; };
+		EC2441C1238DDA2400135660 /* EnvironmentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2441C0238DDA2400135660 /* EnvironmentObject.swift */; };
+		EC38158D23A51F4800F643A5 /* UIKitNodeResolvable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38158C23A51F4800F643A5 /* UIKitNodeResolvable.swift */; };
+		EC38158F23A51F6700F643A5 /* UIKitNodeModifierResolvable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC38158E23A51F6700F643A5 /* UIKitNodeModifierResolvable.swift */; };
 		EC6F1376239BDA26002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
 		EC6F1377239BDA33002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
 		EC6F1378239BDA33002FE2E4 /* ReactiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EC6F137A239BDD26002FE2E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6F1379239BDD26002FE2E4 /* ContentView.swift */; };
-		EC7469EC239C51B3009A4102 /* GestureNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7469EB239C51B3009A4102 /* GestureNodeModifier.swift */; };
+		EC7469EC239C51B3009A4102 /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7469EB239C51B3009A4102 /* Gesture.swift */; };
 		ECC2104B238AD2090034D0E3 /* MockingbirdUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ECC2107D238AD2300034D0E3 /* UIKitNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21052238AD2300034D0E3 /* UIKitNodeModifier.swift */; };
-		ECC2107E238AD2300034D0E3 /* FixedSizeNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSizeNodeModifier.swift */; };
-		ECC2107F238AD2300034D0E3 /* OffsetNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21055238AD2300034D0E3 /* OffsetNodeModifier.swift */; };
-		ECC21080238AD2300034D0E3 /* ClipShapeNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21056238AD2300034D0E3 /* ClipShapeNodeModifier.swift */; };
-		ECC21081238AD2300034D0E3 /* FrameNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21057238AD2300034D0E3 /* FrameNodeModifier.swift */; };
-		ECC21082238AD2300034D0E3 /* BackgroundNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21058238AD2300034D0E3 /* BackgroundNodeModifier.swift */; };
-		ECC21083238AD2300034D0E3 /* PaddingNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21059238AD2300034D0E3 /* PaddingNodeModifier.swift */; };
-		ECC21084238AD2300034D0E3 /* LayoutPriorityNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105A238AD2300034D0E3 /* LayoutPriorityNodeModifier.swift */; };
-		ECC21085238AD2300034D0E3 /* FlexFrameNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105B238AD2300034D0E3 /* FlexFrameNodeModifier.swift */; };
-		ECC21086238AD2300034D0E3 /* ShadowNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105C238AD2300034D0E3 /* ShadowNodeModifier.swift */; };
-		ECC21087238AD2300034D0E3 /* OverlayNodeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105D238AD2300034D0E3 /* OverlayNodeModifier.swift */; };
-		ECC21088238AD2300034D0E3 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105F238AD2300034D0E3 /* ButtonNode.swift */; };
-		ECC21089238AD2300034D0E3 /* VStackNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21060238AD2300034D0E3 /* VStackNode.swift */; };
-		ECC2108A238AD2300034D0E3 /* ImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21061238AD2300034D0E3 /* ImageNode.swift */; };
-		ECC2108B238AD2300034D0E3 /* TextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21062238AD2300034D0E3 /* TextNode.swift */; };
-		ECC2108C238AD2300034D0E3 /* ZStackNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21063238AD2300034D0E3 /* ZStackNode.swift */; };
-		ECC2108D238AD2300034D0E3 /* GeometryReaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21064238AD2300034D0E3 /* GeometryReaderNode.swift */; };
-		ECC2108E238AD2300034D0E3 /* SpacerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21065238AD2300034D0E3 /* SpacerNode.swift */; };
+		ECC2107E238AD2300034D0E3 /* FixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSize.swift */; };
+		ECC2107F238AD2300034D0E3 /* Offset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21055238AD2300034D0E3 /* Offset.swift */; };
+		ECC21080238AD2300034D0E3 /* ClipShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21056238AD2300034D0E3 /* ClipShape.swift */; };
+		ECC21081238AD2300034D0E3 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21057238AD2300034D0E3 /* Frame.swift */; };
+		ECC21082238AD2300034D0E3 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21058238AD2300034D0E3 /* Background.swift */; };
+		ECC21083238AD2300034D0E3 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21059238AD2300034D0E3 /* Padding.swift */; };
+		ECC21084238AD2300034D0E3 /* LayoutPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105A238AD2300034D0E3 /* LayoutPriority.swift */; };
+		ECC21085238AD2300034D0E3 /* FlexFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105B238AD2300034D0E3 /* FlexFrame.swift */; };
+		ECC21086238AD2300034D0E3 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105C238AD2300034D0E3 /* Shadow.swift */; };
+		ECC21087238AD2300034D0E3 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105D238AD2300034D0E3 /* Overlay.swift */; };
+		ECC21088238AD2300034D0E3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105F238AD2300034D0E3 /* Button.swift */; };
+		ECC21089238AD2300034D0E3 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21060238AD2300034D0E3 /* VStack.swift */; };
+		ECC2108A238AD2300034D0E3 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21061238AD2300034D0E3 /* Image.swift */; };
+		ECC2108B238AD2300034D0E3 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21062238AD2300034D0E3 /* Text.swift */; };
+		ECC2108C238AD2300034D0E3 /* ZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21063238AD2300034D0E3 /* ZStack.swift */; };
+		ECC2108D238AD2300034D0E3 /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21064238AD2300034D0E3 /* GeometryReader.swift */; };
+		ECC2108E238AD2300034D0E3 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21065238AD2300034D0E3 /* Spacer.swift */; };
 		ECC2108F238AD2300034D0E3 /* UIViewRepresentableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21066238AD2300034D0E3 /* UIViewRepresentableNode.swift */; };
-		ECC21090238AD2300034D0E3 /* EnvironmentValueModifierNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21067238AD2300034D0E3 /* EnvironmentValueModifierNode.swift */; };
-		ECC21091238AD2300034D0E3 /* HStackNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21068238AD2300034D0E3 /* HStackNode.swift */; };
-		ECC21092238AD2300034D0E3 /* ColorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21069238AD2300034D0E3 /* ColorNode.swift */; };
-		ECC21093238AD2300034D0E3 /* ModifiedContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106A238AD2300034D0E3 /* ModifiedContentNode.swift */; };
+		ECC21090238AD2300034D0E3 /* EnvironmentValueModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21067238AD2300034D0E3 /* EnvironmentValueModifier.swift */; };
+		ECC21091238AD2300034D0E3 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21068238AD2300034D0E3 /* HStack.swift */; };
+		ECC21092238AD2300034D0E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21069238AD2300034D0E3 /* Color.swift */; };
+		ECC21093238AD2300034D0E3 /* ModifiedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106A238AD2300034D0E3 /* ModifiedContent.swift */; };
 		ECC21094238AD2300034D0E3 /* ViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106B238AD2300034D0E3 /* ViewNode.swift */; };
-		ECC21095238AD2300034D0E3 /* StrokeShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106C238AD2300034D0E3 /* StrokeShapeNode.swift */; };
-		ECC21096238AD2300034D0E3 /* FillShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106D238AD2300034D0E3 /* FillShapeNode.swift */; };
-		ECC21097238AD2300034D0E3 /* UIKitNodeModifierResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106E238AD2300034D0E3 /* UIKitNodeModifierResolver.swift */; };
+		ECC21095238AD2300034D0E3 /* StrokeShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106C238AD2300034D0E3 /* StrokeShapeView.swift */; };
+		ECC21096238AD2300034D0E3 /* FillShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106D238AD2300034D0E3 /* FillShapeView.swift */; };
 		ECC21098238AD2300034D0E3 /* RendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106F238AD2300034D0E3 /* RendererView.swift */; };
 		ECC21099238AD2300034D0E3 /* Color+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21071238AD2300034D0E3 /* Color+UIKit.swift */; };
 		ECC2109A238AD2300034D0E3 /* CGSize+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21072238AD2300034D0E3 /* CGSize+Extensions.swift */; };
@@ -50,7 +51,7 @@
 		ECC2109E238AD2300034D0E3 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21076238AD2300034D0E3 /* CGPoint+Extensions.swift */; };
 		ECC2109F238AD2300034D0E3 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21077238AD2300034D0E3 /* CGRect+Extensions.swift */; };
 		ECC210A0238AD2300034D0E3 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21078238AD2300034D0E3 /* CGFloat+Extensions.swift */; };
-		ECC210A1238AD2300034D0E3 /* UIKitNodeResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21079238AD2300034D0E3 /* UIKitNodeResolver.swift */; };
+		ECC210A1238AD2300034D0E3 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21079238AD2300034D0E3 /* Resolver.swift */; };
 		ECC210A2238AD2300034D0E3 /* UIKitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107A238AD2300034D0E3 /* UIKitNode.swift */; };
 		ECC210A3238AD2300034D0E3 /* HostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107B238AD2300034D0E3 /* HostingView.swift */; };
 		ECC210A4238AD2300034D0E3 /* UIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107C238AD2300034D0E3 /* UIViewRepresentable.swift */; };
@@ -93,40 +94,41 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObjectNodeModifier.swift; sourceTree = "<group>"; };
+		EC2441C0238DDA2400135660 /* EnvironmentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObject.swift; sourceTree = "<group>"; };
+		EC38158C23A51F4800F643A5 /* UIKitNodeResolvable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitNodeResolvable.swift; sourceTree = "<group>"; };
+		EC38158E23A51F6700F643A5 /* UIKitNodeModifierResolvable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitNodeModifierResolvable.swift; sourceTree = "<group>"; };
 		EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveKit.framework; path = Carthage/Build/iOS/ReactiveKit.framework; sourceTree = "<group>"; };
 		EC6F1379239BDD26002FE2E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		EC7469EB239C51B3009A4102 /* GestureNodeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureNodeModifier.swift; sourceTree = "<group>"; };
+		EC7469EB239C51B3009A4102 /* Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
 		ECC21046238AD2090034D0E3 /* MockingbirdUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MockingbirdUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockingbirdUIKit.h; sourceTree = "<group>"; };
 		ECC2104A238AD2090034D0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ECC21052238AD2300034D0E3 /* UIKitNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitNodeModifier.swift; sourceTree = "<group>"; };
-		ECC21054238AD2300034D0E3 /* FixedSizeNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedSizeNodeModifier.swift; sourceTree = "<group>"; };
-		ECC21055238AD2300034D0E3 /* OffsetNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffsetNodeModifier.swift; sourceTree = "<group>"; };
-		ECC21056238AD2300034D0E3 /* ClipShapeNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipShapeNodeModifier.swift; sourceTree = "<group>"; };
-		ECC21057238AD2300034D0E3 /* FrameNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameNodeModifier.swift; sourceTree = "<group>"; };
-		ECC21058238AD2300034D0E3 /* BackgroundNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundNodeModifier.swift; sourceTree = "<group>"; };
-		ECC21059238AD2300034D0E3 /* PaddingNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingNodeModifier.swift; sourceTree = "<group>"; };
-		ECC2105A238AD2300034D0E3 /* LayoutPriorityNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPriorityNodeModifier.swift; sourceTree = "<group>"; };
-		ECC2105B238AD2300034D0E3 /* FlexFrameNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlexFrameNodeModifier.swift; sourceTree = "<group>"; };
-		ECC2105C238AD2300034D0E3 /* ShadowNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowNodeModifier.swift; sourceTree = "<group>"; };
-		ECC2105D238AD2300034D0E3 /* OverlayNodeModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayNodeModifier.swift; sourceTree = "<group>"; };
-		ECC2105F238AD2300034D0E3 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
-		ECC21060238AD2300034D0E3 /* VStackNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VStackNode.swift; sourceTree = "<group>"; };
-		ECC21061238AD2300034D0E3 /* ImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageNode.swift; sourceTree = "<group>"; };
-		ECC21062238AD2300034D0E3 /* TextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextNode.swift; sourceTree = "<group>"; };
-		ECC21063238AD2300034D0E3 /* ZStackNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZStackNode.swift; sourceTree = "<group>"; };
-		ECC21064238AD2300034D0E3 /* GeometryReaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryReaderNode.swift; sourceTree = "<group>"; };
-		ECC21065238AD2300034D0E3 /* SpacerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacerNode.swift; sourceTree = "<group>"; };
+		ECC21054238AD2300034D0E3 /* FixedSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedSize.swift; sourceTree = "<group>"; };
+		ECC21055238AD2300034D0E3 /* Offset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offset.swift; sourceTree = "<group>"; };
+		ECC21056238AD2300034D0E3 /* ClipShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipShape.swift; sourceTree = "<group>"; };
+		ECC21057238AD2300034D0E3 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		ECC21058238AD2300034D0E3 /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		ECC21059238AD2300034D0E3 /* Padding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
+		ECC2105A238AD2300034D0E3 /* LayoutPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPriority.swift; sourceTree = "<group>"; };
+		ECC2105B238AD2300034D0E3 /* FlexFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlexFrame.swift; sourceTree = "<group>"; };
+		ECC2105C238AD2300034D0E3 /* Shadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
+		ECC2105D238AD2300034D0E3 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
+		ECC2105F238AD2300034D0E3 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		ECC21060238AD2300034D0E3 /* VStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VStack.swift; sourceTree = "<group>"; };
+		ECC21061238AD2300034D0E3 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		ECC21062238AD2300034D0E3 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		ECC21063238AD2300034D0E3 /* ZStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZStack.swift; sourceTree = "<group>"; };
+		ECC21064238AD2300034D0E3 /* GeometryReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryReader.swift; sourceTree = "<group>"; };
+		ECC21065238AD2300034D0E3 /* Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spacer.swift; sourceTree = "<group>"; };
 		ECC21066238AD2300034D0E3 /* UIViewRepresentableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewRepresentableNode.swift; sourceTree = "<group>"; };
-		ECC21067238AD2300034D0E3 /* EnvironmentValueModifierNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValueModifierNode.swift; sourceTree = "<group>"; };
-		ECC21068238AD2300034D0E3 /* HStackNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HStackNode.swift; sourceTree = "<group>"; };
-		ECC21069238AD2300034D0E3 /* ColorNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorNode.swift; sourceTree = "<group>"; };
-		ECC2106A238AD2300034D0E3 /* ModifiedContentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiedContentNode.swift; sourceTree = "<group>"; };
+		ECC21067238AD2300034D0E3 /* EnvironmentValueModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValueModifier.swift; sourceTree = "<group>"; };
+		ECC21068238AD2300034D0E3 /* HStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
+		ECC21069238AD2300034D0E3 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		ECC2106A238AD2300034D0E3 /* ModifiedContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifiedContent.swift; sourceTree = "<group>"; };
 		ECC2106B238AD2300034D0E3 /* ViewNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewNode.swift; sourceTree = "<group>"; };
-		ECC2106C238AD2300034D0E3 /* StrokeShapeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeShapeNode.swift; sourceTree = "<group>"; };
-		ECC2106D238AD2300034D0E3 /* FillShapeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FillShapeNode.swift; sourceTree = "<group>"; };
-		ECC2106E238AD2300034D0E3 /* UIKitNodeModifierResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitNodeModifierResolver.swift; sourceTree = "<group>"; };
+		ECC2106C238AD2300034D0E3 /* StrokeShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrokeShapeView.swift; sourceTree = "<group>"; };
+		ECC2106D238AD2300034D0E3 /* FillShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FillShapeView.swift; sourceTree = "<group>"; };
 		ECC2106F238AD2300034D0E3 /* RendererView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RendererView.swift; sourceTree = "<group>"; };
 		ECC21071238AD2300034D0E3 /* Color+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+UIKit.swift"; sourceTree = "<group>"; };
 		ECC21072238AD2300034D0E3 /* CGSize+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Extensions.swift"; sourceTree = "<group>"; };
@@ -136,7 +138,7 @@
 		ECC21076238AD2300034D0E3 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		ECC21077238AD2300034D0E3 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		ECC21078238AD2300034D0E3 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
-		ECC21079238AD2300034D0E3 /* UIKitNodeResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitNodeResolver.swift; sourceTree = "<group>"; };
+		ECC21079238AD2300034D0E3 /* Resolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolver.swift; sourceTree = "<group>"; };
 		ECC2107A238AD2300034D0E3 /* UIKitNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitNode.swift; sourceTree = "<group>"; };
 		ECC2107B238AD2300034D0E3 /* HostingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostingView.swift; sourceTree = "<group>"; };
 		ECC2107C238AD2300034D0E3 /* UIViewRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewRepresentable.swift; sourceTree = "<group>"; };
@@ -205,10 +207,11 @@
 		ECC21051238AD2300034D0E3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				ECC21079238AD2300034D0E3 /* Resolver.swift */,
 				ECC2107A238AD2300034D0E3 /* UIKitNode.swift */,
-				ECC21079238AD2300034D0E3 /* UIKitNodeResolver.swift */,
+				EC38158C23A51F4800F643A5 /* UIKitNodeResolvable.swift */,
 				ECC21052238AD2300034D0E3 /* UIKitNodeModifier.swift */,
-				ECC2106E238AD2300034D0E3 /* UIKitNodeModifierResolver.swift */,
+				EC38158E23A51F6700F643A5 /* UIKitNodeModifierResolvable.swift */,
 				ECC2107C238AD2300034D0E3 /* UIViewRepresentable.swift */,
 				ECC2107B238AD2300034D0E3 /* HostingView.swift */,
 				ECC2106F238AD2300034D0E3 /* RendererView.swift */,
@@ -223,18 +226,18 @@
 		ECC21053238AD2300034D0E3 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				ECC21054238AD2300034D0E3 /* FixedSizeNodeModifier.swift */,
-				ECC21055238AD2300034D0E3 /* OffsetNodeModifier.swift */,
-				ECC21056238AD2300034D0E3 /* ClipShapeNodeModifier.swift */,
-				ECC21057238AD2300034D0E3 /* FrameNodeModifier.swift */,
-				ECC21058238AD2300034D0E3 /* BackgroundNodeModifier.swift */,
-				ECC21059238AD2300034D0E3 /* PaddingNodeModifier.swift */,
-				ECC2105A238AD2300034D0E3 /* LayoutPriorityNodeModifier.swift */,
-				ECC2105B238AD2300034D0E3 /* FlexFrameNodeModifier.swift */,
-				ECC2105C238AD2300034D0E3 /* ShadowNodeModifier.swift */,
-				ECC2105D238AD2300034D0E3 /* OverlayNodeModifier.swift */,
-				EC2441C0238DDA2400135660 /* EnvironmentObjectNodeModifier.swift */,
-				EC7469EB239C51B3009A4102 /* GestureNodeModifier.swift */,
+				ECC21054238AD2300034D0E3 /* FixedSize.swift */,
+				ECC21055238AD2300034D0E3 /* Offset.swift */,
+				ECC21056238AD2300034D0E3 /* ClipShape.swift */,
+				ECC21057238AD2300034D0E3 /* Frame.swift */,
+				ECC21058238AD2300034D0E3 /* Background.swift */,
+				ECC21059238AD2300034D0E3 /* Padding.swift */,
+				ECC2105A238AD2300034D0E3 /* LayoutPriority.swift */,
+				ECC2105B238AD2300034D0E3 /* FlexFrame.swift */,
+				ECC2105C238AD2300034D0E3 /* Shadow.swift */,
+				ECC2105D238AD2300034D0E3 /* Overlay.swift */,
+				EC2441C0238DDA2400135660 /* EnvironmentObject.swift */,
+				EC7469EB239C51B3009A4102 /* Gesture.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -243,20 +246,20 @@
 			isa = PBXGroup;
 			children = (
 				ECC2106B238AD2300034D0E3 /* ViewNode.swift */,
-				ECC21068238AD2300034D0E3 /* HStackNode.swift */,
-				ECC21060238AD2300034D0E3 /* VStackNode.swift */,
-				ECC21063238AD2300034D0E3 /* ZStackNode.swift */,
-				ECC21062238AD2300034D0E3 /* TextNode.swift */,
-				ECC21069238AD2300034D0E3 /* ColorNode.swift */,
-				ECC21061238AD2300034D0E3 /* ImageNode.swift */,
-				ECC2105F238AD2300034D0E3 /* ButtonNode.swift */,
-				ECC21065238AD2300034D0E3 /* SpacerNode.swift */,
-				ECC2106D238AD2300034D0E3 /* FillShapeNode.swift */,
-				ECC2106C238AD2300034D0E3 /* StrokeShapeNode.swift */,
-				ECC21064238AD2300034D0E3 /* GeometryReaderNode.swift */,
-				ECC2106A238AD2300034D0E3 /* ModifiedContentNode.swift */,
 				ECC21066238AD2300034D0E3 /* UIViewRepresentableNode.swift */,
-				ECC21067238AD2300034D0E3 /* EnvironmentValueModifierNode.swift */,
+				ECC21068238AD2300034D0E3 /* HStack.swift */,
+				ECC21060238AD2300034D0E3 /* VStack.swift */,
+				ECC21063238AD2300034D0E3 /* ZStack.swift */,
+				ECC21062238AD2300034D0E3 /* Text.swift */,
+				ECC21069238AD2300034D0E3 /* Color.swift */,
+				ECC21061238AD2300034D0E3 /* Image.swift */,
+				ECC2105F238AD2300034D0E3 /* Button.swift */,
+				ECC21065238AD2300034D0E3 /* Spacer.swift */,
+				ECC2106D238AD2300034D0E3 /* FillShapeView.swift */,
+				ECC2106C238AD2300034D0E3 /* StrokeShapeView.swift */,
+				ECC21064238AD2300034D0E3 /* GeometryReader.swift */,
+				ECC2106A238AD2300034D0E3 /* ModifiedContent.swift */,
+				ECC21067238AD2300034D0E3 /* EnvironmentValueModifier.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -410,50 +413,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECC21085238AD2300034D0E3 /* FlexFrameNodeModifier.swift in Sources */,
-				ECC2108D238AD2300034D0E3 /* GeometryReaderNode.swift in Sources */,
-				ECC2108C238AD2300034D0E3 /* ZStackNode.swift in Sources */,
-				ECC21084238AD2300034D0E3 /* LayoutPriorityNodeModifier.swift in Sources */,
+				ECC21085238AD2300034D0E3 /* FlexFrame.swift in Sources */,
+				ECC2108D238AD2300034D0E3 /* GeometryReader.swift in Sources */,
+				ECC2108C238AD2300034D0E3 /* ZStack.swift in Sources */,
+				ECC21084238AD2300034D0E3 /* LayoutPriority.swift in Sources */,
 				ECC2109F238AD2300034D0E3 /* CGRect+Extensions.swift in Sources */,
-				ECC21097238AD2300034D0E3 /* UIKitNodeModifierResolver.swift in Sources */,
-				ECC21082238AD2300034D0E3 /* BackgroundNodeModifier.swift in Sources */,
+				ECC21082238AD2300034D0E3 /* Background.swift in Sources */,
 				ECC210A3238AD2300034D0E3 /* HostingView.swift in Sources */,
-				EC7469EC239C51B3009A4102 /* GestureNodeModifier.swift in Sources */,
-				ECC2108B238AD2300034D0E3 /* TextNode.swift in Sources */,
-				ECC210A1238AD2300034D0E3 /* UIKitNodeResolver.swift in Sources */,
-				ECC21091238AD2300034D0E3 /* HStackNode.swift in Sources */,
-				ECC21080238AD2300034D0E3 /* ClipShapeNodeModifier.swift in Sources */,
+				EC7469EC239C51B3009A4102 /* Gesture.swift in Sources */,
+				ECC2108B238AD2300034D0E3 /* Text.swift in Sources */,
+				EC38158F23A51F6700F643A5 /* UIKitNodeModifierResolvable.swift in Sources */,
+				ECC210A1238AD2300034D0E3 /* Resolver.swift in Sources */,
+				ECC21091238AD2300034D0E3 /* HStack.swift in Sources */,
+				ECC21080238AD2300034D0E3 /* ClipShape.swift in Sources */,
 				ECC210A0238AD2300034D0E3 /* CGFloat+Extensions.swift in Sources */,
-				ECC21086238AD2300034D0E3 /* ShadowNodeModifier.swift in Sources */,
-				ECC21090238AD2300034D0E3 /* EnvironmentValueModifierNode.swift in Sources */,
+				ECC21086238AD2300034D0E3 /* Shadow.swift in Sources */,
+				ECC21090238AD2300034D0E3 /* EnvironmentValueModifier.swift in Sources */,
 				ECC21094238AD2300034D0E3 /* ViewNode.swift in Sources */,
 				ECC21099238AD2300034D0E3 /* Color+UIKit.swift in Sources */,
-				ECC21088238AD2300034D0E3 /* ButtonNode.swift in Sources */,
+				ECC21088238AD2300034D0E3 /* Button.swift in Sources */,
 				ECC210AE238AE9BC0034D0E3 /* HostingController.swift in Sources */,
-				ECC2107E238AD2300034D0E3 /* FixedSizeNodeModifier.swift in Sources */,
-				ECC21095238AD2300034D0E3 /* StrokeShapeNode.swift in Sources */,
+				ECC2107E238AD2300034D0E3 /* FixedSize.swift in Sources */,
+				ECC21095238AD2300034D0E3 /* StrokeShapeView.swift in Sources */,
 				ECC21098238AD2300034D0E3 /* RendererView.swift in Sources */,
-				ECC21093238AD2300034D0E3 /* ModifiedContentNode.swift in Sources */,
+				ECC21093238AD2300034D0E3 /* ModifiedContent.swift in Sources */,
 				ECC2109D238AD2300034D0E3 /* CALayer+Extensions.swift in Sources */,
-				ECC2108A238AD2300034D0E3 /* ImageNode.swift in Sources */,
+				ECC2108A238AD2300034D0E3 /* Image.swift in Sources */,
 				ECC2109C238AD2300034D0E3 /* Font+UIKit.swift in Sources */,
-				ECC21081238AD2300034D0E3 /* FrameNodeModifier.swift in Sources */,
+				ECC21081238AD2300034D0E3 /* Frame.swift in Sources */,
 				ECC2107D238AD2300034D0E3 /* UIKitNodeModifier.swift in Sources */,
 				ECC2109B238AD2300034D0E3 /* Text+UIKit.swift in Sources */,
-				ECC2108E238AD2300034D0E3 /* SpacerNode.swift in Sources */,
-				ECC21089238AD2300034D0E3 /* VStackNode.swift in Sources */,
-				ECC21096238AD2300034D0E3 /* FillShapeNode.swift in Sources */,
-				EC2441C1238DDA2400135660 /* EnvironmentObjectNodeModifier.swift in Sources */,
-				ECC21092238AD2300034D0E3 /* ColorNode.swift in Sources */,
+				ECC2108E238AD2300034D0E3 /* Spacer.swift in Sources */,
+				ECC21089238AD2300034D0E3 /* VStack.swift in Sources */,
+				ECC21096238AD2300034D0E3 /* FillShapeView.swift in Sources */,
+				EC38158D23A51F4800F643A5 /* UIKitNodeResolvable.swift in Sources */,
+				EC2441C1238DDA2400135660 /* EnvironmentObject.swift in Sources */,
+				ECC21092238AD2300034D0E3 /* Color.swift in Sources */,
 				ECC2109E238AD2300034D0E3 /* CGPoint+Extensions.swift in Sources */,
 				ECC210A4238AD2300034D0E3 /* UIViewRepresentable.swift in Sources */,
 				ECC210AB238AD4240034D0E3 /* Modified.swift in Sources */,
-				ECC21083238AD2300034D0E3 /* PaddingNodeModifier.swift in Sources */,
+				ECC21083238AD2300034D0E3 /* Padding.swift in Sources */,
 				ECC2108F238AD2300034D0E3 /* UIViewRepresentableNode.swift in Sources */,
-				ECC21087238AD2300034D0E3 /* OverlayNodeModifier.swift in Sources */,
+				ECC21087238AD2300034D0E3 /* Overlay.swift in Sources */,
 				ECC2109A238AD2300034D0E3 /* CGSize+Extensions.swift in Sources */,
 				ECC210A2238AD2300034D0E3 /* UIKitNode.swift in Sources */,
-				ECC2107F238AD2300034D0E3 /* OffsetNodeModifier.swift in Sources */,
+				ECC2107F238AD2300034D0E3 /* Offset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
