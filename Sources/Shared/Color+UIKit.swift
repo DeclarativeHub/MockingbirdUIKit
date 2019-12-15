@@ -28,4 +28,8 @@ extension Color {
             }
         }
     }
+
+    var cgColorValue: CGColor {
+        return uiColorValue.cgColor
+    }
 }

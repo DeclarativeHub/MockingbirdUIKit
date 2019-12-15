@@ -19,6 +19,7 @@ class ViewNode: UIKitNode<AnyView> {
     var propertyStorage: [String: Any] = [:]
     var node: AnyUIKitNode
     var observedObjectsCancellables: [AnyCancellable] = []
+    var needsViewUpdate: Bool = false
 
     required init( _ view: AnyView, context: Context) {
         ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
@@ -36,11 +37,20 @@ class ViewNode: UIKitNode<AnyView> {
         self.node.parentNode = self
     }
 
+    private func updateViewIfNeeded() {
+        if needsViewUpdate {
+            update(view, context: context)
+            needsViewUpdate = false
+        }
+    }
+
     override func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        updateViewIfNeeded()
         return node.layoutSize(fitting: targetSize)
     }
 
     override func layout(in parent: UIView, bounds: CGRect) {
+        updateViewIfNeeded()
         node.layout(in: parent, bounds: bounds)
     }
 
@@ -53,7 +63,7 @@ class ViewNode: UIKitNode<AnyView> {
                 property.storage.get = { [unowned self] in self.propertyStorage[label!]! }
                 property.storage.set = { [unowned self] in
                     self.propertyStorage[label!] = $0;
-                    self.update(self.view, context: self.context)
+                    self.contentWillChange()
                 }
             } else if let property = value as? EnvironmentObjectProperty {
                 let key = property.storage.objectTypeIdentifier
@@ -61,14 +71,17 @@ class ViewNode: UIKitNode<AnyView> {
                 property.storage.set = { [unowned self] in self.context.environmentObjects[key] = $0 }
             } else if let property = value as? ObservedObjectProperty {
                 property.objectWillChange
-                    .receive(on: DispatchQueue.main)
                     .sink { [weak self] in
-                        guard let self = self else { return }
-                        self.update(self.view, context: self.context)
+                        self?.contentWillChange()
                     }
                     .store(in: &observedObjectsCancellables)
             }
         }
+    }
+
+    private func contentWillChange() {
+        needsViewUpdate = true
+        invalidateLayout()
     }
 
     private static func configureEnvironmentObjectProperties(of view: View, context: Context) {

@@ -245,8 +245,6 @@
 		ECC2105E238AD2300034D0E3 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				ECC2106B238AD2300034D0E3 /* ViewNode.swift */,
-				ECC21066238AD2300034D0E3 /* UIViewRepresentableNode.swift */,
 				ECC21068238AD2300034D0E3 /* HStack.swift */,
 				ECC21060238AD2300034D0E3 /* VStack.swift */,
 				ECC21063238AD2300034D0E3 /* ZStack.swift */,
@@ -260,6 +258,8 @@
 				ECC21064238AD2300034D0E3 /* GeometryReader.swift */,
 				ECC2106A238AD2300034D0E3 /* ModifiedContent.swift */,
 				ECC21067238AD2300034D0E3 /* EnvironmentValueModifier.swift */,
+				ECC21066238AD2300034D0E3 /* UIViewRepresentableNode.swift */,
+				ECC2106B238AD2300034D0E3 /* ViewNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";

@@ -21,6 +21,13 @@ extension Image: UIKitNodeResolvable {
 
         lazy var image = UIImage(named: view.name)!
 
+        override func update(_ view: Image, context: Context) {
+            if view != self.view {
+                invalidateLayout()
+            }
+            super.update(view, context: context)
+        }
+
         override func layoutSize(fitting size: CGSize) -> CGSize {
             return image.size
         }

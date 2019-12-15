@@ -51,11 +51,6 @@ open class AnyUIKitNode: Layoutable {
         parentNode?.invalidateLayout()
         didInvalidateLayout?()
     }
-
-    open func invalidateState() {
-        parentNode?.invalidateState()
-        didInvalidateState?()
-    }
 }
 
 open class UIKitNode<V: View>: AnyUIKitNode {
@@ -69,17 +64,12 @@ open class UIKitNode<V: View>: AnyUIKitNode {
     public var context: Context
     
     public var env: EnvironmentValues {
-        didSet {
-            if env != oldValue {
-                invalidateLayout()
-            }
-        }
+        return context.environment
     }
 
     public required init(_ view: V, context: Context) {
         self.view = view
         self.context = context
-        self.env = context.environment
     }
 
     open override class func make(_ view: View, context: Context) -> AnyUIKitNode {
@@ -87,17 +77,11 @@ open class UIKitNode<V: View>: AnyUIKitNode {
     }
 
     open func update(_ view: V, context: Context) {
-        let oldView = self.view
         self.view = view
         self.context = context
-        self.env = context.environment
-        viewDidUpdate(oldView: oldView)
     }
 
     open override func update(_ view: View, context: Context) {
         self.update(view as! V, context: context)
-    }
-
-    open func viewDidUpdate(oldView: V) {
     }
 }

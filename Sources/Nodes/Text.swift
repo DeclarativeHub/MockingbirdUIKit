@@ -19,10 +19,11 @@ extension Text: UIKitNodeResolvable {
 
         private var label: UILabel?
 
-        override func viewDidUpdate(oldView: Text) {
-            if view != oldView {
+        override func update(_ view: Text, context: Context) {
+            if view != self.view {
                 invalidateLayout()
             }
+            super.update(view, context: context)
         }
 
         override func layoutSize(fitting size: CGSize) -> CGSize {

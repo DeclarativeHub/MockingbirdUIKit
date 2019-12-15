@@ -18,7 +18,11 @@ extension VStack: UIKitNodeResolvable {
         }
 
         private var nodes: [AnyUIKitNode]
-        private var layout: StackLayout
+        private var layout: StackLayout {
+            didSet {
+                invalidateLayout()
+            }
+        }
         private var contentLayoutCache: [CGSize: StackLayout.ContentLayout] = [:]
 
         required init(_ view: VStack, context: Context) {

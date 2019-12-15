@@ -21,6 +21,13 @@ extension Spacer: UIKitNodeResolvable {
             return view.minLength ?? env.stackSpacing
         }
 
+        override func update(_ view: Spacer, context: Context) {
+            if view != self.view {
+                invalidateLayout()
+            }
+            super.update(view, context: context)
+        }
+
         override func isSpacer() -> Bool {
             return true
         }

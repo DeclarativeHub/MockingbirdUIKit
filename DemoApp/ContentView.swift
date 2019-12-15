@@ -61,6 +61,8 @@ struct ContentView: View {
                 }
                 MyButton(title: $viewModel.title)
             }
+            .background(Color.green)
+            .clipShape(viewModel.title.count > 3 ? Capsule() : Circle())
         }.accentColor(colorPalette.secondary)
     }
 }
