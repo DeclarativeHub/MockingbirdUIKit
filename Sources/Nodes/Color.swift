@@ -25,6 +25,7 @@ extension Color: UIKitNodeResolvable {
 
         override func layout(in parent: UIView, bounds: CGRect) {
             layer = layer ?? CALayer()
+            layer.removeAllAnimations()
             layer.backgroundColor = view.uiColorValue.cgColor
             layer.frame = bounds
             parent.layer.addSublayer(layer)
