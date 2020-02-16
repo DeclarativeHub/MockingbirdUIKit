@@ -28,7 +28,7 @@ extension GeometryReader: UIKitNodeResolvable {
     class Node: BaseUIKitNode<GeometryReader, StaticGeometry, NoRenderable> {
 
         override var hierarchyIdentifier: String {
-            "GeometryReader"
+            "GeometryReader(???)"
         }
 
         private var node: UIKitNode?
