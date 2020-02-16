@@ -1,54 +1,69 @@
+// MIT License
 //
-//  HostingView.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 04/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-public class HostingView: RendererView {
+public class HostingView: ContainerView {
 
-    public var context: Context
+    private class Renderer: Mockingbird.Renderer {
+
+        weak var hostingView: HostingView?
+
+        init(hostingView: HostingView? = nil) {
+            self.hostingView = hostingView
+        }
+
+        func setNeedsRendering() {
+            hostingView?.setNeedsRendering()
+        }
+    }
+
+    public var context: Context {
+        didSet {
+            context.rendered = Renderer(hostingView: self)
+        }
+    }
 
     public private(set) var view: View
 
-    private var node: AnyUIKitNode {
-        didSet {
-            invalidateLayout()
-        }
-    }
+    private var node: UIKitNode
 
     private var previousBounds: CGRect? = nil
 
-    public init(_ view: View, resolvedNode: AnyUIKitNode, context: Context = Context()) {
+    public init(_ view: View, context: Context = Context(), cachedNode: UIKitNode? = nil) {
+        let renderer = Renderer()
+        let context = modified(context) { $0.rendered = renderer }
         self.view = view
         self.context = context
-        self.node = resolvedNode
+        self.node = cachedNode ?? view.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
-        node.didInvalidateLayout = { [weak self] in
-            self?.invalidateLayout()
-        }
+        renderer.hostingView = self
     }
 
-    public init(_ view: View, context: Context = Context()) {
-        self.view = view
-        self.context = context
-        self.node = view.resolve(context: context, cachedNode: nil)
-        super.init(frame: .zero)
-        node.didInvalidateLayout = { [weak self] in
-            self?.invalidateLayout()
-        }
-    }
-
-    public func updateView(_ view: View, resolvedNode: AnyUIKitNode? = nil) {
+    public func updateView(_ view: View, resolvedNode: UIKitNode? = nil) {
         self.view = view
         self.node = resolvedNode ?? view.resolve(context: context, cachedNode: nil)
-        node.didInvalidateLayout = { [weak self] in
-            self?.invalidateLayout()
-        }
+        self.setNeedsRendering()
     }
 
     required init?(coder: NSCoder) {
@@ -65,14 +80,30 @@ public class HostingView: RendererView {
         }
         if previousBounds != bounds {
             previousBounds = bounds
+            let container = Container(view: self, viewController: parentViewController!)
             replaceSubviews {
-                node.layout(in: self, bounds: bounds)
+                node.layout(in: container, bounds: layoutBounds)
             }
         }
     }
 
-    public func invalidateLayout() {
+    var layoutBounds: Bounds {
+        if #available(iOS 11.0, *) {
+            return Bounds(rect: bounds.inset(by: safeAreaInsets), safeAreaInsets: .init(safeAreaInsets))
+        } else {
+            return Bounds(rect: bounds, safeAreaInsets: .zero)
+        }
+    }
+
+    public func setNeedsRendering() {
         previousBounds = nil
         setNeedsLayout()
+    }
+}
+
+extension UIResponder {
+
+    var parentViewController: UIViewController? {
+        return next as? UIViewController ?? next?.parentViewController
     }
 }

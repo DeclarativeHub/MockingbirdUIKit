@@ -1,60 +1,38 @@
+// MIT License
 //
-//  FlexFrameNodeModifier.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 17/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.FlexFrame: UIKitNodeModifierResolvable {
+extension ViewModifiers.FlexFrame: UIKitModifierNodeResolvable {
 
-    class NodeModifier: UIKitNodeModifier<ViewModifiers.FlexFrame> {
+    class Node: BaseUIKitModifierNode<ViewModifiers.FlexFrame, ContentGeometry, NoRenderable> {
 
         override var hierarchyIdentifier: String {
-            return "FF"
+            "FlexFrame(\(node.hierarchyIdentifier))"
         }
 
-        override func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
-            var targetSize = targetSize
-            if let minWidth = modifer.minWidth {
-                targetSize.width = max(targetSize.width, minWidth)
-            }
-            if let maxWidth = modifer.maxWidth {
-                targetSize.width = min(targetSize.width, maxWidth)
-            }
-            if let minHeight = modifer.minHeight {
-                targetSize.height = max(targetSize.height, minHeight)
-            }
-            if let maxHeight = modifer.maxHeight {
-                targetSize.height = min(targetSize.height, maxHeight)
-            }
-
-            var size = node.layoutSize(fitting: targetSize)
-            size.width = clamp(targetSize.width, min: modifer.minWidth ?? size.width, max: modifer.maxWidth ?? size.width)
-            size.height = clamp(targetSize.height, min: modifer.minHeight ?? size.height, max: modifer.maxHeight ?? size.height)
-
-            return size
-        }
-
-        override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            let targetSize = bounds.size
-            let viewSize = node.layoutSize(fitting: targetSize)
-
-            switch modifer.alignment {
-            case .center:
-                let rect = CGRect(
-                    x: bounds.minX + (bounds.width - viewSize.width) / 2,
-                    y: bounds.minY + (bounds.height - viewSize.height) / 2,
-                    width: viewSize.width,
-                    height: viewSize.height
-                )
-                node.layout(in: parent, bounds: rect)
-            default:
-                fatalError("TODO")
-            }
+        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
+            Layout.FlexFrame(flexFrame: modifier, node: node).contentLayout(fittingSize: targetSize)
         }
     }
 }

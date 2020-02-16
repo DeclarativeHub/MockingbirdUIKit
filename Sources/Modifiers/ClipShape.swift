@@ -1,55 +1,83 @@
+// MIT License
 //
-//  ClipShapeNodeModifier.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 10/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.ClipShape: UIKitNodeModifierResolvable {
+extension ViewModifiers.ClipShape: UIKitModifierNodeResolvable {
 
-    class NodeModifier: UIKitNodeModifier<ViewModifiers.ClipShape> {
-
-        private class ClippingView: RendererView {
-
-            var clipPath: CGPath? {
-                didSet {
-                    guard let clipPath = clipPath else {
-                        layer.mask = nil
-                        return
-                    }
-                    guard clipPath != oldValue else {
-                        return
-                    }
-                    let mask = CAShapeLayer()
-                    mask.path = clipPath
-                    layer.mask = mask
-                }
-            }
-        }
+    class Node: BaseUIKitModifierNode<ViewModifiers.ClipShape, StaticGeometry, ClippingView> {
 
         override var hierarchyIdentifier: String {
-            return "CS"
+            "ClipShape(\(node.hierarchyIdentifier))"
         }
 
-        private var clippingView: ClippingView?
-
-        override func layoutSize(fitting size: CGSize, node: AnyUIKitNode) -> CGSize {
-            return node.layoutSize(fitting: size)
+        override var layoutableChildNodes: [LayoutableNode] {
+            [renderable]
         }
 
-        override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            let clippingView = self.clippingView ?? ClippingView()
-            clippingView.frame = bounds
-            clippingView.clipPath = modifer.shape.path(in: clippingView.bounds)
-            parent.addSubview(clippingView)
-            clippingView.replaceSubviews {
-                node.layout(in: clippingView, bounds: clippingView.bounds)
+        override func makeRenderable() -> ClippingView {
+            ClippingView()
+        }
+
+        override func updateRenderable() {
+            renderable.makePath = modifier.shape.path(in:)
+        }
+
+        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
+            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
+        }
+
+        override func layout(in container: Container, bounds: Bounds) {
+            super.layout(in: container, bounds: bounds)
+            renderable.replaceSubviews {
+                node.layout(
+                    in: container.replacingView(renderable),
+                    bounds: Bounds(rect: CGRect(origin: .zero, size: bounds.rect.size), safeAreaInsets: .zero)
+                )
             }
-            self.clippingView = clippingView
+        }
+    }
+}
+
+extension ViewModifiers.ClipShape {
+
+    class ClippingView: ContainerView {
+
+        var makePath: ((CGRect) -> CGPath)?
+        let maskLayer = CAShapeLayer()
+
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            layer.mask = maskLayer
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            maskLayer.path = makePath?(bounds)
         }
     }
 }

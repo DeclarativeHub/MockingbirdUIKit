@@ -1,35 +1,54 @@
+// MIT License
 //
-//  StrokeShapeNode.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 24/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
 extension StrokeShapeView: UIKitNodeResolvable {
     
-    class Node: UIKitNode<StrokeShapeView> {
+    class Node: BaseUIKitNode<StrokeShapeView, StaticGeometry, CAShapeLayer> {
 
         override var hierarchyIdentifier: String {
-            return "StrokeS"
+            "StrokeShape"
         }
 
-        private var shapeLayer: CAShapeLayer!
-
-        override func layoutSize(fitting size: CGSize) -> CGSize {
-            return size
+        override func makeRenderable() -> CAShapeLayer {
+            CAShapeLayer()
         }
 
-        override func layout(in parent: UIView, bounds: CGRect) {
-            shapeLayer = shapeLayer ?? CAShapeLayer.mockingbirdLayer()
-            shapeLayer.path = view.shape.path(in: bounds.inset(by: EdgeInsets(view.lineWidth/2)))
-            shapeLayer.fillColor = nil
-            shapeLayer.strokeColor = view.color.uiColorValue.cgColor
-            shapeLayer.lineWidth = view.lineWidth
-            parent.layer.addSublayer(shapeLayer)
+        override func updateRenderable() {
+            renderable.fillColor = nil
+            renderable.strokeColor = view.color.uiColorValue.cgColor
+            renderable.lineWidth = view.lineWidth
+        }
+
+        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
+            StaticGeometry(idealSize: targetSize)
+        }
+
+        override func layout(in container: Container, bounds: Bounds) {
+            let rect = CGRect(origin: .zero, size: bounds.rect.size)
+            renderable.path = view.shape.path(in: rect)
+            super.layout(in: container, bounds: bounds)
         }
     }
 }

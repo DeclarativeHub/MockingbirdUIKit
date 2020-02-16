@@ -23,38 +23,23 @@
 import UIKit
 import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+extension ViewModifiers.EdgesIgnoringSafeArea: UIKitModifierNodeResolvable {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+    class Node: BaseUIKitModifierNode<ViewModifiers.EdgesIgnoringSafeArea, StaticGeometry, NoRenderable> {
 
         override var hierarchyIdentifier: String {
-            "-"
-        }
-
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
-
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
-            true
+            "EISA(\(node.hierarchyIdentifier))"
         }
 
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
+            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
+        }
+
+        override func layout(in container: Container, bounds: Bounds) {
+            super.layout(
+                in: container,
+                bounds: Bounds(rect: bounds.unsafeRect(edges: modifier.edges), safeAreaInsets: .zero)
+            )
         }
     }
 }

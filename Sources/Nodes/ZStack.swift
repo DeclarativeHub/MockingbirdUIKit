@@ -1,28 +1,50 @@
+// MIT License
 //
-//  ZStackNode.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 10/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
 extension ZStack: UIKitNodeResolvable {
 
-    class Node: UIKitNode<ZStack> {
+    class Node: BaseUIKitNode<ZStack, ContentGeometry, NoRenderable> {
 
         override var hierarchyIdentifier: String {
-            return "ZS[\(nodes.map { $0.hierarchyIdentifier }.joined(separator: ";"))]"
+            "ZStack(\(nodes.map { $0.hierarchyIdentifier }.joined(separator: ", ")))"
         }
 
-        private var nodes: [AnyUIKitNode]
+        private var layout: Layout.ZStack = .init(nodes: []) {
+            didSet {
+                invalidateRenderingState()
+            }
+        }
 
-        required init(_ view: ZStack, context: Context) {
-            self.nodes = view.content.flatMap { $0.flattened }.map { $0.resolve(context: context, cachedNode: nil) }
-            super.init(view, context: context)
-            self.nodes.forEach { $0.parentNode = self }
+        override var layoutableChildNodes: [LayoutableNode] {
+            nodes
+        }
+
+        var nodes: [UIKitNode] = [] {
+            didSet {
+                nodes.forEach { $0.didMoveToParent(self) }
+            }
         }
 
         override func update(_ view: ZStack, context: Context) {
@@ -30,52 +52,21 @@ extension ZStack: UIKitNodeResolvable {
             let content = view.content.flatMap { $0.flattened }
             if nodes.count != content.count {
                 nodes = content.map { $0.resolve(context: context, cachedNode: nil) }
-                nodes.forEach { $0.parentNode = self }
-                invalidateLayout()
+                layout = Layout.ZStack(nodes: nodes, screenScale: UIScreen.main.scale)
             } else {
                 var childrenModified = false
                 for (index, node) in nodes.enumerated() {
                     nodes[index] = content[index].resolve(context: context, cachedNode: node)
-                    nodes[index].parentNode = self
                     childrenModified = childrenModified || nodes[index] !== node
                 }
                 if childrenModified {
-                    invalidateLayout()
+                    layout = Layout.ZStack(nodes: nodes, screenScale: UIScreen.main.scale)
                 }
             }
         }
 
-        override func layoutSize(fitting targetSize: CGSize) -> CGSize {
-            return nodes.reduce(.zero) { (totalSize, node) -> CGSize in
-                let nodeSize = node.layoutSize(fitting: targetSize)
-                return max(totalSize, nodeSize)
-            }.roundedToScale(scale: UIScreen.main.scale)
-        }
-
-        override func layout(in parent: UIView, bounds: CGRect) {
-            for node in nodes {
-                let size = node.layoutSize(fitting: bounds.size)
-                var alignedBounds = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                switch view.alignment.horizontal {
-                case .leading:
-                    alignedBounds.origin.x = bounds.minX
-                case .center:
-                    alignedBounds.origin.x = bounds.minX + (bounds.width - size.width) / 2
-                case .trailing:
-                    alignedBounds.origin.x = bounds.maxX - size.width
-                }
-                switch view.alignment.vertical {
-                case .top:
-                    alignedBounds.origin.y = bounds.minY
-                case .center:
-                    alignedBounds.origin.y = bounds.minY + (bounds.height - size.height) / 2
-                case .bottom:
-                    alignedBounds.origin.y = bounds.maxY - size.height
-                case .firstTextBaseline, .lastTextBaseline:
-                    fatalError()
-                }
-                node.layout(in: parent, bounds: alignedBounds.roundedToScale(scale: UIScreen.main.scale))
-            }
+        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
+            layout.contentLayout(fittingSize: targetSize, alignment: view.alignment)
         }
     }
 }

@@ -23,38 +23,31 @@
 import UIKit
 import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+public protocol LayoutableNode {
+    func layout(in container: Container, bounds: Bounds)
+}
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+extension UIView: LayoutableNode {
 
-        override var hierarchyIdentifier: String {
-            "-"
+    public func layout(in container: Container, bounds: Bounds) {
+        if self.frame != bounds.rect {
+            self.frame = bounds.rect
         }
+        container.view.addSubview(self)
+    }
+}
 
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
+extension CALayer: LayoutableNode {
 
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
+    public func layout(in container: Container, bounds: Bounds) {
+        self.frame = bounds.rect
+        self.removeAllAnimations()
+        container.layer.addSublayer(self)
+    }
+}
 
-        override var isSpacer: Bool {
-            true
-        }
+struct NoRenderable: LayoutableNode {
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
-        }
+    public func layout(in container: Container, bounds: Bounds) {
     }
 }

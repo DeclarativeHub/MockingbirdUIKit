@@ -1,62 +1,60 @@
+// MIT License
 //
-//  UIKitNode.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 10/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-open class AnyUIKitNode: Layoutable {
+public protocol UIKitNode: AnyObject, LayoutableNode, LayoutNode, CustomDebugStringConvertible {
 
-    public class var viewType: View.Type {
-        fatalError("To be implemented in a subclass")
-    }
+    var hierarchyIdentifier: String { get }
 
-    open var parentNode: AnyUIKitNode?
+    init(_ view: View, context: Context)
 
-    open var hierarchyIdentifier: String {
-        return String(describing: self)
-    }
-    
-    public var didInvalidateLayout: (() -> Void)?
-    public var didInvalidateState: (() -> Void)?
+    func update(_ view: View, context: Context)
 
-    open class func make(_ view: View, context: Context) -> AnyUIKitNode {
-        fatalError("To be implemented in a subclass")
-    }
+    func invalidateRenderingState()
 
-    open func update(_ view: View, context: Context) {
-        fatalError("To be implemented in a subclass")
-    }
+    func didMoveToParent(_ node: UIKitNode)
+}
 
-    open func layoutSize(fitting size: CGSize) -> CGSize {
-        return .zero
-    }
+extension UIKitNode {
 
-    open func layout(in parent: UIView, bounds: CGRect) {
-    }
-
-    public func isSpacer() -> Bool {
-        return false
-    }
-
-    open func layoutPriority() -> Double {
-        return 0
-    }
-
-    open func invalidateLayout() {
-        parentNode?.invalidateLayout()
-        didInvalidateLayout?()
+    public var debugDescription: String {
+        hierarchyIdentifier
     }
 }
 
-open class UIKitNode<V: View>: AnyUIKitNode {
+open class BaseUIKitNode<V: View, Geometry: UIKitNodeGeometry, Renderable: LayoutableNode>: UIKitNode {
 
-    public override class var viewType: View.Type {
-        return V.self
+    public var isSpacer: Bool {
+        false
+    }
+
+    public var layoutPriority: Double {
+        0
+    }
+
+    public var hierarchyIdentifier: String {
+        fatalError("To be implemented in a subclass")
     }
 
     public var view: V
@@ -64,16 +62,25 @@ open class UIKitNode<V: View>: AnyUIKitNode {
     public var context: Context
     
     public var env: EnvironmentValues {
-        return context.environment
+        context.environment
     }
 
-    public required init(_ view: V, context: Context) {
-        self.view = view
+    public weak var parentNode: UIKitNode?
+
+    public var layoutableChildNodes: [LayoutableNode] {
+        [renderable]
+    }
+
+    private var isInvalidated = true
+
+    private var geometryCache: [CGSize: Geometry] = [:]
+
+    public private(set) lazy var renderable = makeRenderable()
+
+    public required init(_ view: View, context: Context) {
+        self.view = view as! V
         self.context = context
-    }
-
-    open override class func make(_ view: View, context: Context) -> AnyUIKitNode {
-        return Self.init(view as! V, context: context)
+        update(self.view, context: context)
     }
 
     open func update(_ view: V, context: Context) {
@@ -81,7 +88,85 @@ open class UIKitNode<V: View>: AnyUIKitNode {
         self.context = context
     }
 
-    open override func update(_ view: View, context: Context) {
+    open func update(_ view: View, context: Context) {
         self.update(view as! V, context: context)
+    }
+
+    open func layoutSize(fitting size: CGSize) -> CGSize {
+        return geometry(fitting: size).idealSize
+    }
+
+    open func makeRenderable() -> Renderable {
+        if Renderable.self == NoRenderable.self {
+            return NoRenderable() as! Renderable
+        } else {
+            fatalError("To be implemented in a subclass")
+        }
+    }
+
+    open func calculateGeometry(fitting targetSize: CGSize) -> Geometry {
+        fatalError("To be implemented in a subclass")
+    }
+
+    open func updateRenderable() {
+    }
+
+    public func geometry(fitting targetSize: CGSize) -> Geometry {
+        if let geometry = geometryCache[targetSize] {
+            print("Reading geometry from cache for", self)
+            return geometry
+        } else {
+            print("Calculating new geometry for", self)
+            let geometry = calculateGeometry(fitting: targetSize)
+            geometryCache[targetSize] = geometry
+            return geometry
+        }
+    }
+
+    public func invalidateRenderingState() {
+        print("Invalidating", self)
+        isInvalidated = true
+        parentNode?.invalidateRenderingState()
+        context.rendered?.setNeedsRendering()
+    }
+
+    public func didMoveToParent(_ node: UIKitNode) {
+        parentNode = node
+    }
+
+    open func layout(in container: Container, bounds: Bounds) {
+        if isInvalidated {
+            isInvalidated = false
+            geometryCache.removeAll(keepingCapacity: true)
+            updateRenderable()
+        }
+        layout(in: container, bounds: bounds, geometry: geometry(fitting: bounds.size))
+    }
+
+    open func layout(in container: Container, bounds: Bounds, geometry: Geometry) {
+        geometry.layout(nodes: layoutableChildNodes, in: container, bounds: bounds)
+    }
+}
+
+class BaseUIKitModifierNode<Modifier: ViewModifier, Geometry: UIKitNodeGeometry, Renderable: LayoutableNode>: BaseUIKitNode<ModifiedContent, Geometry, Renderable> {
+
+    override var hierarchyIdentifier: String {
+        fatalError("To be implemented in a subclass")
+    }
+
+    override var layoutableChildNodes: [LayoutableNode] {
+        [node]
+    }
+
+    var node: UIKitNode!
+
+    var modifier: Modifier {
+        view.modifier as! Modifier
+    }
+
+    override func update(_ view: ModifiedContent, context: Context) {
+        super.update(view, context: context)
+        self.node = view.content.resolve(context: context, cachedNode: node)
+        self.node.didMoveToParent(self)
     }
 }

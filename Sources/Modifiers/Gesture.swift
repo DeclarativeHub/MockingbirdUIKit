@@ -1,56 +1,87 @@
+// MIT License
 //
-//  GestureNodeModifier.swift
-//  MockingbirdUIKit
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 07/12/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Gesture: UIKitNodeModifierResolvable {
+extension ViewModifiers.Gesture: UIKitModifierNodeResolvable {
 
-    class NodeModifier: UIKitNodeModifier<ViewModifiers.Gesture> {
-
-        private class GestureView: RendererView {
-
-            var didEndAction: (() -> Void)?
-
-            var gestureController: GestureController? {
-                didSet {
-                    guard let gestureController = gestureController else { return }
-                    if let oldGestureController = oldValue {
-                        if oldGestureController._gestureRecognizer != gestureController._gestureRecognizer {
-                            removeGestureRecognizer(oldGestureController._gestureRecognizer)
-                            addGestureRecognizer(gestureController._gestureRecognizer)
-                        }
-                    } else {
-                        addGestureRecognizer(gestureController._gestureRecognizer)
-                    }
-                }
-            }
-
-            @objc func didEnd() {
-                didEndAction?()
-            }
-        }
+    class Node: BaseUIKitModifierNode<ViewModifiers.Gesture, StaticGeometry, GestureView> {
 
         override var hierarchyIdentifier: String {
-            return "Gstr"
+            "Gesture(\(node.hierarchyIdentifier))"
         }
 
-        private var gestureView: GestureView!
+        override var layoutableChildNodes: [LayoutableNode] {
+            [renderable]
+        }
 
-        override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            gestureView = gestureView ?? GestureView()
-            gestureView.frame = bounds
-            gestureView.gestureController = (modifer.gesture as? ResolvableGesture)?
-                .resolve(cachedGestureRecognizer: gestureView.gestureController?._gestureRecognizer)
-            gestureView.replaceSubviews {
-                node.layout(in: gestureView, bounds: gestureView.bounds)
+        override func makeRenderable() -> GestureView {
+            GestureView()
+        }
+
+        override func updateRenderable() {
+            renderable.gestureController = (modifier.gesture as? ResolvableGesture)?
+                .resolve(cachedGestureRecognizer: renderable.gestureController?._gestureRecognizer)
+        }
+
+        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
+            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
+        }
+
+        override func layout(in container: Container, bounds: Bounds) {
+            super.layout(in: container, bounds: bounds)
+            renderable.replaceSubviews {
+                node.layout(
+                    in: container.replacingView(renderable),
+                    bounds: Bounds(rect: renderable.bounds, safeAreaInsets: .zero)  // TODO
+                )
             }
-            parent.addSubview(gestureView)
+        }
+    }
+}
+
+extension ViewModifiers.Gesture {
+
+    class GestureView: ContainerView {
+
+        var didEndAction: (() -> Void)?
+
+       fileprivate var gestureController: GestureController? {
+            didSet {
+                guard let gestureController = gestureController else { return }
+                if let oldGestureController = oldValue {
+                    if oldGestureController._gestureRecognizer != gestureController._gestureRecognizer {
+                        removeGestureRecognizer(oldGestureController._gestureRecognizer)
+                        addGestureRecognizer(gestureController._gestureRecognizer)
+                    }
+                } else {
+                    addGestureRecognizer(gestureController._gestureRecognizer)
+                }
+            }
+        }
+
+        @objc func didEnd() {
+            didEndAction?()
         }
     }
 }

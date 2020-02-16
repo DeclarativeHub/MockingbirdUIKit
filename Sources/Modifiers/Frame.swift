@@ -1,83 +1,38 @@
+// MIT License
 //
-//  FrameNodeModifier.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 10/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Frame: UIKitNodeModifierResolvable {
+extension ViewModifiers.Frame: UIKitModifierNodeResolvable {
     
-    class NodeModifier: UIKitNodeModifier<ViewModifiers.Frame> {
-        
+    class Node: BaseUIKitModifierNode<ViewModifiers.Frame, ContentGeometry, NoRenderable> {
+
         override var hierarchyIdentifier: String {
-            return "F"
+            "Frame(\(node.hierarchyIdentifier))"
         }
         
-        private var width: CGFloat? {
-            return modifer.width
-        }
-        
-        private var height: CGFloat? {
-            return modifer.height
-        }
-        
-        private var alignment: Alignment {
-            return modifer.alignment
-        }
-        
-        override func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
-            var targetSize = targetSize
-            if let width = width {
-                targetSize.width = min(targetSize.width, width)
-            }
-            if let height = height {
-                targetSize.height = min(targetSize.height, height)
-            }
-            
-            var size = node.layoutSize(fitting: targetSize)
-            if let width = width {
-                size.width = max(size.width, width)
-            }
-            if let height = height {
-                size.height = max(size.height, height)
-            }
-            
-            return size
-        }
-        
-        override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            var targetSize = bounds.size
-            if let width = width {
-                targetSize.width = min(targetSize.width, width)
-            }
-            if let height = height {
-                targetSize.height = min(targetSize.height, height)
-            }
-            
-            var viewSize = node.layoutSize(fitting: targetSize)
-            if let width = width {
-                viewSize.width = max(viewSize.width, width)
-            }
-            if let height = height {
-                viewSize.height = max(viewSize.height, height)
-            }
-            
-            switch alignment {
-            case .center:
-                let rect = CGRect(
-                    x: bounds.minX + (bounds.width - viewSize.width) / 2,
-                    y: bounds.minY + (bounds.height - viewSize.height) / 2,
-                    width: viewSize.width,
-                    height: viewSize.height
-                )
-                node.layout(in: parent, bounds: rect)
-            default:
-                fatalError("TODO")
-            }
+        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
+            Layout.Frame(frame: modifier, node: node).contentLayout(fittingSize: targetSize)
         }
     }
 }

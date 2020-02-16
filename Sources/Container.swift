@@ -21,40 +21,20 @@
 // SOFTWARE.
 
 import UIKit
-import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+public struct Container {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+    public var view: UIView
+    public var viewController: UIViewController
 
-        override var hierarchyIdentifier: String {
-            "-"
-        }
+    @inlinable
+    public var layer: CALayer {
+        return view.layer
+    }
 
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
-
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
-            true
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
-        }
+    func replacingView(_ view: UIView) -> Container {
+        var copy = self
+        copy.view = view
+        return copy
     }
 }

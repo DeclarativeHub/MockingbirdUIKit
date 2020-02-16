@@ -1,46 +1,39 @@
+// MIT License
 //
-//  PaddingNode.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 10/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Padding: UIKitNodeModifierResolvable {
+extension ViewModifiers.Padding: UIKitModifierNodeResolvable {
 
-    class NodeModifier: UIKitNodeModifier<ViewModifiers.Padding> {
-        
+    class Node: BaseUIKitModifierNode<ViewModifiers.Padding, ContentGeometry, NoRenderable> {
+
         override var hierarchyIdentifier: String {
-            return "P"
+            "Padding(\(node.hierarchyIdentifier))"
         }
-        
-        private var insets: EdgeInsets {
-            return EdgeInsets(
-                top: modifer.top ?? context.environment.padding,
-                leading: modifer.leading ?? context.environment.padding,
-                bottom: modifer.bottom ?? context.environment.padding,
-                trailing: modifer.trailing ?? context.environment.padding
-            )
-        }
-        
-        override func layoutSize(fitting size: CGSize, node: AnyUIKitNode) -> CGSize {
-            let insets = self.insets
-            let availableSize = CGSize(
-                width: size.width - CGFloat(insets.leading + insets.trailing),
-                height: size.height - CGFloat(insets.top + insets.bottom)
-            )
-            let bodySize = node.layoutSize(fitting: availableSize)
-            return CGSize(
-                width: bodySize.width + CGFloat(insets.leading + insets.trailing),
-                height: bodySize.height + CGFloat(insets.top + insets.bottom)
-            )
-        }
-        
-        override func layout(_ node: AnyUIKitNode, in parent: UIView, bounds: CGRect) {
-            node.layout(in: parent, bounds: bounds.inset(by: insets))
+
+        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
+            Layout.Padding(padding: modifier, node: node)
+                .contentLayout(fittingSize: targetSize, defaultPadding: context.environment.padding)
         }
     }
 }

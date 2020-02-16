@@ -7,62 +7,95 @@
 //
 
 import Mockingbird
+import MockingbirdUIKit
 import ReactiveKit
+import MapKit
 
 typealias Published = ReactiveKit.Published
 typealias ObservableObject = ReactiveKit.ObservableObject
 
-struct ColorPalette {
-    let primary = Color.black
-    let secondary = Color.red
+struct CircleImage: View {
+
+    var body: View {
+        Image("turtlerock")
+            .clipShape(Circle())
+            .overlay(
+                Circle().stroke(Color.white, lineWidth: 4))
+            .shadow(radius: 10)
+    }
+
+}
+
+struct MapView: UIViewRepresentable {
+
+    var coordinate = CLLocationCoordinate2D(latitude: 34.011286, longitude: -116.166868)
+
+    func makeUIView(context: Context) -> MKMapView {
+        MKMapView(frame: .zero)
+    }
+
+    func updateUIView(_ view: MKMapView, context: Context) {
+        guard abs(coordinate.latitude - view.centerCoordinate.latitude) > 0.1
+            || abs(coordinate.longitude - view.centerCoordinate.longitude) > 0.1 else { return }
+        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        view.setRegion(region, animated: false)
+    }
 }
 
 class ViewModel: ObservableObject {
 
     @Published
-    var title: String = "TK"
+    var counter: Int = 0
+    
 }
 
-struct MyButton: View {
-
-    @Binding
-    var title: String
-
-    @EnvironmentObject
-    var colorPalette: ColorPalette
-
-    var body: View {
-//        Button(action: { self.title += "😍" }) {
-            ZStack {
-                Circle()
-                    .stroke(colorPalette.primary, lineWidth: 4)
-                Text("Tap me").font(.system(size: 14, weight: .regular, design: .monospaced))
-            }
-            .frame(width: 100, height: 100)
-            .onLongPressGesture { self.title += "😍" }
-            .onTapGesture { self.title += "🥶" }
-//        }
-    }
-}
 
 struct ContentView: View {
 
-    @ObservedObject
-    var viewModel = ViewModel()
+    @State var value: Float = 50
 
-    @EnvironmentObject
-    var colorPalette: ColorPalette
+    @ObservedObject var viewModel = ViewModel()
 
     var body: View {
-        ZStack {
-            VStack {
-                ForEach(0..<4) { _ in
-                    Text(self.viewModel.title).font(.title)
-                }
-                MyButton(title: $viewModel.title)
+        VStack {
+            MapView()
+                .edgesIgnoringSafeArea(.top)
+                .frame(height: 300)
+
+            ZStack {
+                CircleImage()
+                Text("\(viewModel.counter)").font(.system(size: 80)).foregroundColor(.white)
             }
-            .background(Color.green)
-            .clipShape(viewModel.title.count > 3 ? Capsule() : Circle())
-        }.accentColor(colorPalette.secondary)
+            .onTapGesture {
+                self.viewModel.counter += 1
+            }
+            .offset(y: -130)
+            .padding(.bottom, -130)
+
+            VStack(alignment: .leading) {
+                Text("Turtle Rock")
+                    .font(.title)
+                HStack(alignment: .top) {
+                    Text("Joshua Tree National Park")
+                        .font(.subheadline)
+                    Spacer()
+                    Text("California")
+                        .font(.subheadline)
+                }
+            }
+            .padding()
+            .foregroundColor(Color(rgb: 0x010120))
+
+            Slider(value: $value, in: 0...100, step: 2)
+
+            Button("Tap me") {
+                self.value *= 2
+            }.padding()
+
+            Text("\(value)")
+
+            Spacer()
+        }
     }
 }

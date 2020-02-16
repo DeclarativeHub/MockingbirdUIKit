@@ -23,38 +23,51 @@
 import UIKit
 import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+extension Slider: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+    class Control: UISlider {
+
+        var binding: Binding<Float>? {
+            didSet {
+                guard let binding = binding else { return }
+                value = binding.wrappedValue
+            }
+        }
+
+        override init(frame: CGRect) {
+            super.init(frame: .zero)
+            addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        @objc func handleValueChange() {
+            binding?.wrappedValue = value
+        }
+    }
+
+    class Node: BaseUIKitNode<Slider, StaticGeometry, Control> {
 
         override var hierarchyIdentifier: String {
-            "-"
-        }
-
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
-
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
-            true
+            "Slider"
         }
 
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
+            StaticGeometry(
+                idealSize: CGSize(width: targetSize.width, height: 31)
+            )
+        }
+
+        override func makeRenderable() -> Control {
+            Control(frame: .zero)
+        }
+
+        override func updateRenderable() {
+            renderable.binding = view.value
+            renderable.minimumValue = view.bounds.lowerBound
+            renderable.maximumValue = view.bounds.upperBound
         }
     }
 }

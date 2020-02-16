@@ -20,41 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
+import CoreGraphics
 import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+extension ContentGeometry: UIKitNodeGeometry {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "-"
-        }
-
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
-
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
-            true
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
+    public func layout(nodes: [LayoutableNode], in contaner: Container, bounds: Bounds) {
+//        precondition(nodes.count == frames.count)
+        for (node, frame) in zip(nodes, frames) {
+            let bounds = Bounds(
+                rect: CGRect(
+                    x: bounds.rect.minX + frame.minX,
+                    y: bounds.rect.minY + frame.minY,
+                    width: frame.width,
+                    height: frame.height
+                ),
+                safeAreaInsets: bounds.safeAreaInsets
+            )
+            node.layout(in: contaner, bounds: bounds)
         }
     }
 }

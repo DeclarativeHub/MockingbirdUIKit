@@ -21,40 +21,23 @@
 // SOFTWARE.
 
 import UIKit
-import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+open class ContainerControl: UIControl {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+    open override class var layerClass: AnyClass {
+        return ContainerLayer.self
+    }
 
-        override var hierarchyIdentifier: String {
-            "-"
-        }
+    private var subviewsToRemove: Set<UIView> = []
 
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
+    open override func addSubview(_ view: UIView) {
+        subviewsToRemove.remove(view)
+        super.addSubview(view)
+    }
 
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
-            true
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
-        }
+    public func replaceSubviews(_ block: () -> Void) {
+        subviewsToRemove = Set(subviews)
+        (layer as! ContainerLayer).replaceSublayers(block)
+        subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
 }

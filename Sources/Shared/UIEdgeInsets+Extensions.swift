@@ -23,38 +23,9 @@
 import UIKit
 import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+extension EdgeInsets {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "-"
-        }
-
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
-
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
-            true
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
-        }
+    init(_ insets: UIEdgeInsets) {
+        self.init(top: insets.top, leading: insets.left, bottom: insets.bottom, trailing: insets.right)
     }
 }

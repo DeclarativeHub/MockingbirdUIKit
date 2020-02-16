@@ -21,40 +21,32 @@
 // SOFTWARE.
 
 import UIKit
-import Mockingbird
 
-extension Spacer: UIKitNodeResolvable {
+public let kMockingbirdLayerName = "kMockableLayer"
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+public final class ContainerLayer: CALayer {
 
-        override var hierarchyIdentifier: String {
-            "-"
+    private var sublayersToRemove: Set<CALayer> = []
+
+    public override func addSublayer(_ layer: CALayer) {
+        if layer.name == kMockingbirdLayerName {
+            sublayersToRemove.remove(layer)
         }
+        super.addSublayer(layer)
+    }
 
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
+    public func replaceSublayers(_ block: () -> Void) {
+        sublayersToRemove = Set(sublayers?.filter { $0.name == kMockingbirdLayerName } ?? [])
+        block()
+        sublayersToRemove.forEach { $0.removeFromSuperlayer() }
+    }
+}
 
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
+extension CALayer {
 
-        override var isSpacer: Bool {
-            true
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
-            case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
-            case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
-            default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
-            }
-        }
+    public static func mockingbirdLayer() -> Self {
+        let layer = self.init()
+        layer.name = kMockingbirdLayerName
+        return layer
     }
 }

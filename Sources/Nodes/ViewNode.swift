@@ -1,57 +1,62 @@
+// MIT License
 //
-//  ViewNode.swift
-//  Mockingbird
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 10/11/2019.
-//  Copyright © 2019 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 import ReactiveKit
 
-class ViewNode: UIKitNode<AnyView> {
+class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
 
     override var hierarchyIdentifier: String {
-        return "V[\(node.hierarchyIdentifier)]"
+        "View(\(node.hierarchyIdentifier))"
+    }
+
+    override var layoutableChildNodes: [LayoutableNode] {
+        [node]
     }
 
     var propertyStorage: [String: Any] = [:]
-    var node: AnyUIKitNode
+    var node: UIKitNode!
     var observedObjectsCancellables: [AnyCancellable] = []
     var needsViewUpdate: Bool = false
-
-    required init( _ view: AnyView, context: Context) {
-        ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
-        self.node = view.body.resolve(context: context, cachedNode: nil)
-        super.init(view, context: context)
-        self.node.parentNode = self
-        observeStateProperties(of: view.content)
-    }
 
     override func update(_ view: AnyView, context: Context) {
         super.update(view, context: context)
         observeStateProperties(of: view.content)
         ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
         self.node = view.body.resolve(context: context, cachedNode: node)
-        self.node.parentNode = self
+        self.node.didMoveToParent(self)
     }
 
     private func updateViewIfNeeded() {
         if needsViewUpdate {
-            update(view, context: context)
             needsViewUpdate = false
+            update(view, context: context)
+            invalidateRenderingState()
         }
     }
 
-    override func layoutSize(fitting targetSize: CGSize) -> CGSize {
-        updateViewIfNeeded()
-        return node.layoutSize(fitting: targetSize)
-    }
-
-    override func layout(in parent: UIView, bounds: CGRect) {
-        updateViewIfNeeded()
-        node.layout(in: parent, bounds: bounds)
+    override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
+        StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
     }
 
     private func observeStateProperties(of view: View) {
@@ -80,8 +85,10 @@ class ViewNode: UIKitNode<AnyView> {
     }
 
     private func contentWillChange() {
-        needsViewUpdate = true
-        invalidateLayout()
+        DispatchQueue.main.async {
+            self.needsViewUpdate = true
+            self.updateViewIfNeeded()
+        }
     }
 
     private static func configureEnvironmentObjectProperties(of view: View, context: Context) {

@@ -20,31 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
-import Mockingbird
+import CoreGraphics
 
-extension ViewModifiers.Background: UIKitModifierNodeResolvable {
+public struct StaticGeometry: UIKitNodeGeometry {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.Background, StaticGeometry, NoRenderable> {
+    public var rect: CGRect
 
-        override var hierarchyIdentifier: String {
-            "Background(\(node.hierarchyIdentifier))"
-        }
+    @inlinable
+    public var idealSize: CGSize {
+        rect.size
+    }
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            [backgroundNode, node]
-        }
+    @inlinable
+    public init(origin: CGPoint = .zero, idealSize: CGSize) {
+        self.rect = CGRect(origin: origin, size: idealSize)
+    }
 
-        private var backgroundNode: UIKitNode!
-
-        override func update(_ view: ModifiedContent, context: Context) {
-            super.update(view, context: context)
-            backgroundNode = modifier.background.resolve(context: context, cachedNode: backgroundNode)
-            backgroundNode.didMoveToParent(self)
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
+    @inlinable
+    public func layout(nodes: [LayoutableNode], in contaner: Container, bounds: Bounds) {
+        let bounds = Bounds(
+            rect: CGRect(
+                x: bounds.rect.minX + rect.minX,
+                y: bounds.rect.minY + rect.minY,
+                width: bounds.rect.width,
+                height: bounds.rect.height
+            ),
+            safeAreaInsets: bounds.safeAreaInsets
+        )
+        for node in nodes {
+            node.layout(in: contaner, bounds: bounds)
         }
     }
 }
