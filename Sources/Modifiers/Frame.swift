@@ -26,10 +26,6 @@ import Mockingbird
 extension ViewModifiers.Frame: UIKitModifierNodeResolvable {
     
     class Node: BaseUIKitModifierNode<ViewModifiers.Frame, ContentGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "Frame(\(node.hierarchyIdentifier))"
-        }
         
         override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
             Layout.Frame(frame: modifier, node: node).contentLayout(fittingSize: targetSize)

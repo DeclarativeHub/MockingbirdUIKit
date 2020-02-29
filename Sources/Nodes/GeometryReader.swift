@@ -27,10 +27,6 @@ extension GeometryReader: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<GeometryReader, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "GeometryReader(???)"
-        }
-
         private var node: UIKitNode?
 
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {

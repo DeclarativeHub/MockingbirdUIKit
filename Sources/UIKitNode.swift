@@ -23,24 +23,17 @@
 import UIKit
 import Mockingbird
 
-public protocol UIKitNode: AnyObject, LayoutableNode, LayoutNode, CustomDebugStringConvertible {
+public protocol UIKitNode: AnyObject, LayoutableNode, LayoutNode {
 
     var hierarchyIdentifier: String { get }
 
-    init(_ view: View, context: Context)
+    init(_ view: SomeView, context: Context)
 
-    func update(_ view: View, context: Context)
+    func update(_ view: SomeView, context: Context)
 
     func invalidateRenderingState()
 
     func didMoveToParent(_ node: UIKitNode)
-}
-
-extension UIKitNode {
-
-    public var debugDescription: String {
-        hierarchyIdentifier
-    }
 }
 
 open class BaseUIKitNode<V: View, Geometry: UIKitNodeGeometry, Renderable: LayoutableNode>: UIKitNode {
@@ -54,7 +47,7 @@ open class BaseUIKitNode<V: View, Geometry: UIKitNodeGeometry, Renderable: Layou
     }
 
     public var hierarchyIdentifier: String {
-        fatalError("To be implemented in a subclass")
+        String(describing: V.self)
     }
 
     public var view: V
@@ -77,7 +70,7 @@ open class BaseUIKitNode<V: View, Geometry: UIKitNodeGeometry, Renderable: Layou
 
     public private(set) lazy var renderable = makeRenderable()
 
-    public required init(_ view: View, context: Context) {
+    public required init(_ view: SomeView, context: Context) {
         self.view = view as! V
         self.context = context
         update(self.view, context: context)
@@ -88,7 +81,7 @@ open class BaseUIKitNode<V: View, Geometry: UIKitNodeGeometry, Renderable: Layou
         self.context = context
     }
 
-    open func update(_ view: View, context: Context) {
+    open func update(_ view: SomeView, context: Context) {
         self.update(view as! V, context: context)
     }
 
@@ -148,10 +141,10 @@ open class BaseUIKitNode<V: View, Geometry: UIKitNodeGeometry, Renderable: Layou
     }
 }
 
-class BaseUIKitModifierNode<Modifier: ViewModifier, Geometry: UIKitNodeGeometry, Renderable: LayoutableNode>: BaseUIKitNode<ModifiedContent, Geometry, Renderable> {
+class BaseUIKitModifierNode<Modifier: ViewModifier, Geometry: UIKitNodeGeometry, Renderable: LayoutableNode>: BaseUIKitNode<ModifiedContent<ViewModifierContent<Modifier>, Modifier>, Geometry, Renderable> {
 
-    override var hierarchyIdentifier: String {
-        fatalError("To be implemented in a subclass")
+    public override var hierarchyIdentifier: String {
+        "\(String(describing: Modifier.self))[\(node.hierarchyIdentifier)]"
     }
 
     override var layoutableChildNodes: [LayoutableNode] {
@@ -161,10 +154,10 @@ class BaseUIKitModifierNode<Modifier: ViewModifier, Geometry: UIKitNodeGeometry,
     var node: UIKitNode!
 
     var modifier: Modifier {
-        view.modifier as! Modifier
+        view.modifier
     }
 
-    override func update(_ view: ModifiedContent, context: Context) {
+    override func update(_ view: ModifiedContent<ViewModifierContent<Modifier>, Modifier>, context: Context) {
         super.update(view, context: context)
         self.node = view.content.resolve(context: context, cachedNode: node)
         self.node.didMoveToParent(self)

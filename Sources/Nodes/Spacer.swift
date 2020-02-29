@@ -27,10 +27,6 @@ extension Spacer: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "-"
-        }
-
         var minLenght: CGFloat {
             view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
         }

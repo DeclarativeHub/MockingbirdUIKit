@@ -26,11 +26,7 @@ import Mockingbird
 extension ViewModifiers.FixedSize: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.FixedSize, StaticGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "FixedSize(\(node.hierarchyIdentifier))"
-        }
-
+        
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
             StaticGeometry(idealSize: node.layoutSize(fitting: .zero))
         }

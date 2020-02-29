@@ -27,7 +27,7 @@ public class HostingController: UIViewController {
 
     public let hostingView: HostingView
 
-    public init(_ view: View) {
+    public init<V: View>(_ view: V) {
         self.hostingView = HostingView(view)
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,8 +36,18 @@ public class HostingController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func loadView() {
-        view = hostingView
+    public override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = .white
+        view.addSubview(hostingView)
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            hostingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            hostingView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
+            hostingView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
+            hostingView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor),
+            hostingView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
+        ])
     }
 }

@@ -23,13 +23,13 @@
 import UIKit
 import Mockingbird
 
-extension View {
+extension SomeView {
 
     public func resolve(context: Context, cachedNode: UIKitNode?) -> UIKitNode {
         if let view = self as? AnyUIKitNodeResolvable {
             return view.resolve(context: context, cachedNode: cachedNode)
-        } else if let view = self as? ModifiedContent {
-            return (view.modifier as! AnyUIKitModifierNodeResolvable).resolve(context: context, view: view, cachedNode: cachedNode)
+//        } else if let view = self as? ModifiedContent {
+//            return (view.modifier as! AnyUIKitModifierNodeResolvable).resolve(context: context, view: view, cachedNode: cachedNode)
         } else if let view = self as? AnyUIViewRepresentable {
             if let node = cachedNode as? UIViewRepresentableNode {
                 node.update(AnyView(view), context: context)
@@ -46,6 +46,19 @@ extension View {
             }
         }
     }
+
+    public func contentNodes(context: Context, cachedNodes: [UIKitNode]) -> [UIKitNode] {
+        if let container = self as? ContentContainerNode {
+            return container.contentNodes(context: context, cachedNodes: cachedNodes)
+        } else {
+            return [self.resolve(context: context, cachedNode: cachedNodes.first)]
+        }
+    }
+}
+
+protocol ContentContainerNode {
+
+    func contentNodes(context: Context, cachedNodes: [UIKitNode]) -> [UIKitNode]
 }
 
 protocol AnyUIKitNodeResolvable {
@@ -69,7 +82,7 @@ extension UIKitNodeResolvable {
 }
 
 protocol AnyUIKitModifierNodeResolvable {
-    func resolve(context: Context, view: View, cachedNode: UIKitNode?) -> UIKitNode
+    func resolve(context: Context, view: SomeView, cachedNode: UIKitNode?) -> UIKitNode
 }
 
 protocol UIKitModifierNodeResolvable: AnyUIKitModifierNodeResolvable {
@@ -78,7 +91,7 @@ protocol UIKitModifierNodeResolvable: AnyUIKitModifierNodeResolvable {
 
 extension UIKitModifierNodeResolvable where Self: ViewModifier {
 
-    func resolve(context: Context, view: View, cachedNode: UIKitNode?) -> UIKitNode {
+    func resolve(context: Context, view: SomeView, cachedNode: UIKitNode?) -> UIKitNode {
         if let cachedNode = cachedNode as? Node {
             cachedNode.update(view, context: context)
             return cachedNode

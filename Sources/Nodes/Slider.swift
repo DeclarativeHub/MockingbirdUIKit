@@ -50,10 +50,6 @@ extension Slider: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<Slider, StaticGeometry, Control> {
 
-        override var hierarchyIdentifier: String {
-            "Slider"
-        }
-
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
             StaticGeometry(
                 idealSize: CGSize(width: targetSize.width, height: 31)

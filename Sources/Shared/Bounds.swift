@@ -56,6 +56,13 @@ extension Bounds {
         )
     }
 
+    public func at(origin: CGPoint) -> Bounds {
+        Bounds(
+            rect: CGRect(origin: origin, size: rect.size),
+            safeAreaInsets: safeAreaInsets // TODO
+        )
+    }
+
     public func offset(dx: CGFloat, dy: CGFloat) -> Bounds {
         Bounds(
             rect: rect.offsetBy(dx: dx, dy: dy),

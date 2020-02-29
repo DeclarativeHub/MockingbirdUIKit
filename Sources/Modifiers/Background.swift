@@ -27,10 +27,6 @@ extension ViewModifiers.Background: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.Background, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "Background(\(node.hierarchyIdentifier))"
-        }
-
         override var layoutableChildNodes: [LayoutableNode] {
             [backgroundNode, node]
         }

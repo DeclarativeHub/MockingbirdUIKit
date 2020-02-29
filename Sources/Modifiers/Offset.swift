@@ -27,10 +27,6 @@ extension ViewModifiers.Offset: UIKitModifierNodeResolvable {
     
     class Node: BaseUIKitModifierNode<ViewModifiers.Offset, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "Offset(\(node.hierarchyIdentifier))"
-        }
-
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
             StaticGeometry(
                 origin: CGPoint(x: modifier.offset.width, y: modifier.offset.height),

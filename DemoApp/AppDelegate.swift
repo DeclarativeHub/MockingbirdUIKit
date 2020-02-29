@@ -7,7 +7,39 @@
 //
 
 import UIKit
+import Mockingbird
 import MockingbirdUIKit
+
+@available(iOS 13, *)
+struct VV: View {
+
+    @State var n: CGFloat = 0.5
+
+    var body: some View {
+        VStack {
+            Text("\(n)")
+            Slider(value: $n)
+            GeometryReader { _ in
+                Text("GR")
+            }
+        }
+    }
+}
+
+@available(iOS 13, *)
+struct V: View {
+
+    var body: SomeView {
+        VStack {
+            Text("Hello")
+            HStack {
+                Text("Hello")
+                Text("Hello")
+            }
+            Image("turtlerock").padding(33)//.shadow(radius: 20)
+        }
+    }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,12 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        let view = ContentView()
-        
-        let viewController = HostingController(view)
-        
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = viewController
+
+        if #available(iOS 13, *) {
+            let viewController = HostingController(V())
+            window.rootViewController = viewController
+        }
 
         window.makeKeyAndVisible()
         self.window = window

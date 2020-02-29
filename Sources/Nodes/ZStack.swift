@@ -23,50 +23,9 @@
 import UIKit
 import Mockingbird
 
-extension ZStack: UIKitNodeResolvable {
+extension ZStack: AnyUIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<ZStack, ContentGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "ZStack(\(nodes.map { $0.hierarchyIdentifier }.joined(separator: ", ")))"
-        }
-
-        private var layout: Layout.ZStack = .init(nodes: []) {
-            didSet {
-                invalidateRenderingState()
-            }
-        }
-
-        override var layoutableChildNodes: [LayoutableNode] {
-            nodes
-        }
-
-        var nodes: [UIKitNode] = [] {
-            didSet {
-                nodes.forEach { $0.didMoveToParent(self) }
-            }
-        }
-
-        override func update(_ view: ZStack, context: Context) {
-            super.update(view, context: context)
-            let content = view.content.flatMap { $0.flattened }
-            if nodes.count != content.count {
-                nodes = content.map { $0.resolve(context: context, cachedNode: nil) }
-                layout = Layout.ZStack(nodes: nodes, screenScale: UIScreen.main.scale)
-            } else {
-                var childrenModified = false
-                for (index, node) in nodes.enumerated() {
-                    nodes[index] = content[index].resolve(context: context, cachedNode: node)
-                    childrenModified = childrenModified || nodes[index] !== node
-                }
-                if childrenModified {
-                    layout = Layout.ZStack(nodes: nodes, screenScale: UIScreen.main.scale)
-                }
-            }
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
-            layout.contentLayout(fittingSize: targetSize, alignment: view.alignment)
-        }
+    public func resolve(context: Context, cachedNode: UIKitNode?) -> UIKitNode {
+        return tree.resolve(context: context, cachedNode: cachedNode)
     }
 }

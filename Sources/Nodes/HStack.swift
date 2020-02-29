@@ -23,55 +23,9 @@
 import UIKit
 import Mockingbird
 
-extension HStack: UIKitNodeResolvable {
+extension HStack: AnyUIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<HStack, ContentGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "HStack(\(nodes.map { $0.hierarchyIdentifier }.joined(separator: ", ")))"
-        }
-        
-        override var isSpacer: Bool {
-            nodes.count == 1 && nodes[0].isSpacer
-        }
-        
-        private var layout: Layout.HStack = .init(nodes: [], interItemSpacing: 0) {
-            didSet {
-                invalidateRenderingState()
-            }
-        }
-
-        override var layoutableChildNodes: [LayoutableNode] {
-            nodes
-        }
-
-        public var nodes: [UIKitNode] = [] {
-            didSet {
-                nodes.forEach { $0.didMoveToParent(self) }
-            }
-        }
-        
-        override func update(_ view: HStack, context: Context) {
-            let context = modified(context) { $0.environment._layoutAxis = .horizontal }
-            super.update(view, context: context)
-            let content = view.content.flatMap { $0.flattened }
-            if nodes.count != content.count {
-                nodes = content.map { $0.resolve(context: context, cachedNode: nil) }
-                layout = Layout.HStack(nodes: nodes, interItemSpacing: view.spacing ?? env.hStackSpacing, screenScale: UIScreen.main.scale)
-            } else {
-                var childrenModified = false
-                for (index, node) in nodes.enumerated() {
-                    nodes[index] = content[index].resolve(context: context, cachedNode: node)
-                    childrenModified = childrenModified || nodes[index] !== node
-                }
-                if childrenModified {
-                    layout = Layout.HStack(nodes: nodes, interItemSpacing: view.spacing ?? env.hStackSpacing, screenScale: UIScreen.main.scale)
-                }
-            }
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
-            layout.contentLayout(fittingSize: targetSize, alignment: view.alignment)
-        }
+    public func resolve(context: Context, cachedNode: UIKitNode?) -> UIKitNode {
+        return tree.resolve(context: context, cachedNode: cachedNode)
     }
 }

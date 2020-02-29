@@ -27,10 +27,6 @@ extension ViewModifiers.Gesture: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.Gesture, StaticGeometry, GestureView> {
 
-        override var hierarchyIdentifier: String {
-            "Gesture(\(node.hierarchyIdentifier))"
-        }
-
         override var layoutableChildNodes: [LayoutableNode] {
             [renderable]
         }

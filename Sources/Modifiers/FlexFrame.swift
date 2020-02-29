@@ -27,10 +27,6 @@ extension ViewModifiers.FlexFrame: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.FlexFrame, ContentGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "FlexFrame(\(node.hierarchyIdentifier))"
-        }
-
         override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
             Layout.FlexFrame(flexFrame: modifier, node: node).contentLayout(fittingSize: targetSize)
         }

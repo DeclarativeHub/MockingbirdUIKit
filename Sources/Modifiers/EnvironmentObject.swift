@@ -27,10 +27,6 @@ extension ViewModifiers.EnvironmentObject: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.EnvironmentObject, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "EnvObj(\(node.hierarchyIdentifier))"
-        }
-
         override func update(_ view: ModifiedContent, context: Context) {
             var context = context
             context.environmentObjects[modifier.objectTypeIdentifier] = modifier.object

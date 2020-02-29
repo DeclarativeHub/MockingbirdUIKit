@@ -26,10 +26,6 @@ import Mockingbird
 extension EnvironmentValueModifier: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<EnvironmentValueModifier, StaticGeometry, NoRenderable> {
-
-        override var hierarchyIdentifier: String {
-            "EnvMod(\(node.hierarchyIdentifier))"
-        }
         
         override var layoutPriority: Double {
             node.layoutPriority

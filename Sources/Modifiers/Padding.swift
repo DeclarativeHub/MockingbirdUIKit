@@ -27,13 +27,10 @@ extension ViewModifiers.Padding: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.Padding, ContentGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "Padding(\(node.hierarchyIdentifier))"
-        }
-
         override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
-            Layout.Padding(padding: modifier, node: node)
-                .contentLayout(fittingSize: targetSize, defaultPadding: context.environment.padding)
+            LayoutAlgorithms
+                .Padding(padding: modifier, node: node, defaultPadding: context.environment.padding)
+                .contentLayout(fittingSize: targetSize)
         }
     }
 }

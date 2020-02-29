@@ -27,10 +27,6 @@ extension Image: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<Image, StaticGeometry, UIImageView> {
 
-        override var hierarchyIdentifier: String {
-            "Image"
-        }
-
         lazy var image = UIImage(named: view.name)!
 
         override func update(_ view: Image, context: Context) {

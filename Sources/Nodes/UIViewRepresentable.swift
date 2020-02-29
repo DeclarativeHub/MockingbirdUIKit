@@ -23,7 +23,7 @@
 import UIKit
 import Mockingbird
 
-public protocol AnyUIViewRepresentable: View {
+public protocol AnyUIViewRepresentable: SomeView {
 
     func _makeUIView(context: Context) -> UIView
     func _updateUIView(_ uiView: UIView, context: Context)
@@ -31,7 +31,7 @@ public protocol AnyUIViewRepresentable: View {
     func layoutSize(fitting size: CGSize) -> CGSize
 }
 
-public protocol UIViewRepresentable: AnyUIViewRepresentable {
+public protocol UIViewRepresentable: AnyUIViewRepresentable, View where Body == Never {
 
     associatedtype UIViewType: UIView
 
@@ -40,10 +40,6 @@ public protocol UIViewRepresentable: AnyUIViewRepresentable {
 }
 
 extension UIViewRepresentable {
-
-    public var body: View {
-        fatalError()
-    }
 
     public func updateUIView(_ uiView: UIViewType, context: Context) {
     }
@@ -63,12 +59,8 @@ extension UIViewRepresentable {
 
 class UIViewRepresentableNode: BaseUIKitNode<AnyView, StaticGeometry, UIView> {
 
-    override var hierarchyIdentifier: String {
-        "UIView"
-    }
-
     private var uiViewRepresentable: AnyUIViewRepresentable {
-        view.content as! AnyUIViewRepresentable
+        view as! AnyUIViewRepresentable
     }
 
     override func update(_ view: AnyView, context: Context) {

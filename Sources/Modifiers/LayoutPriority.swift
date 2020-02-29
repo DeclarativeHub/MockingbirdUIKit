@@ -27,10 +27,6 @@ extension ViewModifiers.LayoutPriority: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.LayoutPriority, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "LayoutPriority(\(node.hierarchyIdentifier))"
-        }
-        
         override var layoutPriority: Double {
             modifier.value
         }

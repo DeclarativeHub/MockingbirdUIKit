@@ -27,10 +27,6 @@ extension ViewModifiers.EdgesIgnoringSafeArea: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.EdgesIgnoringSafeArea, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "EISA(\(node.hierarchyIdentifier))"
-        }
-
         override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
             StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
         }

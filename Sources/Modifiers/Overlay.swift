@@ -27,10 +27,6 @@ extension ViewModifiers.Overlay: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.Overlay, StaticGeometry, NoRenderable> {
 
-        override var hierarchyIdentifier: String {
-            "Overlay(\(node.hierarchyIdentifier))"
-        }
-
         override var layoutableChildNodes: [LayoutableNode] {
             [node, overlayNode]
         }

@@ -27,10 +27,6 @@ extension Text: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<Text, StaticGeometry, UILabel> {
 
-        override var hierarchyIdentifier: String {
-            "Text"
-        }
-
         override func update(_ view: Text, context: Context) {
             if view != self.view {
                 invalidateRenderingState()

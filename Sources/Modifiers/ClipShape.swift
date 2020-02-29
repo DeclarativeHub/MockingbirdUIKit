@@ -27,10 +27,6 @@ extension ViewModifiers.ClipShape: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.ClipShape, StaticGeometry, ClippingView> {
 
-        override var hierarchyIdentifier: String {
-            "ClipShape(\(node.hierarchyIdentifier))"
-        }
-
         override var layoutableChildNodes: [LayoutableNode] {
             [renderable]
         }

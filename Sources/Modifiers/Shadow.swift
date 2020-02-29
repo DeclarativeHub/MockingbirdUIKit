@@ -27,10 +27,6 @@ extension ViewModifiers.Shadow: UIKitModifierNodeResolvable {
 
     class Node: BaseUIKitModifierNode<ViewModifiers.Shadow, StaticGeometry, ShadowView> {
 
-        override var hierarchyIdentifier: String {
-            "Shadow(\(node.hierarchyIdentifier))"
-        }
-
         override var layoutableChildNodes: [LayoutableNode] {
             [renderable]
         }

@@ -27,7 +27,7 @@ import ReactiveKit
 class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
 
     override var hierarchyIdentifier: String {
-        "View(\(node.hierarchyIdentifier))"
+        return "View[\(node.hierarchyIdentifier)]"
     }
 
     override var layoutableChildNodes: [LayoutableNode] {
@@ -41,9 +41,9 @@ class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
 
     override func update(_ view: AnyView, context: Context) {
         super.update(view, context: context)
-        observeStateProperties(of: view.content)
-        ViewNode.configureEnvironmentObjectProperties(of: view.content, context: context)
-        self.node = view.body.resolve(context: context, cachedNode: node)
+        observeStateProperties(of: view.view)
+        ViewNode.configureEnvironmentObjectProperties(of: view.view, context: context)
+        self.node = view.view.body.resolve(context: context, cachedNode: node)
         self.node.didMoveToParent(self)
     }
 
@@ -59,7 +59,7 @@ class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
         StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
     }
 
-    private func observeStateProperties(of view: View) {
+    private func observeStateProperties(of view: SomeView) {
         observedObjectsCancellables = []
         let mirror = Mirror(reflecting: view)
         for (label, value) in mirror.children where label != nil {
@@ -91,7 +91,7 @@ class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
         }
     }
 
-    private static func configureEnvironmentObjectProperties(of view: View, context: Context) {
+    private static func configureEnvironmentObjectProperties(of view: SomeView, context: Context) {
         let mirror = Mirror(reflecting: view)
         for (label, value) in mirror.children where label != nil {
             if let property = value as? EnvironmentObjectProperty {

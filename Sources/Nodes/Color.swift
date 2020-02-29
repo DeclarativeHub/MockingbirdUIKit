@@ -27,10 +27,6 @@ extension Color: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<Color, StaticGeometry, CALayer> {
 
-        override var hierarchyIdentifier: String {
-            "Color"
-        }
-
         override func makeRenderable() -> CALayer {
             CALayer()
         }

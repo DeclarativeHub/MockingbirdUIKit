@@ -27,10 +27,6 @@ extension Button: UIKitNodeResolvable {
 
     class Node: BaseUIKitNode<Button, StaticGeometry, Control> {
 
-        override var hierarchyIdentifier: String {
-            "Button[\(label.hierarchyIdentifier)]"
-        }
-
         private var label: UIKitNode!
 
         override func update(_ button: Button, context: Context) {

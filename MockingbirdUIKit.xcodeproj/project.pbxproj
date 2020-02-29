@@ -13,41 +13,13 @@
 		EC6F1376239BDA26002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
 		EC6F1377239BDA33002FE2E4 /* ReactiveKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; };
 		EC6F1378239BDA33002FE2E4 /* ReactiveKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		EC6F137A239BDD26002FE2E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6F1379239BDD26002FE2E4 /* ContentView.swift */; };
-		EC77FD0623E8B60600EE3D1C /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77FD0523E8B60600EE3D1C /* Slider.swift */; };
 		EC907C3423F84FF600FF48E7 /* UIKitNodeGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC907C3323F84FF600FF48E7 /* UIKitNodeGeometry.swift */; };
 		EC907C3623F8501000FF48E7 /* StaticGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC907C3523F8501000FF48E7 /* StaticGeometry.swift */; };
 		EC907C3A23F8504700FF48E7 /* ContentGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC907C3923F8504700FF48E7 /* ContentGeometry.swift */; };
 		EC907C3D23F8510900FF48E7 /* ContainerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC907C3C23F8510900FF48E7 /* ContainerLayer.swift */; };
 		EC907C3F23F8512400FF48E7 /* ContainerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC907C3E23F8512400FF48E7 /* ContainerControl.swift */; };
-		EC907C4023F85AC600FF48E7 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21058238AD2300034D0E3 /* Background.swift */; };
-		EC907C4123F85AF900FF48E7 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21059238AD2300034D0E3 /* Padding.swift */; };
-		EC907C4223F85C0100FF48E7 /* LayoutPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105A238AD2300034D0E3 /* LayoutPriority.swift */; };
-		EC907C4323F85C6300FF48E7 /* EdgesIgnoringSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CAACB23A6A9D00073C826 /* EdgesIgnoringSafeArea.swift */; };
-		EC907C4423F85C7900FF48E7 /* Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7469EB239C51B3009A4102 /* Gesture.swift */; };
-		EC907C4523F85C9D00FF48E7 /* EnvironmentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2441C0238DDA2400135660 /* EnvironmentObject.swift */; };
-		EC907C4623F85CEB00FF48E7 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105D238AD2300034D0E3 /* Overlay.swift */; };
-		EC907C4723F85D0B00FF48E7 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105C238AD2300034D0E3 /* Shadow.swift */; };
-		EC907C4823F85D3800FF48E7 /* ClipShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21056238AD2300034D0E3 /* ClipShape.swift */; };
-		EC907C4923F85D4C00FF48E7 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21057238AD2300034D0E3 /* Frame.swift */; };
-		EC907C4A23F85D8D00FF48E7 /* FlexFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105B238AD2300034D0E3 /* FlexFrame.swift */; };
 		EC907C4E23F9796800FF48E7 /* LayoutableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC907C4D23F9796800FF48E7 /* LayoutableNode.swift */; };
 		ECC2104B238AD2090034D0E3 /* MockingbirdUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = ECC21049238AD2090034D0E3 /* MockingbirdUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ECC2107E238AD2300034D0E3 /* FixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSize.swift */; };
-		ECC2107F238AD2300034D0E3 /* Offset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21055238AD2300034D0E3 /* Offset.swift */; };
-		ECC21088238AD2300034D0E3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105F238AD2300034D0E3 /* Button.swift */; };
-		ECC21089238AD2300034D0E3 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21060238AD2300034D0E3 /* VStack.swift */; };
-		ECC2108A238AD2300034D0E3 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21061238AD2300034D0E3 /* Image.swift */; };
-		ECC2108B238AD2300034D0E3 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21062238AD2300034D0E3 /* Text.swift */; };
-		ECC2108C238AD2300034D0E3 /* ZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21063238AD2300034D0E3 /* ZStack.swift */; };
-		ECC2108D238AD2300034D0E3 /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21064238AD2300034D0E3 /* GeometryReader.swift */; };
-		ECC2108E238AD2300034D0E3 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21065238AD2300034D0E3 /* Spacer.swift */; };
-		ECC21090238AD2300034D0E3 /* EnvironmentValueModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21067238AD2300034D0E3 /* EnvironmentValueModifier.swift */; };
-		ECC21091238AD2300034D0E3 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21068238AD2300034D0E3 /* HStack.swift */; };
-		ECC21092238AD2300034D0E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21069238AD2300034D0E3 /* Color.swift */; };
-		ECC21094238AD2300034D0E3 /* ViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106B238AD2300034D0E3 /* ViewNode.swift */; };
-		ECC21095238AD2300034D0E3 /* StrokeShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106C238AD2300034D0E3 /* StrokeShapeView.swift */; };
-		ECC21096238AD2300034D0E3 /* FillShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106D238AD2300034D0E3 /* FillShapeView.swift */; };
 		ECC21098238AD2300034D0E3 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106F238AD2300034D0E3 /* ContainerView.swift */; };
 		ECC21099238AD2300034D0E3 /* Color+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21071238AD2300034D0E3 /* Color+UIKit.swift */; };
 		ECC2109A238AD2300034D0E3 /* CGSize+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21072238AD2300034D0E3 /* CGSize+Extensions.swift */; };
@@ -58,7 +30,6 @@
 		ECC210A1238AD2300034D0E3 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21079238AD2300034D0E3 /* Resolver.swift */; };
 		ECC210A2238AD2300034D0E3 /* UIKitNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107A238AD2300034D0E3 /* UIKitNode.swift */; };
 		ECC210A3238AD2300034D0E3 /* HostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107B238AD2300034D0E3 /* HostingView.swift */; };
-		ECC210A4238AD2300034D0E3 /* UIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107C238AD2300034D0E3 /* UIViewRepresentable.swift */; };
 		ECC210A7238AD32C0034D0E3 /* Mockingbird.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC210A6238AD32C0034D0E3 /* Mockingbird.framework */; };
 		ECC210AB238AD4240034D0E3 /* Modified.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC210AA238AD4240034D0E3 /* Modified.swift */; };
 		ECC210AE238AE9BC0034D0E3 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC210AC238AE9690034D0E3 /* HostingController.swift */; };
@@ -69,6 +40,27 @@
 		ECC210C9238AEB710034D0E3 /* Mockingbird.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ECC210A6238AD32C0034D0E3 /* Mockingbird.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ECC210CB238AEB730034D0E3 /* MockingbirdUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC21046238AD2090034D0E3 /* MockingbirdUIKit.framework */; };
 		ECC210CC238AEB730034D0E3 /* MockingbirdUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ECC21046238AD2090034D0E3 /* MockingbirdUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ECF2EB97240AAE7E00BD5E67 /* ViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2106B238AD2300034D0E3 /* ViewNode.swift */; };
+		ECF2EB98240AAEE800BD5E67 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21065238AD2300034D0E3 /* Spacer.swift */; };
+		ECF2EB99240AAEFA00BD5E67 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21062238AD2300034D0E3 /* Text.swift */; };
+		ECF2EB9A240AAF1700BD5E67 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21069238AD2300034D0E3 /* Color.swift */; };
+		ECF2EB9B240AAF2400BD5E67 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21061238AD2300034D0E3 /* Image.swift */; };
+		ECF2EB9C240AAF2400BD5E67 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77FD0523E8B60600EE3D1C /* Slider.swift */; };
+		ECF2EB9E240AAF9400BD5E67 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105F238AD2300034D0E3 /* Button.swift */; };
+		ECF2EB9F240AAFA800BD5E67 /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21064238AD2300034D0E3 /* GeometryReader.swift */; };
+		ECF2EBA0240AAFB200BD5E67 /* EnvironmentValueModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21067238AD2300034D0E3 /* EnvironmentValueModifier.swift */; };
+		ECF2EBA1240AAFB900BD5E67 /* UIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2107C238AD2300034D0E3 /* UIViewRepresentable.swift */; };
+		ECF2EBA2240AB01100BD5E67 /* ZStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21063238AD2300034D0E3 /* ZStack.swift */; };
+		ECF2EBA4240AB06400BD5E67 /* VariadicView.Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2EBA3240AB06400BD5E67 /* VariadicView.Tree.swift */; };
+		ECF2EBAB240ABA4B00BD5E67 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21060238AD2300034D0E3 /* VStack.swift */; };
+		ECF2EBAC240ABA7300BD5E67 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21068238AD2300034D0E3 /* HStack.swift */; };
+		ECF2EBAE240ABE7500BD5E67 /* TupleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2EBAD240ABE7500BD5E67 /* TupleView.swift */; };
+		ECF2EBAF240AF0EB00BD5E67 /* FixedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21054238AD2300034D0E3 /* FixedSize.swift */; };
+		ECF2EBB1240AF1BF00BD5E67 /* ModifiedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */; };
+		ECF2EBB2240AF45F00BD5E67 /* Offset.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21055238AD2300034D0E3 /* Offset.swift */; };
+		ECF2EBB3240AF46F00BD5E67 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21059238AD2300034D0E3 /* Padding.swift */; };
+		ECF2EBB4240AF49800BD5E67 /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105C238AD2300034D0E3 /* Shadow.swift */; };
+		ECF2EBB8240B166400BD5E67 /* ViewModifierContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2EBB7240B166400BD5E67 /* ViewModifierContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +150,10 @@
 		ECC210BE238AEA8C0034D0E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECC210C1238AEA8C0034D0E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ECC210C3238AEA8C0034D0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ECF2EBA3240AB06400BD5E67 /* VariadicView.Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariadicView.Tree.swift; sourceTree = "<group>"; };
+		ECF2EBAD240ABE7500BD5E67 /* TupleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TupleView.swift; sourceTree = "<group>"; };
+		ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedContent.swift; sourceTree = "<group>"; };
+		ECF2EBB7240B166400BD5E67 /* ViewModifierContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifierContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,12 +272,16 @@
 				ECC21068238AD2300034D0E3 /* HStack.swift */,
 				ECC21060238AD2300034D0E3 /* VStack.swift */,
 				ECC21063238AD2300034D0E3 /* ZStack.swift */,
+				ECF2EBA3240AB06400BD5E67 /* VariadicView.Tree.swift */,
+				ECF2EBAD240ABE7500BD5E67 /* TupleView.swift */,
 				ECC21062238AD2300034D0E3 /* Text.swift */,
 				ECC21069238AD2300034D0E3 /* Color.swift */,
 				ECC21061238AD2300034D0E3 /* Image.swift */,
 				ECC2105F238AD2300034D0E3 /* Button.swift */,
 				EC77FD0523E8B60600EE3D1C /* Slider.swift */,
 				ECC21065238AD2300034D0E3 /* Spacer.swift */,
+				ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */,
+				ECF2EBB7240B166400BD5E67 /* ViewModifierContent.swift */,
 				ECC2106D238AD2300034D0E3 /* FillShapeView.swift */,
 				ECC2106C238AD2300034D0E3 /* StrokeShapeView.swift */,
 				ECC21064238AD2300034D0E3 /* GeometryReader.swift */,
@@ -441,54 +441,47 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECC2108D238AD2300034D0E3 /* GeometryReader.swift in Sources */,
-				ECC2108C238AD2300034D0E3 /* ZStack.swift in Sources */,
 				ECC2109F238AD2300034D0E3 /* CGRect+Extensions.swift in Sources */,
+				ECF2EB98240AAEE800BD5E67 /* Spacer.swift in Sources */,
 				ECC210A3238AD2300034D0E3 /* HostingView.swift in Sources */,
-				ECC2108B238AD2300034D0E3 /* Text.swift in Sources */,
+				ECF2EBAB240ABA4B00BD5E67 /* VStack.swift in Sources */,
+				ECF2EBAF240AF0EB00BD5E67 /* FixedSize.swift in Sources */,
 				ECC210A1238AD2300034D0E3 /* Resolver.swift in Sources */,
-				ECC21091238AD2300034D0E3 /* HStack.swift in Sources */,
+				ECF2EB9C240AAF2400BD5E67 /* Slider.swift in Sources */,
 				EC907C3F23F8512400FF48E7 /* ContainerControl.swift in Sources */,
-				EC77FD0623E8B60600EE3D1C /* Slider.swift in Sources */,
 				EC1CAAC423A6814E0073C826 /* Container.swift in Sources */,
+				ECF2EB9E240AAF9400BD5E67 /* Button.swift in Sources */,
 				EC1CAAC623A698D50073C826 /* UIEdgeInsets+Extensions.swift in Sources */,
-				EC907C4A23F85D8D00FF48E7 /* FlexFrame.swift in Sources */,
-				ECC21090238AD2300034D0E3 /* EnvironmentValueModifier.swift in Sources */,
-				EC907C4423F85C7900FF48E7 /* Gesture.swift in Sources */,
-				EC907C4623F85CEB00FF48E7 /* Overlay.swift in Sources */,
 				EC907C3D23F8510900FF48E7 /* ContainerLayer.swift in Sources */,
-				ECC21094238AD2300034D0E3 /* ViewNode.swift in Sources */,
-				EC907C4323F85C6300FF48E7 /* EdgesIgnoringSafeArea.swift in Sources */,
 				ECC21099238AD2300034D0E3 /* Color+UIKit.swift in Sources */,
-				EC907C4923F85D4C00FF48E7 /* Frame.swift in Sources */,
-				ECC21088238AD2300034D0E3 /* Button.swift in Sources */,
 				ECC210AE238AE9BC0034D0E3 /* HostingController.swift in Sources */,
-				ECC2107E238AD2300034D0E3 /* FixedSize.swift in Sources */,
-				ECC21095238AD2300034D0E3 /* StrokeShapeView.swift in Sources */,
+				ECF2EB99240AAEFA00BD5E67 /* Text.swift in Sources */,
 				ECC21098238AD2300034D0E3 /* ContainerView.swift in Sources */,
-				ECC2108A238AD2300034D0E3 /* Image.swift in Sources */,
-				EC907C4123F85AF900FF48E7 /* Padding.swift in Sources */,
-				EC907C4023F85AC600FF48E7 /* Background.swift in Sources */,
+				ECF2EBA0240AAFB200BD5E67 /* EnvironmentValueModifier.swift in Sources */,
+				ECF2EB9F240AAFA800BD5E67 /* GeometryReader.swift in Sources */,
+				ECF2EBAC240ABA7300BD5E67 /* HStack.swift in Sources */,
 				ECC2109C238AD2300034D0E3 /* Font+UIKit.swift in Sources */,
 				EC907C3A23F8504700FF48E7 /* ContentGeometry.swift in Sources */,
-				EC907C4223F85C0100FF48E7 /* LayoutPriority.swift in Sources */,
+				ECF2EBA1240AAFB900BD5E67 /* UIViewRepresentable.swift in Sources */,
+				ECF2EBA4240AB06400BD5E67 /* VariadicView.Tree.swift in Sources */,
+				ECF2EB97240AAE7E00BD5E67 /* ViewNode.swift in Sources */,
 				EC907C3423F84FF600FF48E7 /* UIKitNodeGeometry.swift in Sources */,
+				ECF2EBB4240AF49800BD5E67 /* Shadow.swift in Sources */,
 				EC1CAAC223A67E180073C826 /* Bounds.swift in Sources */,
+				ECF2EBB1240AF1BF00BD5E67 /* ModifiedContent.swift in Sources */,
 				ECC2109B238AD2300034D0E3 /* Text+UIKit.swift in Sources */,
+				ECF2EBA2240AB01100BD5E67 /* ZStack.swift in Sources */,
+				ECF2EBAE240ABE7500BD5E67 /* TupleView.swift in Sources */,
+				ECF2EBB8240B166400BD5E67 /* ViewModifierContent.swift in Sources */,
+				ECF2EB9A240AAF1700BD5E67 /* Color.swift in Sources */,
+				ECF2EBB3240AF46F00BD5E67 /* Padding.swift in Sources */,
+				ECF2EB9B240AAF2400BD5E67 /* Image.swift in Sources */,
 				EC907C4E23F9796800FF48E7 /* LayoutableNode.swift in Sources */,
-				ECC2108E238AD2300034D0E3 /* Spacer.swift in Sources */,
-				EC907C4823F85D3800FF48E7 /* ClipShape.swift in Sources */,
-				ECC21089238AD2300034D0E3 /* VStack.swift in Sources */,
-				ECC21096238AD2300034D0E3 /* FillShapeView.swift in Sources */,
-				ECC21092238AD2300034D0E3 /* Color.swift in Sources */,
 				ECC2109E238AD2300034D0E3 /* CGPoint+Extensions.swift in Sources */,
-				ECC210A4238AD2300034D0E3 /* UIViewRepresentable.swift in Sources */,
 				ECC210AB238AD4240034D0E3 /* Modified.swift in Sources */,
 				ECC2109A238AD2300034D0E3 /* CGSize+Extensions.swift in Sources */,
 				ECC210A2238AD2300034D0E3 /* UIKitNode.swift in Sources */,
-				ECC2107F238AD2300034D0E3 /* Offset.swift in Sources */,
-				EC907C4723F85D0B00FF48E7 /* Shadow.swift in Sources */,
-				EC907C4523F85C9D00FF48E7 /* EnvironmentObject.swift in Sources */,
+				ECF2EBB2240AF45F00BD5E67 /* Offset.swift in Sources */,
 				EC907C3623F8501000FF48E7 /* StaticGeometry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,7 +490,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC6F137A239BDD26002FE2E4 /* ContentView.swift in Sources */,
 				ECC210B6238AEA8A0034D0E3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

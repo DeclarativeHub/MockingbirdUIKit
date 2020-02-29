@@ -44,13 +44,13 @@ public class HostingView: ContainerView {
         }
     }
 
-    public private(set) var view: View
+    public private(set) var view: SomeView
 
     private var node: UIKitNode
 
     private var previousBounds: CGRect? = nil
 
-    public init(_ view: View, context: Context = Context(), cachedNode: UIKitNode? = nil) {
+    public init<V: View>(_ view: V, context: Context = Context(), cachedNode: UIKitNode? = nil) {
         let renderer = Renderer()
         let context = modified(context) { $0.rendered = renderer }
         self.view = view
@@ -58,9 +58,10 @@ public class HostingView: ContainerView {
         self.node = cachedNode ?? view.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
         renderer.hostingView = self
+        print("New view: ", node.hierarchyIdentifier)
     }
 
-    public func updateView(_ view: View, resolvedNode: UIKitNode? = nil) {
+    public func updateView<V: View>(_ view: V, resolvedNode: UIKitNode? = nil) {
         self.view = view
         self.node = resolvedNode ?? view.resolve(context: context, cachedNode: nil)
         self.setNeedsRendering()
@@ -93,6 +94,10 @@ public class HostingView: ContainerView {
         } else {
             return Bounds(rect: bounds, safeAreaInsets: .zero)
         }
+    }
+
+    public override var intrinsicContentSize: CGSize {
+        node.layoutSize(fitting: UIScreen.main.bounds.size)
     }
 
     public func setNeedsRendering() {
