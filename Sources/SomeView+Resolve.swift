@@ -20,17 +20,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import UIKit
 import Mockingbird
 
-extension TupleView: ContentContainerNode {
+protocol UIKitNodeResolvable {
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode
+}
+
+extension SomeView {
+
+    public func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        let resolvedNode: AnyUIKitNode
+        if let view = self as? UIKitNodeResolvable {
+            resolvedNode = view.resolve(context: context, cachedNode: cachedNode)
+        } else if let view = self as? AnyUIViewRepresentable {
+            let node = (cachedNode as? UIViewRepresentableNode) ?? UIViewRepresentableNode()
+            node.update(view: view, context: context)
+            return node
+        } else {
+            resolvedNode = cachedNode as? ViewNode ?? ViewNode()
+        }
+        resolvedNode.update(view: self, context: context)
+        return resolvedNode
+    }
 
     public func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode] {
-        let mirror = Mirror(reflecting: value)
-        let nodes = mirror.children.map { ($0.value as! SomeView) }
-        if nodes.count == cachedNodes.count {
-            return zip(nodes, cachedNodes).map { $0.resolve(context: context, cachedNode: $1) }
+        if let container = self as? ContentContainerNode {
+            return container.contentNodes(context: context, cachedNodes: cachedNodes)
         } else {
-            return nodes.map { $0.resolve(context: context, cachedNode: nil) }
+            return [self.resolve(context: context, cachedNode: cachedNodes.first)]
         }
     }
+}
+
+protocol ContentContainerNode {
+    func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode]
 }

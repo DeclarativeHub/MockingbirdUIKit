@@ -1,51 +1,75 @@
+// MIT License
 //
-//  VariadicView.Tree.swift
-//  MockingbirdUIKit
+// Copyright (c) 2020 Declarative Hub
 //
-//  Created by Srdan Rasic on 29/02/2020.
-//  Copyright © 2020 Declarative Hub. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import UIKit
 import Mockingbird
 
 extension VariadicView.Tree: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<VariadicView.Tree<Root, Content>, ContentGeometry, NoRenderable> {
+    private class Node: UIKitNode {
 
-        override var hierarchyIdentifier: String {
-            return "Tree[\(nodes.map { $0.hierarchyIdentifier }.joined(separator: ", "))]"
-        }
-        
-        private var layoutAlgorithm: LayoutAlgorithm! = nil {
-            didSet {
-                invalidateRenderingState()
+        var nodes: [AnyUIKitNode]!
+
+        var layoutAlgorithm: LayoutAlgorithm!
+
+        func update(view: SomeView, context: Context) {
+            if let view = view as? VStack<Content> {
+                self.nodes = view.tree.content.contentNodes(context: context, cachedNodes: nodes ?? [])
+                self.layoutAlgorithm = view.tree.root.layoutAlgorithm(nodes: nodes, env: context.environment)
+            } else if let view = view as? HStack<Content> {
+                self.nodes = view.tree.content.contentNodes(context: context, cachedNodes: nodes ?? [])
+                self.layoutAlgorithm = view.tree.root.layoutAlgorithm(nodes: nodes, env: context.environment)
+            } else if let view = view as? ZStack<Content> {
+                self.nodes = view.tree.content.contentNodes(context: context, cachedNodes: nodes ?? [])
+                self.layoutAlgorithm = view.tree.root.layoutAlgorithm(nodes: nodes, env: context.environment)
+            } else {
+                fatalError()
             }
         }
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            nodes
+        func update(view: VariadicView.Tree<Root, Content>, context: Context) {
+            fatalError()
         }
 
-        var nodes: [UIKitNode] = [] {
-            didSet {
-                nodes.forEach { $0.didMoveToParent(self) }
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            layoutAlgorithm.contentLayout(fittingSize: targetSize).idealSize
+        }
+
+        func layout(in container: Container, bounds: Bounds) {
+            let layout = layoutAlgorithm.contentLayout(fittingSize: bounds.size)
+            zip(nodes, layout.frames).forEach { (node, frame) in
+                node.layout(
+                    in: container,
+                    bounds: Bounds(
+                        rect: frame.offsetBy(dx: bounds.origin.x, dy: bounds.origin.y),
+                        safeAreaInsets: .zero
+                    )
+                )
             }
         }
 
-        override func update(_ view: VariadicView.Tree<Root, Content>, context: Context) {
-            let layoutChanged = self.view.root != view.root
-            super.update(view, context: context)
-            let newNodes = view.content.contentNodes(context: context, cachedNodes: nodes)
-            let nodesChanges = nodes.count != newNodes.count || zip(nodes, newNodes).contains { $0 !== $1 }
-            self.nodes = newNodes
-            if self.layoutAlgorithm == nil || layoutChanged || nodesChanges {
-                self.layoutAlgorithm = view.root.layoutAlgorithm(nodes: nodes, env: context.environment)
-            }
-        }
+    }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
-            layoutAlgorithm.contentLayout(fittingSize: targetSize)
-        }
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
     }
 }

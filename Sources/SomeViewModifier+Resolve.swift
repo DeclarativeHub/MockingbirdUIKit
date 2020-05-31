@@ -20,24 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import CoreGraphics
+import UIKit
 import Mockingbird
 
-extension ContentGeometry: UIKitNodeGeometry {
+protocol UIKitNodeModifierResolvable {
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier
+}
 
-    public func layout(nodes: [LayoutableNode], in contaner: Container, bounds: Bounds) {
-//        precondition(nodes.count == frames.count)
-        for (node, frame) in zip(nodes, frames) {
-            let bounds = Bounds(
-                rect: CGRect(
-                    x: bounds.rect.minX + frame.minX,
-                    y: bounds.rect.minY + frame.minY,
-                    width: frame.width,
-                    height: frame.height
-                ),
-                safeAreaInsets: bounds.safeAreaInsets
-            )
-            node.layout(in: contaner, bounds: bounds)
+extension SomeViewModifier {
+
+    public func resolve(context: inout Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier? {
+        if let viewModifier = self as? UIKitNodeModifierResolvable {
+            let resolvedNodeModifier = viewModifier.resolve(context: context, cachedNodeModifier: cachedNodeModifier)
+            resolvedNodeModifier.update(viewModifier: self, context: &context)
+            return resolvedNodeModifier
+        } else {
+            return nil
         }
     }
 }

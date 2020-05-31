@@ -23,12 +23,35 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.FlexFrame: UIKitModifierNodeResolvable {
+extension ViewModifiers.FlexFrame: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.FlexFrame, ContentGeometry, NoRenderable> {
+    private class Node: UIKitNodeModifier {
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
-            Layout.FlexFrame(flexFrame: modifier, node: node).contentLayout(fittingSize: targetSize)
+        var viewModifier: ViewModifiers.FlexFrame!
+
+        func update(viewModifier: ViewModifiers.FlexFrame, context: inout Context) {
+            self.viewModifier = viewModifier
         }
+
+        func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
+            LayoutAlgorithms
+                .FlexFrame(flexFrame: viewModifier, node: node, screenScale: UIScreen.main.scale)
+                .contentLayout(fittingSize: targetSize)
+                .idealSize
+        }
+
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            let geometry = LayoutAlgorithms
+                .FlexFrame(flexFrame: viewModifier, node: node, screenScale: UIScreen.main.scale)
+                .contentLayout(fittingSize: bounds.size)
+            node.layout(
+                in: container,
+                bounds: bounds.update(to: geometry.frames[0].offsetBy(dx: bounds.rect.minX, dy: bounds.rect.minY))
+            )
+        }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

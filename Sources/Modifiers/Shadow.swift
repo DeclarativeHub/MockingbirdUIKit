@@ -23,38 +23,33 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Shadow: UIKitModifierNodeResolvable {
+extension ViewModifiers.Shadow: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.Shadow, StaticGeometry, ShadowView> {
+    private class Node: UIKitNodeModifier {
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            [renderable]
+        let shadowView = ShadowView()
+
+        func update(viewModifier: ViewModifiers.Shadow, context: inout Context) {
+            shadowView.layer.shadowColor = viewModifier.color.uiColorValue.cgColor
+            shadowView.layer.shadowRadius = viewModifier.radius
+            shadowView.layer.shadowOffset = CGSize(width: viewModifier.x, height: viewModifier.y)
+            shadowView.layer.shadowOpacity = 1
         }
 
-        override func makeRenderable() -> ShadowView {
-            ShadowView()
-        }
-
-        override func updateRenderable() {
-            renderable.layer.shadowColor = modifier.color.uiColorValue.cgColor
-            renderable.layer.shadowRadius = modifier.radius
-            renderable.layer.shadowOffset = CGSize(width: modifier.x, height: modifier.y)
-            renderable.layer.shadowOpacity = 1
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
-
-        override func layout(in container: Container, bounds: Bounds) {
-            super.layout(in: container, bounds: bounds)
-            renderable.replaceSubviews {
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            shadowView.frame = bounds.rect
+            container.view.addSubview(shadowView)
+            shadowView.replaceSubnodes {
                 node.layout(
-                    in: container.replacingView(renderable),
-                    bounds: Bounds(rect: renderable.bounds, safeAreaInsets: .zero)
+                    in: container.replacingView(shadowView),
+                    bounds: bounds.at(origin: .zero)
                 )
             }
         }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }
 
@@ -62,8 +57,8 @@ extension ViewModifiers.Shadow {
 
     class ShadowView: ContainerView {
 
-        override func replaceSubviews(_ block: () -> Void) {
-            super.replaceSubviews(block)
+        override func layoutSubviews() {
+            super.layoutSubviews()
             let path = CGMutablePath()
             for sublayer in layer.sublayers ?? [] {
                 var sublayerPath: CGPath?

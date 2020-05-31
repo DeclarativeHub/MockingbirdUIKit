@@ -20,35 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import CoreGraphics
+import UIKit
+import Mockingbird
 
-public struct StaticGeometry: UIKitNodeGeometry {
+extension ViewModifiers.EnvironmentValue: UIKitNodeModifierResolvable {
 
-    public var rect: CGRect
+    private class Node: UIKitNodeModifier {
 
-    @inlinable
-    public var idealSize: CGSize {
-        rect.size
-    }
-
-    @inlinable
-    public init(origin: CGPoint = .zero, idealSize: CGSize) {
-        self.rect = CGRect(origin: origin, size: idealSize)
-    }
-
-    @inlinable
-    public func layout(nodes: [LayoutableNode], in contaner: Container, bounds: Bounds) {
-        let bounds = Bounds(
-            rect: CGRect(
-                x: bounds.rect.minX + rect.minX,
-                y: bounds.rect.minY + rect.minY,
-                width: bounds.rect.width,
-                height: bounds.rect.height
-            ),
-            safeAreaInsets: bounds.safeAreaInsets
-        )
-        for node in nodes {
-            node.layout(in: contaner, bounds: bounds)
+        func update(viewModifier: ViewModifiers.EnvironmentValue, context: inout Context) {
+            viewModifier.modify(&context.environment)
         }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

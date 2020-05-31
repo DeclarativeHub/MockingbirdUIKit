@@ -24,39 +24,42 @@ import UIKit
 import Mockingbird
 import ReactiveKit
 
-class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
+class ViewNode: UIKitNode {
 
-    override var hierarchyIdentifier: String {
-        return "View[\(node.hierarchyIdentifier)]"
-    }
+    var node: AnyUIKitNode!
 
-    override var layoutableChildNodes: [LayoutableNode] {
-        [node]
-    }
-
+    var view: SomeView!
+    var context: Context!
+    
     var propertyStorage: [String: Any] = [:]
-    var node: UIKitNode!
     var observedObjectsCancellables: [AnyCancellable] = []
     var needsViewUpdate: Bool = false
 
-    override func update(_ view: AnyView, context: Context) {
-        super.update(view, context: context)
-        observeStateProperties(of: view.view)
-        ViewNode.configureEnvironmentObjectProperties(of: view.view, context: context)
-        self.node = view.view.body.resolve(context: context, cachedNode: node)
-        self.node.didMoveToParent(self)
+    func update(view: SomeView, context: Context) {
+        self.view = view
+        self.context = context
+        ViewNode.configureEnvironmentObjectProperties(of: view, context: context)
+        node = view.body.resolve(context: context, cachedNode: node ?? nil)
+        observeStateProperties(of: view)
+    }
+
+    func update(view: Never, context: Context) {
+    }
+
+    func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        node.layoutSize(fitting: targetSize)
+    }
+
+    func layout(in container: Container, bounds: Bounds) {
+        node.layout(in: container, bounds: bounds)
     }
 
     private func updateViewIfNeeded() {
         if needsViewUpdate {
             needsViewUpdate = false
-            update(view, context: context)
-            invalidateRenderingState()
+            update(view: view, context: context)
+            context.rendered?.setNeedsRendering()
         }
-    }
-
-    override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-        StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
     }
 
     private func observeStateProperties(of view: SomeView) {
@@ -85,7 +88,7 @@ class ViewNode: BaseUIKitNode<AnyView, StaticGeometry, NoRenderable> {
     }
 
     private func contentWillChange() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { // runloop?
             self.needsViewUpdate = true
             self.updateViewIfNeeded()
         }

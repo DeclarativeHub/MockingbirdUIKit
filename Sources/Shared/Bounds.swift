@@ -45,6 +45,18 @@ extension Bounds {
         rect.size
     }
 
+    public func unsafe(edges: Edge.Set = .all) -> Bounds {
+        Bounds(
+            rect: unsafeRect(edges: edges),
+            safeAreaInsets: EdgeInsets(
+                top: edges.contains(.top) ? 0 : safeAreaInsets.top,
+                leading: edges.contains(.leading) ? 0 : safeAreaInsets.leading,
+                bottom: edges.contains(.bottom) ? 0 : safeAreaInsets.bottom,
+                trailing: edges.contains(.trailing) ? 0 : safeAreaInsets.trailing
+            )
+        )
+    }
+
     public func unsafeRect(edges: Edge.Set = .all) -> CGRect {
         rect.inset(by:
             EdgeInsets(
@@ -57,7 +69,7 @@ extension Bounds {
     }
 
     public func at(origin: CGPoint) -> Bounds {
-        Bounds(
+        return Bounds(
             rect: CGRect(origin: origin, size: rect.size),
             safeAreaInsets: safeAreaInsets // TODO
         )
@@ -73,6 +85,18 @@ extension Bounds {
     public func inset(by insets: EdgeInsets) -> Bounds {
         Bounds(
             rect: rect.inset(by: insets),
+            safeAreaInsets: EdgeInsets(
+                top: max(0, safeAreaInsets.top - insets.top),
+                leading: max(0, safeAreaInsets.leading - insets.leading),
+                bottom: max(0, safeAreaInsets.bottom - insets.bottom),
+                trailing: max(0, safeAreaInsets.trailing - insets.trailing)
+            )
+        )
+    }
+
+    public func update(to newRect: CGRect) -> Bounds {
+        Bounds(
+            rect: newRect,
             safeAreaInsets: safeAreaInsets // TODO
         )
     }

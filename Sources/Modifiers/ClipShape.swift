@@ -23,35 +23,31 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.ClipShape: UIKitModifierNodeResolvable {
+extension ViewModifiers.ClipShape: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.ClipShape, StaticGeometry, ClippingView> {
+    private class Node: UIKitNodeModifier {
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            [renderable]
+        let clippingView = ClippingView()
+
+        func update(viewModifier: ViewModifiers.ClipShape<S>, context: inout Context) {
+            clippingView.makePath = viewModifier.shape.path(in:)
         }
 
-        override func makeRenderable() -> ClippingView {
-            ClippingView()
-        }
-
-        override func updateRenderable() {
-            renderable.makePath = modifier.shape.path(in:)
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
-
-        override func layout(in container: Container, bounds: Bounds) {
-            super.layout(in: container, bounds: bounds)
-            renderable.replaceSubviews {
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            clippingView.frame = bounds.rect
+            clippingView.layoutIfNeeded()
+            container.view.addSubview(clippingView)
+            clippingView.replaceSubnodes {
                 node.layout(
-                    in: container.replacingView(renderable),
-                    bounds: Bounds(rect: CGRect(origin: .zero, size: bounds.rect.size), safeAreaInsets: .zero)
+                    in: container.replacingView(clippingView),
+                    bounds: bounds.at(origin: .zero)
                 )
             }
         }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }
 

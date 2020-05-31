@@ -23,24 +23,23 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Background: UIKitModifierNodeResolvable {
+extension ViewModifiers.Background: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.Background, StaticGeometry, NoRenderable> {
+    private class Node: UIKitNodeModifier {
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            [backgroundNode, node]
+        private var backgroundNode: AnyUIKitNode!
+
+        func update(viewModifier: ViewModifiers.Background<Background>, context: inout Context) {
+            backgroundNode = viewModifier.background.resolve(context: context, cachedNode: backgroundNode)
         }
 
-        private var backgroundNode: UIKitNode!
-
-        override func update(_ view: ModifiedContent, context: Context) {
-            super.update(view, context: context)
-            backgroundNode = modifier.background.resolve(context: context, cachedNode: backgroundNode)
-            backgroundNode.didMoveToParent(self)
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            backgroundNode.layout(in: container, bounds: bounds)
+            node.layout(in: container, bounds: bounds)
         }
+    }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

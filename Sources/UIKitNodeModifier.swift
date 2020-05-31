@@ -23,27 +23,27 @@
 import UIKit
 import Mockingbird
 
-public protocol AnyUIKitNode: LayoutNode {
+public protocol AnyUIKitNodeModifier {
 
     var isSpacer: Bool { get }
 
     var layoutPriority: Double { get }
 
-    func update(view: SomeView, context: Context)
+    func update(viewModifier: SomeViewModifier, context: inout Context)
 
-    func layoutSize(fitting targetSize: CGSize) -> CGSize
+    func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize
 
-    func layout(in container: Container, bounds: Bounds)
+    func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode)
 }
 
-public protocol UIKitNode: AnyUIKitNode {
+public protocol UIKitNodeModifier: AnyUIKitNodeModifier {
 
-    associatedtype View: SomeView
+    associatedtype ViewModifier: SomeViewModifier
 
-    func update(view: View, context: Context)
+    func update(viewModifier: ViewModifier, context: inout Context)
 }
 
-extension AnyUIKitNode {
+extension AnyUIKitNodeModifier {
 
     public var isSpacer: Bool {
         false
@@ -52,11 +52,23 @@ extension AnyUIKitNode {
     public var layoutPriority: Double {
         0
     }
+
+    func update(viewModifier: SomeViewModifier, context: inout Context) {
+        
+    }
+
+    func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
+        node.layoutSize(fitting: targetSize)
+    }
+
+    func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+        node.layout(in: container, bounds: bounds)
+    }
 }
 
-extension UIKitNode {
+extension UIKitNodeModifier {
 
-    public func update(view: SomeView, context: Context) {
-        update(view: view as! View, context: context)
+    public func update(viewModifier: SomeViewModifier, context: inout Context) {
+        update(viewModifier: viewModifier as! ViewModifier, context: &context)
     }
 }

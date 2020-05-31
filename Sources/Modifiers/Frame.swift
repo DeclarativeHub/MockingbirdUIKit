@@ -23,12 +23,35 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Frame: UIKitModifierNodeResolvable {
-    
-    class Node: BaseUIKitModifierNode<ViewModifiers.Frame, ContentGeometry, NoRenderable> {
-        
-        override func calculateGeometry(fitting targetSize: CGSize) -> ContentGeometry {
-            Layout.Frame(frame: modifier, node: node).contentLayout(fittingSize: targetSize)
+extension ViewModifiers.Frame: UIKitNodeModifierResolvable {
+
+    private class Node: UIKitNodeModifier {
+
+        var viewModifier: ViewModifiers.Frame!
+
+        func update(viewModifier: ViewModifiers.Frame, context: inout Context) {
+            self.viewModifier = viewModifier
         }
+
+        func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
+            LayoutAlgorithms
+                .Frame(frame: viewModifier, node: node, screenScale: UIScreen.main.scale)
+                .contentLayout(fittingSize: targetSize)
+                .idealSize
+        }
+
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            let geometry = LayoutAlgorithms
+                .Frame(frame: viewModifier, node: node, screenScale: UIScreen.main.scale)
+                .contentLayout(fittingSize: bounds.size)
+            node.layout(
+                in: container,
+                bounds: bounds.update(to: geometry.frames[0].offsetBy(dx: bounds.rect.minX, dy: bounds.rect.minY))
+            )
+        }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

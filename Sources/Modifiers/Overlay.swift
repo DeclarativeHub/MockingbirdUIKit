@@ -23,24 +23,23 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Overlay: UIKitModifierNodeResolvable {
+extension ViewModifiers.Overlay: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.Overlay, StaticGeometry, NoRenderable> {
+    private class Node: UIKitNodeModifier {
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            [node, overlayNode]
+        private var overlayNode: AnyUIKitNode!
+
+        func update(viewModifier: ViewModifiers.Overlay<Overlay>, context: inout Context) {
+            overlayNode = viewModifier.overlay.resolve(context: context, cachedNode: overlayNode)
         }
 
-        private var overlayNode: UIKitNode!
-
-        override func update(_ view: ModifiedContent, context: Context) {
-            super.update(view, context: context)
-            overlayNode = modifier.overlay.resolve(context: context, cachedNode: overlayNode)
-            overlayNode.didMoveToParent(self)
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds)
+            overlayNode.layout(in: container, bounds: bounds)
         }
+    }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

@@ -24,7 +24,7 @@ import UIKit
 
 public let kMockingbirdLayerName = "kMockableLayer"
 
-public final class ContainerLayer: CALayer {
+public final class ContainerLayer: CALayer, ContainerNode {
 
     private var sublayersToRemove: Set<CALayer> = []
 
@@ -35,18 +35,9 @@ public final class ContainerLayer: CALayer {
         super.addSublayer(layer)
     }
 
-    public func replaceSublayers(_ block: () -> Void) {
+    public func replaceSubnodes(_ block: () -> Void) {
         sublayersToRemove = Set(sublayers?.filter { $0.name == kMockingbirdLayerName } ?? [])
         block()
         sublayersToRemove.forEach { $0.removeFromSuperlayer() }
-    }
-}
-
-extension CALayer {
-
-    public static func mockingbirdLayer() -> Self {
-        let layer = self.init()
-        layer.name = kMockingbirdLayerName
-        return layer
     }
 }

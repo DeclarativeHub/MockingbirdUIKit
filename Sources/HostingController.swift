@@ -40,14 +40,12 @@ public class HostingController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(hostingView)
-        hostingView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            hostingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            hostingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            hostingView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor),
-            hostingView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor),
-            hostingView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor),
-            hostingView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
-        ])
+    }
+
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let size = hostingView.layoutSize(fitting: view.bounds.size)
+        hostingView.frame.size = size
+        hostingView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
     }
 }

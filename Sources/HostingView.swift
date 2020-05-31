@@ -46,22 +46,23 @@ public class HostingView: ContainerView {
 
     public private(set) var view: SomeView
 
-    private var node: UIKitNode
+    private var node: AnyUIKitNode
 
     private var previousBounds: CGRect? = nil
 
-    public init<V: View>(_ view: V, context: Context = Context(), cachedNode: UIKitNode? = nil) {
+    public init<V: View>(_ view: V, context: Context = Context(), cachedNode: AnyUIKitNode? = nil) {
         let renderer = Renderer()
-        let context = modified(context) { $0.rendered = renderer }
+        var context = context
+        context.rendered = renderer
         self.view = view
         self.context = context
         self.node = cachedNode ?? view.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
         renderer.hostingView = self
-        print("New view: ", node.hierarchyIdentifier)
+        print("New view: ", V.typeIdentifier)
     }
 
-    public func updateView<V: View>(_ view: V, resolvedNode: UIKitNode? = nil) {
+    public func updateView<V: View>(_ view: V, resolvedNode: AnyUIKitNode? = nil) {
         self.view = view
         self.node = resolvedNode ?? view.resolve(context: context, cachedNode: nil)
         self.setNeedsRendering()
@@ -82,7 +83,7 @@ public class HostingView: ContainerView {
         if previousBounds != bounds {
             previousBounds = bounds
             let container = Container(view: self, viewController: parentViewController!)
-            replaceSubviews {
+            container.view.replaceSubnodes {
                 node.layout(in: container, bounds: layoutBounds)
             }
         }
@@ -96,8 +97,8 @@ public class HostingView: ContainerView {
         }
     }
 
-    public override var intrinsicContentSize: CGSize {
-        node.layoutSize(fitting: UIScreen.main.bounds.size)
+    public func layoutSize(fitting size: CGSize) -> CGSize {
+        node.layoutSize(fitting: size)
     }
 
     public func setNeedsRendering() {

@@ -23,47 +23,47 @@
 import UIKit
 import Mockingbird
 
-extension Slider: UIKitNodeResolvable {
-
-    class Control: UISlider {
-
-        var binding: Binding<Float>? {
-            didSet {
-                guard let binding = binding else { return }
-                value = binding.wrappedValue
-            }
-        }
-
-        override init(frame: CGRect) {
-            super.init(frame: .zero)
-            addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
-        }
-
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-
-        @objc func handleValueChange() {
-            binding?.wrappedValue = value
-        }
-    }
-
-    class Node: BaseUIKitNode<Slider, StaticGeometry, Control> {
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(
-                idealSize: CGSize(width: targetSize.width, height: 31)
-            )
-        }
-
-        override func makeRenderable() -> Control {
-            Control(frame: .zero)
-        }
-
-        override func updateRenderable() {
-            renderable.binding = view.value
-            renderable.minimumValue = view.bounds.lowerBound
-            renderable.maximumValue = view.bounds.upperBound
-        }
-    }
-}
+//extension Slider: UIKitNodeResolvable {
+//
+//    class Control: UISlider {
+//
+//        var binding: Binding<Float>? {
+//            didSet {
+//                guard let binding = binding else { return }
+//                value = binding.wrappedValue
+//            }
+//        }
+//
+//        override init(frame: CGRect) {
+//            super.init(frame: .zero)
+//            addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
+//        }
+//
+//        required init?(coder: NSCoder) {
+//            fatalError("init(coder:) has not been implemented")
+//        }
+//
+//        @objc func handleValueChange() {
+//            binding?.wrappedValue = value
+//        }
+//    }
+//
+//    class Node: BaseUIKitNode<Slider, StaticGeometry, Control> {
+//
+//        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
+//            StaticGeometry(
+//                idealSize: CGSize(width: targetSize.width, height: 31)
+//            )
+//        }
+//
+//        override func makeRenderable() -> Control {
+//            Control(frame: .zero)
+//        }
+//
+//        override func updateRenderable() {
+//            renderable.binding = view.value
+//            renderable.minimumValue = view.bounds.lowerBound
+//            renderable.maximumValue = view.bounds.upperBound
+//        }
+//    }
+//}

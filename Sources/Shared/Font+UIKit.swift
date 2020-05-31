@@ -68,7 +68,7 @@ extension Font.Descriptor {
             case .default:
                 font = .systemFont(ofSize: size, weight: weight.uiFontWeightValue)
             case .monospaced:
-                if #available(iOS 12.0, *) {
+                if #available(iOS 13.0, *) {
                     font = .monospacedSystemFont(ofSize: size, weight: weight.uiFontWeightValue)
                 } else {
                     font = .monospacedDigitSystemFont(ofSize: size, weight: weight.uiFontWeightValue)

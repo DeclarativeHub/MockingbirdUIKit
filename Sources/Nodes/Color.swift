@@ -25,18 +25,27 @@ import Mockingbird
 
 extension Color: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<Color, StaticGeometry, CALayer> {
+    private class Node: UIKitNode {
 
-        override func makeRenderable() -> CALayer {
-            CALayer()
+        let layer = CALayer()
+
+        func update(view: Color, context: Context) {
+            layer.backgroundColor = view.uiColorValue.cgColor
         }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: targetSize)
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            targetSize
         }
 
-        override func updateRenderable() {
-            renderable.backgroundColor = view.uiColorValue.cgColor
+        func layout(in container: Container, bounds: Bounds) {
+            layer.frame = bounds.rect
+            layer.removeAllAnimations()
+            container.layer.addSublayer(layer)
         }
+
+    }
+
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
     }
 }

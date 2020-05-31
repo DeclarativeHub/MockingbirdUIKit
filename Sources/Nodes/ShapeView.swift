@@ -23,18 +23,16 @@
 import UIKit
 import Mockingbird
 
-extension GeometryReader: UIKitNodeResolvable {
+extension ShapeView: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
-        var view: GeometryReader<Content>?
-        var context: Context?
+        let layer = CAShapeLayer()
+        var makePath: ((CGRect) -> CGPath)!
 
-        var node: AnyUIKitNode?
-
-        func update(view: GeometryReader<Content>, context: Context) {
-            self.view = view
-            self.context = context
+        func update(view: ShapeView<S, SS>, context: Context) {
+            makePath = view.shape.path(in:)
+            (view.style as! ShapeStyleNode).apply(to: layer, context: context)
         }
 
         func layoutSize(fitting targetSize: CGSize) -> CGSize {
@@ -42,30 +40,51 @@ extension GeometryReader: UIKitNodeResolvable {
         }
 
         func layout(in container: Container, bounds: Bounds) {
-            guard let view = view, let context = context else { fatalError() }
-            let unsafeRect = bounds.unsafeRect()
-            let proxy = GeometryProxy(
-                size: unsafeRect.size,
-                safeAreaInsets: bounds.safeAreaInsets,
-                getFrame: { space in
-                    switch space {
-                    case .local:
-                        return CGRect(x: 0, y: 0, width: unsafeRect.width, height: unsafeRect.height)
-                    case .global:
-                        return unsafeRect
-                    case .named:
-                        fatalError()
-                    }
-                }
-            )
-            let content = view.content(proxy)
-            node = content.resolve(context: context, cachedNode: node)
-            node?.layout(in: container, bounds: bounds)
+            layer.path = makePath(bounds.rect)
+            layer.removeAllAnimations()
+            container.layer.addSublayer(layer)
         }
 
     }
 
     func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
         return (cachedNode as? Node) ?? Node()
+    }
+}
+
+protocol ShapeStyleNode {
+
+    func apply(to layer: CAShapeLayer, context: Context)
+}
+
+extension Color: ShapeStyleNode {
+
+    func apply(to layer: CAShapeLayer, context: Context) {
+        layer.fillColor = cgColorValue
+        layer.strokeColor = cgColorValue
+    }
+}
+
+extension ForegroundStyle: ShapeStyleNode {
+
+    func apply(to layer: CAShapeLayer, context: Context) {
+        layer.fillColor = context.environment.foregroundColor?.cgColorValue
+    }
+}
+
+extension FillShapeStyle: ShapeStyleNode {
+
+    func apply(to layer: CAShapeLayer, context: Context) {
+        (content as! ShapeStyleNode).apply(to: layer, context: context)
+        layer.strokeColor = nil
+    }
+}
+
+extension StrokeShapeStyle: ShapeStyleNode {
+
+    func apply(to layer: CAShapeLayer, context: Context) {
+        (content as! ShapeStyleNode).apply(to: layer, context: context)
+        layer.fillColor = nil
+        layer.lineWidth = lineWidth
     }
 }

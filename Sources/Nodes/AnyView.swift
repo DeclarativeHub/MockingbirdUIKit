@@ -20,8 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-func modified<T>(_ value: T, _ modify: (inout T) -> Void) -> T {
-    var copy = value
-    modify(&copy)
-    return copy
+import UIKit
+import Mockingbird
+
+extension AnyView: UIKitNodeResolvable {
+
+    private class Node: UIKitNode {
+
+        var node: AnyUIKitNode!
+
+        func update(view: AnyView, context: Context) {
+            node = view.view.resolve(context: context, cachedNode: node)
+        }
+
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            node.layoutSize(fitting: targetSize)
+        }
+
+        func layout(in container: Container, bounds: Bounds) {
+            node.layout(in: container, bounds: bounds)
+        }
+
+    }
+
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
+    }
 }

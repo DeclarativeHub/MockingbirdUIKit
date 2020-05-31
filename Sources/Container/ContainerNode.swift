@@ -20,34 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
-import Mockingbird
+public protocol ContainerNode: AnyObject {
 
-extension EnvironmentValueModifier: UIKitNodeResolvable {
-
-    class Node: BaseUIKitNode<EnvironmentValueModifier, StaticGeometry, NoRenderable> {
-        
-        override var layoutPriority: Double {
-            node.layoutPriority
-        }
-
-        override var layoutableChildNodes: [LayoutableNode] {
-            [node]
-        }
-
-        private var node: UIKitNode!
-
-        override func update(_ view: EnvironmentValueModifier, context: Context) {
-            super.update(view, context: context)
-            let context = modified(context) {
-                view.modify(&$0.environment)
-            }
-            node = view.content.resolve(context: context, cachedNode: node)
-            node.didMoveToParent(self)
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
-    }
+    func replaceSubnodes(_ block: () -> Void)
 }

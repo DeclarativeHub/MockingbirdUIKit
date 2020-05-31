@@ -23,15 +23,23 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Offset: UIKitModifierNodeResolvable {
-    
-    class Node: BaseUIKitModifierNode<ViewModifiers.Offset, StaticGeometry, NoRenderable> {
+extension ViewModifiers.Offset: UIKitNodeModifierResolvable {
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(
-                origin: CGPoint(x: modifier.offset.width, y: modifier.offset.height),
-                idealSize: node.layoutSize(fitting: targetSize)
-            )
+    private class Node: UIKitNodeModifier {
+
+        var viewModifier: ViewModifiers.Offset!
+
+        func update(viewModifier: ViewModifiers.Offset, context: inout Context) {
+            self.viewModifier = viewModifier
         }
+
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            let bounds = bounds.offset(dx: viewModifier.offset.width, dy: viewModifier.offset.height)
+            node.layout(in: container, bounds: bounds)
+        }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

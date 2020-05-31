@@ -7,36 +7,46 @@
 //
 
 import UIKit
+import ReactiveKit
 import Mockingbird
 import MockingbirdUIKit
 
-@available(iOS 13, *)
-struct VV: View {
+struct TestView: View {
 
-    @State var n: CGFloat = 0.5
-
-    var body: some View {
-        VStack {
-            Text("\(n)")
-            Slider(value: $n)
-            GeometryReader { _ in
-                Text("GR")
-            }
-        }
-    }
-}
-
-@available(iOS 13, *)
-struct V: View {
+    @State var spacing: CGFloat = 5
+    @State var isOn: Bool = false
+    @EnvironmentObject var ud: UserDefaults
 
     var body: SomeView {
-        VStack {
-            Text("Hello")
-            HStack {
-                Text("Hello")
-                Text("Hello")
+        VStack(spacing: spacing) {
+            Color.yellow.frame(width: 200, height: 100, alignment: .center)
+            VStack {
+                ForEach(0..<5) { (id) in
+                    Text("Spacing \(id * 10)").onTapGesture {
+                        self.spacing = CGFloat(id) * 10
+                    }
+                }
             }
-            Image("turtlerock").padding(33)//.shadow(radius: 20)
+            Capsule().stroke(Color.green).border(Color.black).padding()
+            HStack(spacing: spacing) {
+                Text("Hello").padding(20).background(Color.yellow).cornerRadius(10).shadow(radius: 20)
+                Text("Hello").background(Color.green)
+            }
+            Button("Spacing++", action: { self.spacing += 5 }).padding(12).background(Color.red)
+            Button("Present sheet") { self.isOn.toggle() }
+            Image("turtlerock")
+                .resizable()
+                .cornerRadius(10)
+                .shadow(radius: 20)
+                .onTapGesture {
+                    self.spacing = 0
+                }.onLongPressGesture {
+                    self.spacing = 30
+            }
+        }
+        .padding()
+        .sheet(isPresented: $isOn) {
+            Color.yellow.clipShape(Capsule())
         }
     }
 }
@@ -50,11 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let window = UIWindow(frame: UIScreen.main.bounds)
 
-        if #available(iOS 13, *) {
-            let viewController = HostingController(V())
-            window.rootViewController = viewController
-        }
-
+        window.rootViewController = HostingController(
+            TestView()
+                .environmentObject(UserDefaults.standard)
+        )
         window.makeKeyAndVisible()
         self.window = window
 

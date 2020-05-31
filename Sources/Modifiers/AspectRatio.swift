@@ -23,30 +23,33 @@
 import UIKit
 import Mockingbird
 
-extension FillShapeView: UIKitNodeResolvable {
+extension ViewModifiers.AspectRatio: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitNode<FillShapeView, StaticGeometry, CAShapeLayer> {
+    private class Node: UIKitNodeModifier {
 
-        override var hierarchyIdentifier: String {
-            "FillShape"
+        var viewModifier: ViewModifiers.AspectRatio!
+
+        func update(viewModifier: ViewModifiers.AspectRatio, context: inout Context) {
+            self.viewModifier = viewModifier
         }
 
-        override func makeRenderable() -> CAShapeLayer {
-            CAShapeLayer()
+        func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
+            let size = node.layoutSize(fitting: targetSize)
+            let ratio = viewModifier.aspectRatio ?? size.width / size.height
+            let targetRatio = targetSize.width / targetSize.height
+            if targetRatio < ratio {
+                return CGSize(width: targetSize.width, height: targetSize.height / ratio)
+            } else {
+                return CGSize(width: targetSize.width * ratio, height: targetSize.height)
+            }
         }
 
-        override func updateRenderable() {
-            renderable.fillColor = view.color.uiColorValue.cgColor
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds) // FIXME
         }
+    }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: targetSize)
-        }
-
-        override func layout(in container: Container, bounds: Bounds) {
-            let rect = CGRect(origin: .zero, size: bounds.rect.size)
-            renderable.path = view.shape.path(in: rect)
-            super.layout(in: container, bounds: bounds)
-        }
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

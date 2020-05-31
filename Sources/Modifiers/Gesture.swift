@@ -23,36 +23,33 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Gesture: UIKitModifierNodeResolvable {
+extension ViewModifiers.Gesture: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.Gesture, StaticGeometry, GestureView> {
+    private class Node: UIKitNodeModifier {
 
-        override var layoutableChildNodes: [LayoutableNode] {
-            [renderable]
+        let gestureView = GestureView()
+
+        func update(viewModifier: ViewModifiers.Gesture, context: inout Context) {
+            let gesture = viewModifier.gesture as! ResolvableGesture
+            gestureView.gestureController = gesture.resolve(
+                cachedGestureRecognizer: gestureView.gestureController?._gestureRecognizer
+            )
         }
 
-        override func makeRenderable() -> GestureView {
-            GestureView()
-        }
-
-        override func updateRenderable() {
-            renderable.gestureController = (modifier.gesture as? ResolvableGesture)?
-                .resolve(cachedGestureRecognizer: renderable.gestureController?._gestureRecognizer)
-        }
-
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
-
-        override func layout(in container: Container, bounds: Bounds) {
-            super.layout(in: container, bounds: bounds)
-            renderable.replaceSubviews {
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            gestureView.frame = bounds.rect
+            container.view.addSubview(gestureView)
+            gestureView.replaceSubnodes {
                 node.layout(
-                    in: container.replacingView(renderable),
-                    bounds: Bounds(rect: renderable.bounds, safeAreaInsets: .zero)  // TODO
+                    in: container.replacingView(gestureView),
+                    bounds: bounds.at(origin: .zero)
                 )
             }
         }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }
 

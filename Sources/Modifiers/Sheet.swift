@@ -23,37 +23,40 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.Padding: UIKitNodeModifierResolvable {
+extension ViewModifiers.Sheet: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
-        var defaultPadding: CGFloat!
-        var viewModifier: ViewModifiers.Padding!
+        var viewModifier: ViewModifiers.Sheet<Content>!
 
-        func update(viewModifier: ViewModifiers.Padding, context: inout Context) {
+        func update(viewModifier: ViewModifiers.Sheet<Content>, context: inout Context) {
             self.viewModifier = viewModifier
-            self.defaultPadding = context.environment.padding
-        }
-
-        func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
-            LayoutAlgorithms
-                .Padding(padding: viewModifier, node: node, defaultPadding: defaultPadding)
-                .contentLayout(fittingSize: targetSize)
-                .idealSize
         }
 
         func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
-            let geometry = LayoutAlgorithms
-                .Padding(padding: viewModifier, node: node, defaultPadding: defaultPadding)
-                .contentLayout(fittingSize: bounds.size)
-            node.layout(
-                in: container,
-                bounds: bounds.update(to: geometry.frames[0].offsetBy(dx: bounds.rect.minX, dy: bounds.rect.minY))
-            )
+            node.layout(in: container, bounds: bounds)
+            if viewModifier.isPresented.get() {
+                if container.viewController.presentedViewController == nil {
+                    let sheet = SheetHostingController(viewModifier.content())
+                    sheet.onDismiss = { self.viewModifier.isPresented.wrappedValue = false }
+                    container.viewController.present(sheet, animated: true, completion: nil)
+                }
+            } else {
+                container.viewController.dismiss(animated: true, completion: viewModifier.onDismiss)
+            }
         }
     }
 
     func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
         return (cachedNodeModifier as? Node) ?? Node()
+    }
+}
+
+private class SheetHostingController: HostingController {
+
+    var onDismiss: (() -> Void)?
+
+    deinit {
+        onDismiss?() // FIXME
     }
 }

@@ -25,27 +25,35 @@ import Mockingbird
 
 extension Image: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<Image, StaticGeometry, UIImageView> {
+    private class Node: UIKitNode {
 
-        lazy var image = UIImage(named: view.name)!
+        var image: UIImage?
+        var isResizable: Bool = false
 
-        override func update(_ view: Image, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
+        let imageView = UIImageView()
+
+        func update(view: Image, context: Context) {
+            isResizable = view.isResizable
+            image = UIImage(named: view.name)
+            imageView.image = image
+        }
+
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            if isResizable {
+                return targetSize
+            } else {
+                return min(image?.size ?? .zero, targetSize)
             }
-            super.update(view, context: context)
         }
 
-        override func makeRenderable() -> UIImageView {
-            UIImageView()
+        func layout(in container: Container, bounds: Bounds) {
+            container.view.addSubview(imageView)
+            imageView.frame = bounds.rect
         }
 
-        override func updateRenderable() {
-            renderable.image = image
-        }
+    }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: image.size)
-        }
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
     }
 }

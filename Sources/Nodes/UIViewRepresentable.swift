@@ -25,54 +25,90 @@ import Mockingbird
 
 public protocol AnyUIViewRepresentable: SomeView {
 
-    func _makeUIView(context: Context) -> UIView
-    func _updateUIView(_ uiView: UIView, context: Context)
-
-    func layoutSize(fitting size: CGSize) -> CGSize
+    func __makeCoordinator() -> Any
+    func __makeUIView(context: Any) -> UIView
+    func __updateUIView(_ uiView: UIView, context: Any)
+    func __makeContext(context: Context, coordinator: Any) -> Any
 }
 
 public protocol UIViewRepresentable: AnyUIViewRepresentable, View where Body == Never {
 
     associatedtype UIViewType: UIView
+    associatedtype Coordinator = Void
 
+    typealias Context = UIViewRepresentableContext<Self>
+
+    func makeCoordinator() -> Coordinator
     func makeUIView(context: Context) -> UIViewType
     func updateUIView(_ uiView: UIViewType, context: Context)
 }
 
-extension UIViewRepresentable {
+public struct UIViewRepresentableContext<Representable> where Representable: UIViewRepresentable {
 
-    public func updateUIView(_ uiView: UIViewType, context: Context) {
+    public let coordinator: Representable.Coordinator
+
+    public var transaction: Transaction {
+        context.transaction
     }
 
-    public func layoutSize(fitting size: CGSize) -> CGSize {
-        return size
+    public var environment: EnvironmentValues {
+        context.environment
     }
 
-    public func _makeUIView(context: Context) -> UIView {
-        return makeUIView(context: context)
-    }
+    internal let context: Context
+}
 
-    public func _updateUIView(_ uiView: UIView, context: Context) {
-        updateUIView(uiView as! UIViewType, context: context)
+extension UIViewRepresentable where Coordinator == Void {
+
+    public func makeCoordinator() -> Void {
     }
 }
 
-class UIViewRepresentableNode: BaseUIKitNode<AnyView, StaticGeometry, UIView> {
+extension UIViewRepresentable {
 
-    private var uiViewRepresentable: AnyUIViewRepresentable {
-        view as! AnyUIViewRepresentable
+    public func __makeCoordinator() -> Any {
+        makeCoordinator()
     }
 
-    override func update(_ view: AnyView, context: Context) {
-        super.update(view, context: context)
-        uiViewRepresentable._updateUIView(renderable, context: context)
+    public func __makeUIView(context: Any) -> UIView {
+        makeUIView(context: context as! Context)
     }
 
-    override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-        StaticGeometry(idealSize: uiViewRepresentable.layoutSize(fitting: targetSize))
+    public func __updateUIView(_ uiView: UIView, context: Any) {
+        updateUIView(uiView as! UIViewType, context: context as! Context)
     }
 
-    override func makeRenderable() -> UIView {
-        uiViewRepresentable._makeUIView(context: context)
+    public func __makeContext(context: Mockingbird.Context, coordinator: Any) -> Any {
+        UIViewRepresentableContext<Self>(coordinator: coordinator as! Coordinator, context: context)
     }
+}
+
+class UIViewRepresentableNode: AnyUIKitNode {
+
+    var uiView: UIView!
+    var coordinator: Any!
+
+    func update(view: SomeView, context: Context) {
+        let view = view as! AnyUIViewRepresentable
+        if let uiView = self.uiView {
+            let context = view.__makeContext(context: context, coordinator: coordinator as Any)
+            view.__updateUIView(uiView, context: context)
+        } else {
+            self.coordinator = view.__makeCoordinator()
+            let context = view.__makeContext(context: context, coordinator: coordinator as Any)
+            self.uiView = view.__makeUIView(context: context)
+            view.__updateUIView(self.uiView, context: context)
+        }
+    }
+
+    func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        let size = uiView.intrinsicContentSize
+        return max(size, targetSize)
+    }
+
+    func layout(in container: Container, bounds: Bounds) {
+        uiView.frame = bounds.rect
+        container.view.addSubview(uiView)
+    }
+
 }

@@ -25,37 +25,37 @@ import Mockingbird
 
 extension Button: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<Button, StaticGeometry, Control> {
+    private class Node: UIKitNode {
 
-        private var label: UIKitNode!
+        var view: Button!
+        var label: AnyUIKitNode!
 
-        override func update(_ button: Button, context: Context) {
-            super.update(button, context: context)
+        let control = Control()
+
+        func update(view: Button, context: Context) {
+            self.view = view
             var context = context
             context.environment.foregroundColor = context.environment.accentColor
-            self.label = button.label.resolve(context: context, cachedNode: self.label)
-            self.label.didMoveToParent(self)
+            self.label = view.label.resolve(context: context, cachedNode: label)
+            control.tappedHandler = view.action
         }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: label.layoutSize(fitting: targetSize))
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            label.layoutSize(fitting: targetSize)
         }
 
-        override func makeRenderable() -> Button.Control {
-            Control()
-        }
-
-        override func updateRenderable() {
-            renderable.tappedHandler = view.action
-        }
-
-        override func layout(in container: Container, bounds: Bounds) {
-            super.layout(in: container, bounds: bounds)
+        func layout(in container: Container, bounds: Bounds) {
+            control.frame = bounds.rect
+            container.view.addSubview(control)
             label.layout(
-                in: container.replacingView(renderable),
-                bounds: Bounds(rect: renderable.bounds, safeAreaInsets: bounds.safeAreaInsets)
+                in: container.replacingView(control),
+                bounds: bounds.at(origin: .zero)
             )
         }
+    }
+
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
     }
 }
 

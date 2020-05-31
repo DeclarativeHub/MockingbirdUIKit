@@ -25,32 +25,40 @@ import Mockingbird
 
 extension Spacer: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<Spacer, StaticGeometry, NoRenderable> {
+    private class Node: UIKitNode {
 
-        var minLenght: CGFloat {
-            view.minLength ?? (env._layoutAxis == .horizontal ? env.hStackSpacing : env.vStackSpacing)
-        }
+        var view: Spacer!
+        var context: Context!
 
-        override func update(_ view: Spacer, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
-        }
-
-        override var isSpacer: Bool {
+        var isSpacer: Bool {
             true
         }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            switch env._layoutAxis {
+        var minLenght: CGFloat {
+            return view.minLength ?? context.environment.padding
+        }
+
+        func update(view: Spacer, context: Context) {
+            self.view = view
+            self.context = context
+        }
+
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            switch context.environment._layoutAxis {
             case .horizontal:
-                return StaticGeometry(idealSize: CGSize(width: minLenght, height: 0))
+                return CGSize(width: minLenght, height: 0)
             case .vertical:
-                return StaticGeometry(idealSize: CGSize(width: 0, height: minLenght))
+                return CGSize(width: 0, height: minLenght)
             default:
-                return StaticGeometry(idealSize: max(CGSize(width: minLenght, height: minLenght), targetSize))
+                return CGSize(width: minLenght, height: minLenght)
             }
         }
+
+        func layout(in container: Container, bounds: Bounds) {
+        }
+    }
+
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
     }
 }

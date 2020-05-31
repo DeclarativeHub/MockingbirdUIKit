@@ -20,34 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
 import Mockingbird
 
-public protocol LayoutableNode {
-    func layout(in container: Container, bounds: Bounds)
-}
+extension ForEach: ContentContainerNode {
 
-extension UIView: LayoutableNode {
-
-    public func layout(in container: Container, bounds: Bounds) {
-        if self.frame != bounds.rect {
-            self.frame = bounds.rect
+    public func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode] {
+        let nodes = data.map { content($0) }
+        if nodes.count == cachedNodes.count {
+            return zip(nodes, cachedNodes).map { $0.resolve(context: context, cachedNode: $1) }
+        } else {
+            return nodes.map { $0.resolve(context: context, cachedNode: nil) }
         }
-        container.view.addSubview(self)
-    }
-}
-
-extension CALayer: LayoutableNode {
-
-    public func layout(in container: Container, bounds: Bounds) {
-        self.frame = bounds.rect
-        self.removeAllAnimations()
-        container.layer.addSublayer(self)
-    }
-}
-
-struct NoRenderable: LayoutableNode {
-
-    public func layout(in container: Container, bounds: Bounds) {
     }
 }

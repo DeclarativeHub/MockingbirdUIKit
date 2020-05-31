@@ -23,19 +23,22 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.EdgesIgnoringSafeArea: UIKitModifierNodeResolvable {
+extension ViewModifiers.EdgesIgnoringSafeArea: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.EdgesIgnoringSafeArea, StaticGeometry, NoRenderable> {
+    private class Node: UIKitNodeModifier {
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
+        var viewModifier: ViewModifiers.EdgesIgnoringSafeArea!
+
+        func update(viewModifier: ViewModifiers.EdgesIgnoringSafeArea, context: inout Context) {
+            self.viewModifier = viewModifier
         }
 
-        override func layout(in container: Container, bounds: Bounds) {
-            super.layout(
-                in: container,
-                bounds: Bounds(rect: bounds.unsafeRect(edges: modifier.edges), safeAreaInsets: .zero)
-            )
+        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds.unsafe(edges: viewModifier.edges))
         }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

@@ -22,7 +22,7 @@
 
 import UIKit
 
-open class ContainerControl: UIControl {
+open class ContainerControl: UIControl, ContainerNode {
 
     open override class var layerClass: AnyClass {
         return ContainerLayer.self
@@ -35,9 +35,9 @@ open class ContainerControl: UIControl {
         super.addSubview(view)
     }
 
-    public func replaceSubviews(_ block: () -> Void) {
+    public func replaceSubnodes(_ block: () -> Void) {
         subviewsToRemove = Set(subviews)
-        (layer as! ContainerLayer).replaceSublayers(block)
+        (layer as! ContainerLayer).replaceSubnodes(block)
         subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
 }

@@ -24,15 +24,15 @@ import UIKit
 
 public struct Container {
 
-    public var view: UIView
+    public var view: UIView & ContainerNode
     public var viewController: UIViewController
 
     @inlinable
-    public var layer: CALayer {
-        return view.layer
+    public var layer: CALayer & ContainerNode{
+        return view.layer as! CALayer & ContainerNode
     }
 
-    func replacingView(_ view: UIView) -> Container {
+    func replacingView(_ view: UIView & ContainerNode) -> Container {
         var copy = self
         copy.view = view
         return copy

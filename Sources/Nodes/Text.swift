@@ -25,28 +25,32 @@ import Mockingbird
 
 extension Text: UIKitNodeResolvable {
 
-    class Node: BaseUIKitNode<Text, StaticGeometry, UILabel> {
+    private class Node: UIKitNode {
 
-        override func update(_ view: Text, context: Context) {
-            if view != self.view {
-                invalidateRenderingState()
-            }
-            super.update(view, context: context)
+        var text: Text?
+        var env: EnvironmentValues?
+
+        let label = UILabel()
+
+        func update(view: Text, context: Context) {
+            (text, env) = (view, context.environment)
+            label.configure(with: view.storage, env: context.environment)
         }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(
-                idealSize: view.storage.boundingSize(fitting: targetSize, env: env)
-            )
+        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+            guard let text = text, let env = env else { return .zero }
+            return text.storage.boundingSize(fitting: targetSize, env: env)
         }
 
-        override func makeRenderable() -> UILabel {
-            UILabel()
+        func layout(in container: Container, bounds: Bounds) {
+            container.view.addSubview(label)
+            label.frame = bounds.rect
         }
 
-        override func updateRenderable() {
-            renderable.configure(with: view.storage, env: env)
-        }
+    }
+
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        return (cachedNode as? Node) ?? Node()
     }
 }
 
@@ -83,4 +87,5 @@ extension UILabel {
             text = storage.stringValue
         }
     }
+
 }

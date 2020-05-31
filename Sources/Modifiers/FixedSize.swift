@@ -23,12 +23,22 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.FixedSize: UIKitModifierNodeResolvable {
+extension ViewModifiers.FixedSize: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.FixedSize, StaticGeometry, NoRenderable> {
-        
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: .zero))
+    private class Node: UIKitNodeModifier {
+
+        var viewModifier: ViewModifiers.FixedSize!
+
+        func update(viewModifier: ViewModifiers.FixedSize, context: inout Context) {
+            self.viewModifier = viewModifier
         }
+
+        func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
+            node.layoutSize(fitting: .zero)
+        }
+    }
+
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

@@ -22,7 +22,7 @@
 
 import UIKit
 
-open class ContainerView: UIView {
+open class ContainerView: UIView, ContainerNode {
 
     open override class var layerClass: AnyClass {
         return ContainerLayer.self
@@ -31,16 +31,13 @@ open class ContainerView: UIView {
     private var subviewsToRemove: Set<UIView> = []
 
     open override func addSubview(_ view: UIView) {
-        if subviews.first(where: { $0 === view }) == nil {
-            super.addSubview(view)
-        } else {
-            subviewsToRemove.remove(view)
-        }
+        subviewsToRemove.remove(view)
+        super.addSubview(view)
     }
 
-    public func replaceSubviews(_ block: () -> Void) {
+    public func replaceSubnodes(_ block: () -> Void) {
         subviewsToRemove = Set(subviews)
-        (layer as! ContainerLayer).replaceSublayers(block)
+        (layer as! ContainerLayer).replaceSubnodes(block)
         subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
 }

@@ -23,18 +23,16 @@
 import UIKit
 import Mockingbird
 
-extension ViewModifiers.EnvironmentObject: UIKitModifierNodeResolvable {
+extension ViewModifiers.EnvironmentObject: UIKitNodeModifierResolvable {
 
-    class Node: BaseUIKitModifierNode<ViewModifiers.EnvironmentObject, StaticGeometry, NoRenderable> {
+    private class Node: UIKitNodeModifier {
 
-        override func update(_ view: ModifiedContent, context: Context) {
-            var context = context
-            context.environmentObjects[modifier.objectTypeIdentifier] = modifier.object
-            super.update(view, context: context)
+        func update(viewModifier: ViewModifiers.EnvironmentObject, context: inout Context) {
+            context.environmentObjects[viewModifier.objectTypeIdentifier] = viewModifier.object
         }
+    }
 
-        override func calculateGeometry(fitting targetSize: CGSize) -> StaticGeometry {
-            StaticGeometry(idealSize: node.layoutSize(fitting: targetSize))
-        }
+    func resolve(context: Context, cachedNodeModifier: AnyUIKitNodeModifier?) -> AnyUIKitNodeModifier {
+        return (cachedNodeModifier as? Node) ?? Node()
     }
 }

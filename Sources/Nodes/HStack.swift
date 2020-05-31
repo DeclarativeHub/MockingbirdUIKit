@@ -23,9 +23,9 @@
 import UIKit
 import Mockingbird
 
-extension HStack: AnyUIKitNodeResolvable {
+extension HStack: UIKitNodeResolvable {
 
-    public func resolve(context: Context, cachedNode: UIKitNode?) -> UIKitNode {
-        return tree.resolve(context: context, cachedNode: cachedNode)
+    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
+        tree.resolve(context: context, cachedNode: cachedNode)
     }
 }
