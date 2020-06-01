@@ -1,7 +1,7 @@
 #  MockingbirdUIKit
 
-Mockingbird is a UIKit renderer for Mockingbird DSL. The goal of this project is to provide SwiftUI-like UI framework for older system versions starting from iOS 9.
 
+Mockingbird is a UIKit renderer for platform independent [Mockingbird](https://github.com/DeclarativeHub/Mockingbird) DSL. The goal of this project is to provide a SwiftUI-like UI framework for older iOS versions starting from iOS 9.
 ## Example
 
 `MockingbirdUIKit` is just like `SwiftUI` for UIKit except that the body of your views return `SomeView` instead of `some View` to enable pre-iOS 13 compatibility.
@@ -144,5 +144,5 @@ Add `https://github.com/DeclarativeHub/MockingbirdUIKit.git` as a dependency.
 ### Carthage
 
 ```
-github "DeclarativeHub/MockingbirdUIKit"
+github "DeclarativeHub/MockingbirdUIKit" "master"
 ```
