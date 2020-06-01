@@ -46,7 +46,10 @@ struct TestView: View {
         }
         .padding()
         .sheet(isPresented: $isOn) {
-            Color.yellow.clipShape(Capsule())
+            ZStack {
+                Color.yellow.clipShape(Capsule())
+                Button("Dismiss") { self.isOn.toggle() }
+            }
         }
     }
 }
