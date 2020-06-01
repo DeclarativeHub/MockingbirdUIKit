@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Mockingbird",
+        "repositoryURL": "https://github.com/DeclarativeHub/Mockingbird.git",
+        "state": {
+          "branch": "master",
+          "revision": "a48f10ac10c32e6097c19fedd19061ce4d81edcf",
+          "version": null
+        }
+      },
+      {
+        "package": "ReactiveKit",
+        "repositoryURL": "https://github.com/DeclarativeHub/ReactiveKit.git",
+        "state": {
+          "branch": null,
+          "revision": "657faa987330879852b4117937b632b108a11400",
+          "version": "3.17.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
