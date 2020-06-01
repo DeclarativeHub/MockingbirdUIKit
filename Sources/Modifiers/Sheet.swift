@@ -37,7 +37,7 @@ extension ViewModifiers.Sheet: UIKitNodeModifierResolvable {
             node.layout(in: container, bounds: bounds)
             if viewModifier.isPresented.get() {
                 if container.viewController.presentedViewController == nil {
-                    let sheet = SheetHostingController(viewModifier.content())
+                    let sheet = SheetHostingController(rootView: viewModifier.content())
                     sheet.onDismiss = { self.viewModifier.isPresented.wrappedValue = false }
                     container.viewController.present(sheet, animated: true, completion: nil)
                 }

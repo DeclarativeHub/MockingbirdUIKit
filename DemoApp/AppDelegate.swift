@@ -61,8 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
 
         window.rootViewController = HostingController(
-            TestView()
-                .environmentObject(UserDefaults.standard)
+            rootView: TestView().environmentObject(UserDefaults.standard)
         )
         window.makeKeyAndVisible()
         self.window = window

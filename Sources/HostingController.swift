@@ -27,8 +27,8 @@ public class HostingController: UIViewController {
 
     public let hostingView: HostingView
 
-    public init<V: View>(_ view: V) {
-        self.hostingView = HostingView(view)
+    public init<V: View>(rootView: V) {
+        self.hostingView = HostingView(rootView: rootView)
         super.init(nibName: nil, bundle: nil)
     }
 

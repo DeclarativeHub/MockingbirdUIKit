@@ -50,19 +50,19 @@ public class HostingView: ContainerView {
 
     private var previousBounds: CGRect? = nil
 
-    public init<V: View>(_ view: V, context: Context = Context(), cachedNode: AnyUIKitNode? = nil) {
+    public init<V: View>(rootView: V, context: Context = Context(), cachedNode: AnyUIKitNode? = nil) {
         let renderer = Renderer()
         var context = context
         context.rendered = renderer
-        self.view = view
+        self.view = rootView
         self.context = context
-        self.node = cachedNode ?? view.resolve(context: context, cachedNode: nil)
+        self.node = cachedNode ?? rootView.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
         renderer.hostingView = self
     }
 
-    public func updateView<V: View>(_ view: V, resolvedNode: AnyUIKitNode? = nil) {
-        self.view = view
+    public func update<V: View>(rootView: V, resolvedNode: AnyUIKitNode? = nil) {
+        self.view = rootView
         self.node = resolvedNode ?? view.resolve(context: context, cachedNode: nil)
         self.setNeedsRendering()
     }
@@ -103,6 +103,7 @@ public class HostingView: ContainerView {
     public func setNeedsRendering() {
         previousBounds = nil
         setNeedsLayout()
+        superview?.setNeedsLayout()
     }
 }
 

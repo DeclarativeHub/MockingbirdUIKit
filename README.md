@@ -27,7 +27,7 @@ struct MyView: View {
     }
 }
 
-window.rootViewController = HostingController(MyView())
+window.rootViewController = HostingController(rootView: MyView())
 ```
 
 ## Status
