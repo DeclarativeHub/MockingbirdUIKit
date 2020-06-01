@@ -19,7 +19,7 @@ struct TestView: View {
 
     var body: SomeView {
         VStack(spacing: spacing) {
-            Color.yellow.frame(width: 200, height: 100, alignment: .center)
+            Color.orange.clipShape(Circle()).frame(width: 200, height: 100, alignment: .center)
             VStack {
                 ForEach(0..<5) { (id) in
                     Text("Spacing \(id * 10)").onTapGesture {

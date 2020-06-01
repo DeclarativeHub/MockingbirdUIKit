@@ -28,7 +28,7 @@ extension ShapeView: UIKitNodeResolvable {
     private class Node: UIKitNode {
 
         let layer = CAShapeLayer()
-        var makePath: ((CGRect) -> CGPath)!
+        var makePath: ((CGRect) -> Path)!
 
         func update(view: ShapeView<S, SS>, context: Context) {
             makePath = view.shape.path(in:)
@@ -40,7 +40,7 @@ extension ShapeView: UIKitNodeResolvable {
         }
 
         func layout(in container: Container, bounds: Bounds) {
-            layer.path = makePath(bounds.rect)
+            layer.path = makePath(bounds.rect).cgPath
             layer.removeAllAnimations()
             container.layer.addSublayer(layer)
         }

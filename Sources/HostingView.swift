@@ -59,7 +59,6 @@ public class HostingView: ContainerView {
         self.node = cachedNode ?? view.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
         renderer.hostingView = self
-        print("New view: ", V.typeIdentifier)
     }
 
     public func updateView<V: View>(_ view: V, resolvedNode: AnyUIKitNode? = nil) {

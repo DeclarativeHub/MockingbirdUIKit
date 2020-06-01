@@ -55,7 +55,7 @@ extension ViewModifiers.ClipShape {
 
     class ClippingView: ContainerView {
 
-        var makePath: ((CGRect) -> CGPath)?
+        var makePath: ((CGRect) -> Path)?
         let maskLayer = CAShapeLayer()
 
         override init(frame: CGRect) {
@@ -69,7 +69,7 @@ extension ViewModifiers.ClipShape {
 
         override func layoutSubviews() {
             super.layoutSubviews()
-            maskLayer.path = makePath?(bounds)
+            maskLayer.path = makePath?(bounds).cgPath
         }
     }
 }
