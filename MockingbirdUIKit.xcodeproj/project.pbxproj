@@ -10,6 +10,8 @@
 		EC1CAAC223A67E180073C826 /* Bounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CAAC123A67E180073C826 /* Bounds.swift */; };
 		EC1CAAC423A6814E0073C826 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CAAC323A6814E0073C826 /* Container.swift */; };
 		EC1CAAC623A698D50073C826 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CAAC523A698D50073C826 /* UIEdgeInsets+Extensions.swift */; };
+		EC25395E248C184A00540102 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25395C248C181800540102 /* ScrollView.swift */; };
+		EC253960248C1A0D00540102 /* ContainerScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25395F248C1A0D00540102 /* ContainerScrollView.swift */; };
 		EC3FA2FA24746FAC0053C301 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21065238AD2300034D0E3 /* Spacer.swift */; };
 		EC3FA2FC247471E10053C301 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105F238AD2300034D0E3 /* Button.swift */; };
 		EC3FA2FD247477490053C301 /* ModifiedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */; };
@@ -105,6 +107,8 @@
 		EC1CAAC523A698D50073C826 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		EC1CAACB23A6A9D00073C826 /* EdgesIgnoringSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgesIgnoringSafeArea.swift; sourceTree = "<group>"; };
 		EC2441C0238DDA2400135660 /* EnvironmentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObject.swift; sourceTree = "<group>"; };
+		EC25395C248C181800540102 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		EC25395F248C1A0D00540102 /* ContainerScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerScrollView.swift; sourceTree = "<group>"; };
 		EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveKit.framework; path = Carthage/Build/iOS/ReactiveKit.framework; sourceTree = "<group>"; };
 		EC7469EB239C51B3009A4102 /* Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
 		EC77FD0523E8B60600EE3D1C /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				EC907C3C23F8510900FF48E7 /* ContainerLayer.swift */,
 				ECC2106F238AD2300034D0E3 /* ContainerView.swift */,
 				EC907C3E23F8512400FF48E7 /* ContainerControl.swift */,
+				EC25395F248C1A0D00540102 /* ContainerScrollView.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 				EC77FD0523E8B60600EE3D1C /* Slider.swift */,
 				ECC21065238AD2300034D0E3 /* Spacer.swift */,
 				ECB3315F248438EF00893516 /* ShapeView.swift */,
+				EC25395C248C181800540102 /* ScrollView.swift */,
 				ECC21064238AD2300034D0E3 /* GeometryReader.swift */,
 				ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */,
 				ECF2EBB7240B166400BD5E67 /* ViewModifierContent.swift */,
@@ -453,10 +459,12 @@
 				EC3FA2FD247477490053C301 /* ModifiedContent.swift in Sources */,
 				ECB3315E2484370A00893516 /* FlexFrame.swift in Sources */,
 				ECB33160248438EF00893516 /* ShapeView.swift in Sources */,
+				EC253960248C1A0D00540102 /* ContainerScrollView.swift in Sources */,
 				ECB331542483F44C00893516 /* ContainerNode.swift in Sources */,
 				EC3FA2FC247471E10053C301 /* Button.swift in Sources */,
 				EC907C3D23F8510900FF48E7 /* ContainerLayer.swift in Sources */,
 				ECB3314F2483ECC500893516 /* Background.swift in Sources */,
+				EC25395E248C184A00540102 /* ScrollView.swift in Sources */,
 				EC3FA30024747DD70053C301 /* ViewNode.swift in Sources */,
 				ECC21099238AD2300034D0E3 /* Color+UIKit.swift in Sources */,
 				ECC210AE238AE9BC0034D0E3 /* HostingController.swift in Sources */,

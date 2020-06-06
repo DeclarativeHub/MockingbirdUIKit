@@ -21,39 +21,23 @@
 // SOFTWARE.
 
 import UIKit
-import Mockingbird
 
-extension Image: UIKitNodeResolvable {
+open class ContainerScrollView: UIScrollView, ContainerNode {
 
-    private class Node: UIKitNode {
-
-        var image: UIImage?
-        var isResizable: Bool = false
-
-        let imageView = UIImageView()
-
-        func update(view: Image, context: Context) {
-            isResizable = view.isResizable
-            image = UIImage(named: view.name)
-            imageView.image = image
-        }
-
-        func layoutSize(fitting targetSize: CGSize) -> CGSize {
-            if isResizable {
-                return targetSize
-            } else {
-                return image?.size ?? .zero
-            }
-        }
-
-        func layout(in container: Container, bounds: Bounds) {
-            container.view.addSubview(imageView)
-            imageView.frame = bounds.rect
-        }
-
+    open override class var layerClass: AnyClass {
+        return ContainerLayer.self
     }
 
-    func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
-        return (cachedNode as? Node) ?? Node()
+    private var subviewsToRemove: Set<UIView> = []
+
+    open override func addSubview(_ view: UIView) {
+        subviewsToRemove.remove(view)
+        super.addSubview(view)
+    }
+
+    public func replaceSubnodes(_ block: () -> Void) {
+        subviewsToRemove = Set(subviews)
+        (layer as! ContainerLayer).replaceSubnodes(block)
+        subviewsToRemove.forEach { $0.removeFromSuperview() }
     }
 }

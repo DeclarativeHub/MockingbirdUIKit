@@ -23,32 +23,49 @@
 import UIKit
 import Mockingbird
 
-extension Image: UIKitNodeResolvable {
+extension ScrollView: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
-        var image: UIImage?
-        var isResizable: Bool = false
+        let scrollView = ContainerScrollView()
 
-        let imageView = UIImageView()
+        var content: AnyUIKitNode!
+        var axes: Axis.Set!
 
-        func update(view: Image, context: Context) {
-            isResizable = view.isResizable
-            image = UIImage(named: view.name)
-            imageView.image = image
+        func update(view: ScrollView<Content>, context: Context) {
+            self.axes = view.axes
+            self.content = view.content.resolve(context: context, cachedNode: content)
+            scrollView.showsVerticalScrollIndicator = view.showsIndicators
+            scrollView.showsHorizontalScrollIndicator = view.showsIndicators
+            scrollView.alwaysBounceVertical = view.axes.contains(.vertical)
+            scrollView.alwaysBounceHorizontal = view.axes.contains(.horizontal)
         }
 
         func layoutSize(fitting targetSize: CGSize) -> CGSize {
-            if isResizable {
+            if axes == [.horizontal, .vertical] {
                 return targetSize
+            } else if axes == [.vertical] {
+                var size = content.layoutSize(fitting: .init(width: targetSize.width, height: 0))
+                size.height = targetSize.height
+                return size
+            } else if axes == [.horizontal] {
+                var size = content.layoutSize(fitting: .init(width: 0, height: targetSize.height))
+                size.width = targetSize.width
+                return size
             } else {
-                return image?.size ?? .zero
+                fatalError()
             }
         }
 
         func layout(in container: Container, bounds: Bounds) {
-            container.view.addSubview(imageView)
-            imageView.frame = bounds.rect
+            let contentSize = content.layoutSize(fitting: bounds.size)
+            scrollView.frame = bounds.rect
+            scrollView.contentSize = contentSize
+            container.view.addSubview(scrollView)
+            content.layout(
+                in: container.replacingView(scrollView),
+                bounds: bounds.update(to: .init(origin: .zero, size: contentSize))
+            )
         }
 
     }
