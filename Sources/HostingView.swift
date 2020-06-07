@@ -50,6 +50,8 @@ public class HostingView: ContainerView {
 
     private var previousBounds: CGRect? = nil
 
+    private var layoutPass = LayoutPass()
+
     public init(rootView: SomeView, context: Context = Context(), cachedNode: AnyUIKitNode? = nil) {
         let renderer = Renderer()
         var context = context
@@ -84,7 +86,7 @@ public class HostingView: ContainerView {
             let container = Container(view: self, viewController: parentViewController!)
             measure("layout") {
                 container.view.replaceSubnodes {
-                    node.layout(in: container, bounds: layoutBounds, pass: .init())
+                    node.layout(in: container, bounds: layoutBounds, pass: layoutPass)
                 }
             }
         }
@@ -100,12 +102,13 @@ public class HostingView: ContainerView {
 
     public func layoutSize(fitting size: CGSize) -> CGSize {
         measure("layoutSize") {
-            node.layoutSize(fitting: size, pass: .init())
+            node.layoutSize(fitting: size, pass: layoutPass)
         }
     }
 
     public func setNeedsRendering() {
         previousBounds = nil
+        layoutPass = .init()
         setNeedsLayout()
         superview?.setNeedsLayout()
     }
