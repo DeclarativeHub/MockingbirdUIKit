@@ -27,6 +27,10 @@ extension GeometryReader: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "GeometryReader<***>"
+        }
+
         var view: GeometryReader<Content>?
         var context: Context?
 

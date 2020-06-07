@@ -27,6 +27,10 @@ extension VariadicView.Tree: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "Tree<\(nodes.map(\.hierarchyIdentifier).joined(separator: ", "))>"
+        }
+
         var nodes: [AnyUIKitNode]!
 
         var layoutAlgorithm: LayoutAlgorithm!

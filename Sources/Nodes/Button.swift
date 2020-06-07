@@ -27,6 +27,10 @@ extension Button: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "Button<\(label.hierarchyIdentifier)>"
+        }
+
         var view: Button!
         var label: AnyUIKitNode!
 

@@ -27,6 +27,10 @@ extension ViewModifiers.Padding: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Padding"
+        }
+
         var defaultPadding: CGFloat!
         var viewModifier: ViewModifiers.Padding!
 

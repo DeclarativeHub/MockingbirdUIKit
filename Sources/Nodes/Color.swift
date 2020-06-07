@@ -27,6 +27,10 @@ extension Color: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "Color"
+        }
+
         let layer = CALayer()
 
         func update(view: Color, context: Context) {

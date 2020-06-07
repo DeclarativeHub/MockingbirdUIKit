@@ -27,6 +27,10 @@ extension ViewModifiers.Shadow: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Shadow"
+        }
+
         let shadowView = ShadowView()
 
         func update(viewModifier: ViewModifiers.Shadow, context: inout Context) {

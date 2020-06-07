@@ -27,6 +27,10 @@ extension ViewModifiers.EdgesIgnoringSafeArea: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "EdgesIgnoringSafeArea"
+        }
+
         var viewModifier: ViewModifiers.EdgesIgnoringSafeArea!
 
         func update(viewModifier: ViewModifiers.EdgesIgnoringSafeArea, context: inout Context) {

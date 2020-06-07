@@ -27,6 +27,10 @@ extension Text: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "Text"
+        }
+
         var text: Text?
         var env: EnvironmentValues?
 

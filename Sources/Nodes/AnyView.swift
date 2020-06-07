@@ -27,6 +27,10 @@ extension AnyView: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "AnyView<\(node.hierarchyIdentifier)>"
+        }
+
         var node: AnyUIKitNode!
 
         func update(view: AnyView, context: Context) {

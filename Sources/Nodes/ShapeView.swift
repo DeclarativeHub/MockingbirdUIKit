@@ -27,6 +27,10 @@ extension ShapeView: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "ShapeView"
+        }
+
         let layer = CAShapeLayer()
         var makePath: ((CGRect) -> Path)!
 

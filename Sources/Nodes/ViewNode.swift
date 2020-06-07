@@ -26,6 +26,10 @@ import ReactiveKit
 
 class ViewNode: UIKitNode {
 
+    var hierarchyIdentifier: String {
+        "View<\(node.hierarchyIdentifier)>"
+    }
+
     var node: AnyUIKitNode!
 
     var view: SomeView!

@@ -27,6 +27,10 @@ extension ViewModifiers.FlexFrame: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "FlexFrame"
+        }
+
         var viewModifier: ViewModifiers.FlexFrame!
 
         func update(viewModifier: ViewModifiers.FlexFrame, context: inout Context) {

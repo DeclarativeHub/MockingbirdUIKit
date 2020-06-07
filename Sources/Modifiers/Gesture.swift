@@ -27,6 +27,10 @@ extension ViewModifiers.Gesture: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Gesture"
+        }
+
         let gestureView = GestureView()
 
         func update(viewModifier: ViewModifiers.Gesture, context: inout Context) {

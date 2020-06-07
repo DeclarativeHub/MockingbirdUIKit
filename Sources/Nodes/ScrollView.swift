@@ -27,6 +27,10 @@ extension ScrollView: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "ScrollView<\(content.hierarchyIdentifier)>"
+        }
+
         let scrollView = ContainerScrollView()
 
         var content: AnyUIKitNode!

@@ -27,6 +27,10 @@ extension ViewModifiers.Offset: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Offset"
+        }
+
         var viewModifier: ViewModifiers.Offset!
 
         func update(viewModifier: ViewModifiers.Offset, context: inout Context) {

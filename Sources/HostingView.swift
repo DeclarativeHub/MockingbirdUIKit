@@ -59,6 +59,7 @@ public class HostingView: ContainerView {
         self.node = cachedNode ?? rootView.resolve(context: context, cachedNode: nil)
         super.init(frame: .zero)
         renderer.hostingView = self
+        print(node.hierarchyIdentifier)
     }
 
     public func update<V: View>(rootView: V, resolvedNode: AnyUIKitNode? = nil) {

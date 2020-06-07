@@ -27,6 +27,10 @@ extension ViewModifiers.LayoutPriority: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "LayoutPriority"
+        }
+
         var viewModifier: ViewModifiers.LayoutPriority!
 
         func update(viewModifier: ViewModifiers.LayoutPriority, context: inout Context) {

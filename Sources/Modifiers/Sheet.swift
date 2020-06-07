@@ -27,6 +27,10 @@ extension ViewModifiers.Sheet: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Sheet"
+        }
+
         var viewModifier: ViewModifiers.Sheet<Content>!
 
         func update(viewModifier: ViewModifiers.Sheet<Content>, context: inout Context) {

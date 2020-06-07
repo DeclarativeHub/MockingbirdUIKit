@@ -27,6 +27,10 @@ extension ViewModifiers.ClipShape: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "ClipShape"
+        }
+
         let clippingView = ClippingView()
 
         func update(viewModifier: ViewModifiers.ClipShape<S>, context: inout Context) {

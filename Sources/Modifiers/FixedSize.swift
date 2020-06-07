@@ -27,6 +27,10 @@ extension ViewModifiers.FixedSize: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "FixedSize"
+        }
+
         var viewModifier: ViewModifiers.FixedSize!
 
         func update(viewModifier: ViewModifiers.FixedSize, context: inout Context) {

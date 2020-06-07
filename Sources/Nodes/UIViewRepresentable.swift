@@ -85,6 +85,10 @@ extension UIViewRepresentable {
 
 class UIViewRepresentableNode: AnyUIKitNode {
 
+    var hierarchyIdentifier: String {
+        "\(type(of: uiView))"
+    }
+
     var uiView: UIView!
     var coordinator: Any!
 

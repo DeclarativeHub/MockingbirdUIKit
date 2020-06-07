@@ -27,6 +27,10 @@ extension ViewModifiers.Frame: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Frame"
+        }
+
         var viewModifier: ViewModifiers.Frame!
 
         func update(viewModifier: ViewModifiers.Frame, context: inout Context) {

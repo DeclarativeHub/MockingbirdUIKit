@@ -27,6 +27,10 @@ extension ViewModifiers.Overlay: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Overlay"
+        }
+
         private var overlayNode: AnyUIKitNode!
 
         func update(viewModifier: ViewModifiers.Overlay<Overlay>, context: inout Context) {

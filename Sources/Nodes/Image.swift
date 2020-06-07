@@ -27,6 +27,10 @@ extension Image: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "Image"
+        }
+
         var image: UIImage?
         var isResizable: Bool = false
 

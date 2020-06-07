@@ -25,6 +25,8 @@ import Mockingbird
 
 public protocol AnyUIKitNode: LayoutNode {
 
+    var hierarchyIdentifier: String { get }
+
     var isSpacer: Bool { get }
 
     var layoutPriority: Double { get }

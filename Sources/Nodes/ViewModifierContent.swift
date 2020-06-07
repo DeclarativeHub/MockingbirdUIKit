@@ -27,6 +27,10 @@ extension ViewModifierContent: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "ViewModifierContent<\(content.hierarchyIdentifier)>"
+        }
+
         var content: AnyUIKitNode!
 
         func update(view: ViewModifierContent<VM>, context: Context) {

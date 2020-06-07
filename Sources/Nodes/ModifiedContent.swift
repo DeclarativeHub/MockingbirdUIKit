@@ -13,6 +13,10 @@ extension ModifiedContent: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "ModifiedContent<\(contentNode.hierarchyIdentifier), \(contentNodeModifier?.hierarchyIdentifier ?? "Never")>"
+        }
+
         var contentNode: AnyUIKitNode!
         var contentNodeModifier: AnyUIKitNodeModifier?
 

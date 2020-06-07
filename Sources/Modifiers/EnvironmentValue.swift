@@ -27,6 +27,10 @@ extension ViewModifiers.EnvironmentValue: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "EnvironmentValue"
+        }
+
         func update(viewModifier: ViewModifiers.EnvironmentValue, context: inout Context) {
             viewModifier.modify(&context.environment)
         }

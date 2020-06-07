@@ -27,6 +27,10 @@ extension ViewModifiers.AspectRatio: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "AspectRatio"
+        }
+
         var viewModifier: ViewModifiers.AspectRatio!
 
         func update(viewModifier: ViewModifiers.AspectRatio, context: inout Context) {

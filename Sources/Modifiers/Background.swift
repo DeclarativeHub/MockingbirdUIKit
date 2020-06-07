@@ -27,6 +27,10 @@ extension ViewModifiers.Background: UIKitNodeModifierResolvable {
 
     private class Node: UIKitNodeModifier {
 
+        var hierarchyIdentifier: String {
+            "Background"
+        }
+
         private var backgroundNode: AnyUIKitNode!
 
         func update(viewModifier: ViewModifiers.Background<Background>, context: inout Context) {

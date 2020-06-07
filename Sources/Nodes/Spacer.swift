@@ -27,6 +27,10 @@ extension Spacer: UIKitNodeResolvable {
 
     private class Node: UIKitNode {
 
+        var hierarchyIdentifier: String {
+            "Spacer"
+        }
+
         var view: Spacer!
         var context: Context!
 
