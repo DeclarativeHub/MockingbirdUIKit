@@ -22,14 +22,10 @@
 
 import Mockingbird
 
-extension ForEach: ContentContainerNode {
+extension ForEach: TransientContainerView {
 
-    public func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode] {
-        let nodes = data.map { content($0) }
-        if nodes.count == cachedNodes.count {
-            return zip(nodes, cachedNodes).map { $0.resolve(context: context, cachedNode: $1) }
-        } else {
-            return nodes.map { $0.resolve(context: context, cachedNode: nil) }
-        }
+    var contentViews: [SomeView] {
+        data.flatMap { content($0).contentViews }
     }
+    
 }

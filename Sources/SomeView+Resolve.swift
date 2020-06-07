@@ -27,7 +27,19 @@ protocol UIKitNodeResolvable {
     func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode
 }
 
+protocol TransientContainerView {
+    var contentViews: [SomeView] { get }
+}
+
 extension SomeView {
+
+    var contentViews: [SomeView] {
+        if let container = self as? TransientContainerView {
+            return container.contentViews
+        } else {
+            return [self]
+        }
+    }
 
     public func resolve(context: Context, cachedNode: AnyUIKitNode?) -> AnyUIKitNode {
         let resolvedNode: AnyUIKitNode
@@ -44,15 +56,17 @@ extension SomeView {
         return resolvedNode
     }
 
-    public func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode] {
-        if let container = self as? ContentContainerNode {
-            return container.contentNodes(context: context, cachedNodes: cachedNodes)
+    public func resolve(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode] {
+        let views = contentViews
+        if views.count == cachedNodes.count {
+            return zip(views, cachedNodes).map {
+                $0.resolve(context: context, cachedNode: $1)
+            }
         } else {
-            return [self.resolve(context: context, cachedNode: cachedNodes.first)]
+            return views.map {
+                $0.resolve(context: context, cachedNode: nil)
+            }
         }
     }
-}
 
-protocol ContentContainerNode {
-    func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode]
 }

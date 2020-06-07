@@ -22,15 +22,10 @@
 
 import Mockingbird
 
-extension TupleView: ContentContainerNode {
+extension TupleView: TransientContainerView {
 
-    public func contentNodes(context: Context, cachedNodes: [AnyUIKitNode]) -> [AnyUIKitNode] {
-        let mirror = Mirror(reflecting: value)
-        let nodes = mirror.children.map { ($0.value as! SomeView) }
-        if nodes.count == cachedNodes.count {
-            return zip(nodes, cachedNodes).map { $0.resolve(context: context, cachedNode: $1) }
-        } else {
-            return nodes.map { $0.resolve(context: context, cachedNode: nil) }
-        }
+    var contentViews: [SomeView] {
+        Mirror(reflecting: value).children.flatMap { ($0.value as! SomeView).contentViews }
     }
+    
 }
