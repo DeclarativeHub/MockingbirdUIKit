@@ -37,8 +37,8 @@ extension ViewModifiers.EdgesIgnoringSafeArea: UIKitNodeModifierResolvable {
             self.viewModifier = viewModifier
         }
 
-        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
-            node.layout(in: container, bounds: bounds.unsafe(edges: viewModifier.edges))
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds.unsafe(edges: viewModifier.edges), pass: pass)
         }
     }
 

@@ -40,13 +40,14 @@ extension ViewModifiers.Gesture: UIKitNodeModifierResolvable {
             )
         }
 
-        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass, node: AnyUIKitNode) {
             gestureView.frame = bounds.rect
             container.view.addSubview(gestureView)
             gestureView.replaceSubnodes {
                 node.layout(
                     in: container.replacingView(gestureView),
-                    bounds: bounds.at(origin: .zero)
+                    bounds: bounds.at(origin: .zero),
+                    pass: pass
                 )
             }
         }

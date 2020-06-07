@@ -37,12 +37,12 @@ extension ViewModifierContent: UIKitNodeResolvable {
             content = view.view.resolve(context: context, cachedNode: content)
         }
 
-        func layoutSize(fitting targetSize: CGSize) -> CGSize {
-            content.layoutSize(fitting: targetSize)
+        func layoutSize(fitting targetSize: CGSize, pass: LayoutPass) -> CGSize {
+            content.layoutSize(fitting: targetSize, pass: pass)
         }
 
-        func layout(in container: Container, bounds: Bounds) {
-            content.layout(in: container, bounds: bounds)
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass) {
+            content.layout(in: container, bounds: bounds, pass: pass)
         }
 
     }

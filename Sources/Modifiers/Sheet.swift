@@ -37,8 +37,8 @@ extension ViewModifiers.Sheet: UIKitNodeModifierResolvable {
             self.viewModifier = viewModifier
         }
 
-        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
-            node.layout(in: container, bounds: bounds)
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds, pass: pass)
             if viewModifier.isPresented.get() {
                 if container.viewController.presentedViewController == nil {
                     let sheet = SheetHostingController(rootView: viewModifier.content())

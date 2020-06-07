@@ -41,12 +41,12 @@ extension Text: UIKitNodeResolvable {
             label.configure(with: view.storage, env: context.environment)
         }
 
-        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        func layoutSize(fitting targetSize: CGSize, pass: LayoutPass) -> CGSize {
             guard let text = text, let env = env else { return .zero }
             return text.storage.boundingSize(fitting: targetSize, env: env)
         }
 
-        func layout(in container: Container, bounds: Bounds) {
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass) {
             container.view.addSubview(label)
             label.frame = bounds.rect
         }

@@ -37,8 +37,8 @@ extension ViewModifiers.AspectRatio: UIKitNodeModifierResolvable {
             self.viewModifier = viewModifier
         }
 
-        func layoutSize(fitting targetSize: CGSize, node: AnyUIKitNode) -> CGSize {
-            let size = node.layoutSize(fitting: targetSize)
+        func layoutSize(fitting targetSize: CGSize, pass: LayoutPass, node: AnyUIKitNode) -> CGSize {
+            let size = node.layoutSize(fitting: targetSize, pass: pass)
             let ratio = viewModifier.aspectRatio ?? size.width / size.height
             let targetRatio = targetSize.width / targetSize.height
             if targetRatio < ratio {
@@ -48,8 +48,8 @@ extension ViewModifiers.AspectRatio: UIKitNodeModifierResolvable {
             }
         }
 
-        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
-            node.layout(in: container, bounds: bounds) // FIXME
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds, pass: pass) // FIXME
         }
     }
 

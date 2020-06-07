@@ -30,19 +30,19 @@ extension ModifiedContent: UIKitNodeResolvable {
             }
         }
 
-        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        func layoutSize(fitting targetSize: CGSize, pass: LayoutPass) -> CGSize {
             if let contentNodeModifier = contentNodeModifier {
-                return contentNodeModifier.layoutSize(fitting: targetSize, node: contentNode)
+                return contentNodeModifier.layoutSize(fitting: targetSize, pass: pass,  node: contentNode)
             } else {
-                return contentNode.layoutSize(fitting: targetSize)
+                return contentNode.layoutSize(fitting: targetSize, pass: pass)
             }
         }
 
-        func layout(in container: Container, bounds: Bounds) {
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass) {
             if let contentNodeModifier = contentNodeModifier {
-                contentNodeModifier.layout(in: container, bounds: bounds, node: contentNode)
+                contentNodeModifier.layout(in: container, bounds: bounds, pass: pass, node: contentNode)
             } else {
-                contentNode.layout(in: container, bounds: bounds)
+                contentNode.layout(in: container, bounds: bounds, pass: pass)
             }
         }
 

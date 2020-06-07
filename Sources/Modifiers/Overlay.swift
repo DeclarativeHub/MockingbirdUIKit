@@ -37,9 +37,9 @@ extension ViewModifiers.Overlay: UIKitNodeModifierResolvable {
             overlayNode = viewModifier.overlay.resolve(context: context, cachedNode: overlayNode)
         }
 
-        func layout(in container: Container, bounds: Bounds, node: AnyUIKitNode) {
-            node.layout(in: container, bounds: bounds)
-            overlayNode.layout(in: container, bounds: bounds)
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass, node: AnyUIKitNode) {
+            node.layout(in: container, bounds: bounds, pass: pass)
+            overlayNode.layout(in: container, bounds: bounds, pass: pass)
         }
     }
 

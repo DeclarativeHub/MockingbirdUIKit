@@ -82,8 +82,10 @@ public class HostingView: ContainerView {
         if previousBounds != bounds {
             previousBounds = bounds
             let container = Container(view: self, viewController: parentViewController!)
-            container.view.replaceSubnodes {
-                node.layout(in: container, bounds: layoutBounds)
+            measure("layout") {
+                container.view.replaceSubnodes {
+                    node.layout(in: container, bounds: layoutBounds, pass: .init())
+                }
             }
         }
     }
@@ -97,7 +99,9 @@ public class HostingView: ContainerView {
     }
 
     public func layoutSize(fitting size: CGSize) -> CGSize {
-        node.layoutSize(fitting: size)
+        measure("layoutSize") {
+            node.layoutSize(fitting: size, pass: .init())
+        }
     }
 
     public func setNeedsRendering() {
@@ -112,4 +116,15 @@ extension UIResponder {
     var parentViewController: UIViewController? {
         return next as? UIViewController ?? next?.parentViewController
     }
+}
+
+func measure<T>(_ name: String, _ block: () -> T) -> T {
+    #if DEBUG
+    let date = Date()
+    let r = block()
+    print(name, Date().timeIntervalSince1970 - date.timeIntervalSince1970)
+    return r
+    #else
+    return block()
+    #endif
 }

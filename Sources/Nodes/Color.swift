@@ -37,11 +37,11 @@ extension Color: UIKitNodeResolvable {
             layer.backgroundColor = view.uiColorValue.cgColor
         }
 
-        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        func layoutSize(fitting targetSize: CGSize, pass: LayoutPass) -> CGSize {
             targetSize
         }
 
-        func layout(in container: Container, bounds: Bounds) {
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass) {
             layer.frame = bounds.rect
             layer.removeAllAnimations()
             container.layer.addSublayer(layer)

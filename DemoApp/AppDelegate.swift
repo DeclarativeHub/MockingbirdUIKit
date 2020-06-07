@@ -54,6 +54,85 @@ struct TestView: View {
     }
 }
 
+struct ContentView: View {
+
+    @State var spacing: CGFloat = 5
+    @State var isOn: Bool = false
+    @EnvironmentObject var ud: UserDefaults
+
+    var body: SomeView {
+        ScrollView {
+
+            VStack {
+
+                ForEach(0..<5) { _ in
+
+                    VStack(spacing: 10) {
+
+                        // Header
+                        HStack {
+                            if self.spacing > 10 {
+                            Image("turtlerock")
+                                .resizable()
+                                .frame(width: 30, height: 30, alignment: .center)
+                            }
+
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("Benjamin Leander")
+                                        .bold()
+                                    Text("I dag 14:35")
+                                }
+                                Text("Har opnået et nyt trofæ")
+                            }
+
+                            Spacer()
+
+                            ZStack {
+
+                                Text("😅")
+                                    .padding(.init(top: 2, leading: 8, bottom: 2, trailing: 8))
+                                    .background(
+                                        Color.white
+                                            .clipShape(Capsule())
+                                            .shadow(radius: 4)
+                                    )
+                                    .onTapGesture {
+                                        self.spacing += 10
+                                    }
+                            }
+
+                        }
+
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(Color.gray)
+                                .frame(height: 20, alignment: .center)
+
+                            Text("Skriv en kommentar").padding()
+
+                            VStack {
+                                ForEach(0..<5) { _ in
+                                    ZStack {
+                                        Color.red
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(5)
+                    .shadow(radius: 3)
+                    .padding()
+
+                }
+            }.padding()
+        }
+    }
+}
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -64,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
 
         window.rootViewController = HostingController(
-            rootView: TestView().environmentObject(UserDefaults.standard)
+            rootView: ContentView().environmentObject(UserDefaults.standard)
         )
         window.makeKeyAndVisible()
         self.window = window

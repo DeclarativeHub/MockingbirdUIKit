@@ -22,14 +22,6 @@
 
 import CoreGraphics
 
-extension CGSize: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        width.hash(into: &hasher)
-        height.hash(into: &hasher)
-    }
-}
-
 extension CGSize {
 
     var flipped: CGSize {

@@ -39,11 +39,11 @@ extension ShapeView: UIKitNodeResolvable {
             (view.style as! ShapeStyleNode).apply(to: layer, context: context)
         }
 
-        func layoutSize(fitting targetSize: CGSize) -> CGSize {
+        func layoutSize(fitting targetSize: CGSize, pass: LayoutPass) -> CGSize {
             targetSize
         }
 
-        func layout(in container: Container, bounds: Bounds) {
+        func layout(in container: Container, bounds: Bounds, pass: LayoutPass) {
             layer.path = makePath(bounds.rect).cgPath
             layer.removeAllAnimations()
             container.layer.addSublayer(layer)
