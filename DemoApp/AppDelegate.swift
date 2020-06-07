@@ -79,11 +79,11 @@ struct ContentView: View {
 
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Text("Benjamin Leander")
+                                    Text("User Name")
                                         .bold()
-                                    Text("I dag 14:35")
+                                    Text("Today 14:35")
                                 }
-                                Text("Har opnået et nyt trofæ")
+                                Text("Profile status message")
                             }
 
                             Spacer()
@@ -109,7 +109,7 @@ struct ContentView: View {
                                 .fill(Color.gray)
                                 .frame(height: 20, alignment: .center)
 
-                            Text("Skriv en kommentar").padding()
+                            Text("Comment").padding()
 
                             VStack {
                                 ForEach(0..<5) { _ in

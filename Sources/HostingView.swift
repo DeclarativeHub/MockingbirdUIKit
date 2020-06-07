@@ -23,7 +23,7 @@
 import UIKit
 import Mockingbird
 
-public class HostingView: ContainerView {
+open class HostingView: ContainerView {
 
     private class Renderer: Mockingbird.Renderer {
 
@@ -69,11 +69,11 @@ public class HostingView: ContainerView {
         self.setNeedsRendering()
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         let bounds: CGRect
         if #available(iOS 11.0, *) {
@@ -84,10 +84,8 @@ public class HostingView: ContainerView {
         if previousBounds != bounds {
             previousBounds = bounds
             let container = Container(view: self, viewController: parentViewController!)
-            measure("layout") {
-                container.view.replaceSubnodes {
-                    node.layout(in: container, bounds: layoutBounds, pass: layoutPass)
-                }
+            container.view.replaceSubnodes {
+                node.layout(in: container, bounds: layoutBounds, pass: layoutPass)
             }
         }
     }
@@ -100,13 +98,11 @@ public class HostingView: ContainerView {
         }
     }
 
-    public func layoutSize(fitting size: CGSize) -> CGSize {
-        measure("layoutSize") {
-            node.layoutSize(fitting: size, pass: layoutPass)
-        }
+    open func layoutSize(fitting size: CGSize) -> CGSize {
+        node.layoutSize(fitting: size, pass: layoutPass)
     }
 
-    public func setNeedsRendering() {
+    open func setNeedsRendering() {
         previousBounds = nil
         layoutPass = .init()
         setNeedsLayout()
@@ -114,20 +110,9 @@ public class HostingView: ContainerView {
     }
 }
 
-extension UIResponder {
+private extension UIResponder {
 
     var parentViewController: UIViewController? {
         return next as? UIViewController ?? next?.parentViewController
     }
-}
-
-func measure<T>(_ name: String, _ block: () -> T) -> T {
-    #if DEBUG
-    let date = Date()
-    let r = block()
-    print(name, Date().timeIntervalSince1970 - date.timeIntervalSince1970)
-    return r
-    #else
-    return block()
-    #endif
 }
