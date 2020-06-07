@@ -33,7 +33,7 @@ protocol TransientContainerView {
 
 extension SomeView {
 
-    var contentViews: [SomeView] {
+    public var contentViews: [SomeView] {
         if let container = self as? TransientContainerView {
             return container.contentViews
         } else {
