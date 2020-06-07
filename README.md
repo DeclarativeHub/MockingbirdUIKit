@@ -67,6 +67,7 @@ window.rootViewController = HostingController(rootView: MyView())
 | ✅ | `Shape` | |
 | ✅ | `Slider` | |
 | ✅ | `Sheet` | |
+| ✅ | `ScrollView` | |
 | ❌ | `Toggle` | |
 | ❌ | `List` | |
 | ❌ | `NavigationView` | |
