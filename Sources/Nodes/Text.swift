@@ -33,6 +33,7 @@ extension Text: UIKitNodeResolvable {
 
         var text: Text?
         var env: EnvironmentValues?
+        var cache = GeometryCache()
 
         let label = UILabel()
 
@@ -43,7 +44,16 @@ extension Text: UIKitNodeResolvable {
 
         func layoutSize(fitting targetSize: CGSize, pass: LayoutPass) -> CGSize {
             guard let text = text, let env = env else { return .zero }
-            return text.storage.boundingSize(fitting: targetSize, env: env)
+            if let geometry = cache.geometry(for: pass, size: targetSize) {
+                return geometry.idealSize
+            }
+            let size = text.storage.boundingSize(fitting: targetSize, env: env)
+            cache.update(
+                pass: pass,
+                size: targetSize,
+                geometry: ContentGeometry(idealSize: size, frames: [])
+            )
+            return size
         }
 
         func layout(in container: Container, bounds: Bounds, pass: LayoutPass) {
