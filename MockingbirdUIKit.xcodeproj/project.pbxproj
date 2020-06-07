@@ -12,6 +12,7 @@
 		EC1CAAC623A698D50073C826 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CAAC523A698D50073C826 /* UIEdgeInsets+Extensions.swift */; };
 		EC25395E248C184A00540102 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25395C248C181800540102 /* ScrollView.swift */; };
 		EC253960248C1A0D00540102 /* ContainerScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC25395F248C1A0D00540102 /* ContainerScrollView.swift */; };
+		EC253962248CF4E500540102 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC253961248CF4E500540102 /* Optional.swift */; };
 		EC3FA2FA24746FAC0053C301 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21065238AD2300034D0E3 /* Spacer.swift */; };
 		EC3FA2FC247471E10053C301 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC2105F238AD2300034D0E3 /* Button.swift */; };
 		EC3FA2FD247477490053C301 /* ModifiedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */; };
@@ -109,6 +110,7 @@
 		EC2441C0238DDA2400135660 /* EnvironmentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentObject.swift; sourceTree = "<group>"; };
 		EC25395C248C181800540102 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		EC25395F248C1A0D00540102 /* ContainerScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerScrollView.swift; sourceTree = "<group>"; };
+		EC253961248CF4E500540102 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
 		EC6F1375239BDA26002FE2E4 /* ReactiveKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveKit.framework; path = Carthage/Build/iOS/ReactiveKit.framework; sourceTree = "<group>"; };
 		EC7469EB239C51B3009A4102 /* Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gesture.swift; sourceTree = "<group>"; };
 		EC77FD0523E8B60600EE3D1C /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				ECF2EBAD240ABE7500BD5E67 /* TupleView.swift */,
 				ECB3315B2484359300893516 /* ForEach.swift */,
 				ECB331492483AF1900893516 /* AnyView.swift */,
+				EC253961248CF4E500540102 /* Optional.swift */,
 				ECC21062238AD2300034D0E3 /* Text.swift */,
 				ECC21069238AD2300034D0E3 /* Color.swift */,
 				ECC21061238AD2300034D0E3 /* Image.swift */,
@@ -477,6 +480,7 @@
 				EC3FA2FA24746FAC0053C301 /* Spacer.swift in Sources */,
 				ECB3316624843FA600893516 /* AspectRatio.swift in Sources */,
 				EC3FA2FF24747D640053C301 /* Offset.swift in Sources */,
+				EC253962248CF4E500540102 /* Optional.swift in Sources */,
 				ECB532C9247414E4006101BE /* VariadicView.Tree.swift in Sources */,
 				ECB3315C2484359300893516 /* ForEach.swift in Sources */,
 				ECB331592483FB2800893516 /* EnvironmentObject.swift in Sources */,
