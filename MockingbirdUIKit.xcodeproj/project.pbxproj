@@ -75,6 +75,7 @@
 		ECF2EB9B240AAF2400BD5E67 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21061238AD2300034D0E3 /* Image.swift */; };
 		ECF2EB9F240AAFA800BD5E67 /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21064238AD2300034D0E3 /* GeometryReader.swift */; };
 		ECF7E46C24950D66003ACEBC /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7E46B24950D66003ACEBC /* EmptyView.swift */; };
+		ECF7E47224953FF2003ACEBC /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7E47124953FF2003ACEBC /* Animation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +172,7 @@
 		ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedContent.swift; sourceTree = "<group>"; };
 		ECF2EBB7240B166400BD5E67 /* ViewModifierContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifierContent.swift; sourceTree = "<group>"; };
 		ECF7E46B24950D66003ACEBC /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		ECF7E47124953FF2003ACEBC /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 				ECB5EC6F246FD95900095509 /* EnvironmentValue.swift */,
 				EC2441C0238DDA2400135660 /* EnvironmentObject.swift */,
 				EC1CAACB23A6A9D00073C826 /* EdgesIgnoringSafeArea.swift */,
+				ECF7E47124953FF2003ACEBC /* Animation.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				ECB3314F2483ECC500893516 /* Background.swift in Sources */,
 				EC25395E248C184A00540102 /* ScrollView.swift in Sources */,
 				EC3FA30024747DD70053C301 /* ViewNode.swift in Sources */,
+				ECF7E47224953FF2003ACEBC /* Animation.swift in Sources */,
 				ECC21099238AD2300034D0E3 /* Color+UIKit.swift in Sources */,
 				ECC210AE238AE9BC0034D0E3 /* HostingController.swift in Sources */,
 				ECF2EB99240AAEFA00BD5E67 /* Text.swift in Sources */,
