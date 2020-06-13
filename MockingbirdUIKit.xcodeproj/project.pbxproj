@@ -74,6 +74,7 @@
 		ECF2EB9A240AAF1700BD5E67 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21069238AD2300034D0E3 /* Color.swift */; };
 		ECF2EB9B240AAF2400BD5E67 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21061238AD2300034D0E3 /* Image.swift */; };
 		ECF2EB9F240AAFA800BD5E67 /* GeometryReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC21064238AD2300034D0E3 /* GeometryReader.swift */; };
+		ECF7E46C24950D66003ACEBC /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7E46B24950D66003ACEBC /* EmptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +170,7 @@
 		ECF2EBAD240ABE7500BD5E67 /* TupleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TupleView.swift; sourceTree = "<group>"; };
 		ECF2EBB0240AF1BF00BD5E67 /* ModifiedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiedContent.swift; sourceTree = "<group>"; };
 		ECF2EBB7240B166400BD5E67 /* ViewModifierContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifierContent.swift; sourceTree = "<group>"; };
+		ECF7E46B24950D66003ACEBC /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +288,7 @@
 				ECB3315B2484359300893516 /* ForEach.swift */,
 				ECB331492483AF1900893516 /* AnyView.swift */,
 				EC253961248CF4E500540102 /* Optional.swift */,
+				ECF7E46B24950D66003ACEBC /* EmptyView.swift */,
 				ECC21062238AD2300034D0E3 /* Text.swift */,
 				ECC21069238AD2300034D0E3 /* Color.swift */,
 				ECC21061238AD2300034D0E3 /* Image.swift */,
@@ -492,6 +495,7 @@
 				EC1CAAC223A67E180073C826 /* Bounds.swift in Sources */,
 				ECB331442483A3CF00893516 /* UIKitNodeModifier.swift in Sources */,
 				ECC2109B238AD2300034D0E3 /* Text+UIKit.swift in Sources */,
+				ECF7E46C24950D66003ACEBC /* EmptyView.swift in Sources */,
 				ECB3316D248446C500893516 /* Sheet.swift in Sources */,
 				ECB3314E2483EB1300893516 /* ClipShape.swift in Sources */,
 				ECB331502483EEBE00893516 /* Padding.swift in Sources */,
